@@ -1,0 +1,19 @@
+{
+  "name": "shelftrack",
+  "version": "0.1.0",
+  "private": true,
+  "description": "MyAnimeList meets Letterboxd, for manga you actually own.",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "pnpm --filter web dev",
+    "build": "pnpm --filter web build",
+    "lint": "pnpm -r lint",
+    "typecheck": "pnpm -r typecheck"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
