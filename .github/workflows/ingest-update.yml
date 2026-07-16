@@ -1,0 +1,59 @@
+name: Weekly Catalog Update
+
+on:
+  schedule:
+    # Every Monday at 09:00 UTC
+    - cron: '0 9 * * 1'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (no DB writes)'
+        required: false
+        default: 'false'
+        type: boolean
+
+jobs:
+  ingest:
+    name: Run catalog update
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Install script dependencies
+        run: pnpm install --filter scripts
+        working-directory: scripts
+
+      - name: Run update script
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          GOOGLE_BOOKS_API_KEY: ${{ secrets.GOOGLE_BOOKS_API_KEY }}
+        run: |
+          FLAGS=""
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            FLAGS="--dry-run"
+          fi
+          npx tsx scripts/ingest/update.ts $FLAGS
+
+      - name: Create issue if new volumes found
+        if: success()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Read from the update script's stdout — in production,
+            // write summary to a file and read it here.
+            // Placeholder: just log a note.
+            console.log('Update complete — check /admin/ingest for new drafts.');

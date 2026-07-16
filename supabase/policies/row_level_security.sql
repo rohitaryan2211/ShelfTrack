@@ -49,6 +49,10 @@ alter table volume_chapters enable row level security;
 alter table volume_availability enable row level security;
 alter table regions enable row level security;
 alter table retailers enable row level security;
+alter table series_licensors enable row level security;
+
+-- Materialized views do not support RLS; use GRANT for read-only access
+grant select on volume_popularity to anon, authenticated;
 
 create policy "Catalog: public read" on publishers for select using (true);
 create policy "Catalog: public read" on series for select using (true);
@@ -58,3 +62,4 @@ create policy "Catalog: public read" on volume_chapters for select using (true);
 create policy "Catalog: public read" on volume_availability for select using (true);
 create policy "Catalog: public read" on regions for select using (true);
 create policy "Catalog: public read" on retailers for select using (true);
+create policy "Catalog: public read" on series_licensors for select using (true);

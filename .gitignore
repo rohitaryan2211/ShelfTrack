@@ -54,3 +54,5 @@ Thumbs.db
 
 # ─── Type generation cache ─────────────────────────────────────────────────────
 *.tsbuildinfo
+.data/
+

@@ -52,5 +52,6 @@ create table volumes (
   region_code   text references regions(code),
   release_date  date,
   cover_url     text,
-  page_count    int
+  page_count    int,
+  constraint uq_volume_edition unique (series_id, volume_number, region_code)
 );
