@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Ping Supabase REST endpoint
         run: |
-          curl -s "${{ secrets.SUPABASE_URL }}/rest/v1/publishers?select=id&limit=1" \
-            -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
-            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}"
+          curl -s "${{ secrets.VITE_SUPABASE_URL }}/rest/v1/publishers?select=id&limit=1" \
+            -H "apikey: ${{ secrets.VITE_SUPABASE_ANON_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.VITE_SUPABASE_ANON_KEY }}"
           echo "Ping complete"
