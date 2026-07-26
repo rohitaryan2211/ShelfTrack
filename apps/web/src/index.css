@@ -518,6 +518,30 @@ small { font-size: 0.8125rem; color: var(--text-muted); }
   border-color: var(--border-default);
 }
 
+/* Discover grid — responsive series card grid */
+.discover-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+  gap: var(--space-5);
+}
+
+@media (min-width: 640px) {
+  .discover-grid {
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .discover-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: var(--space-6);
+  }
+}
+
+.discover-grid .volume-card {
+  width: 100%;
+}
+
 /* Volume / Series card */
 .volume-card {
   background: var(--bg-elevated);
@@ -1046,6 +1070,10 @@ small { font-size: 0.8125rem; color: var(--text-muted); }
   .grid-covers-lg { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--space-3); }
   .topbar { padding: 0 var(--space-4); }
 }
+
+/* =========================================================
+   UTILITY CLASSES
+   ========================================================= */
 
 /* =========================================================
    UTILITY CLASSES

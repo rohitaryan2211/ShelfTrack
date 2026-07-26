@@ -17,46 +17,86 @@ if (!supabaseUrl || !supabaseKey) {
 
 const supabase = createClient(supabaseUrl, supabaseKey)
 
+// Parse target table argument e.g. --table series
+const tableArgIdx = process.argv.indexOf('--table')
+const targetTable = tableArgIdx !== -1 ? process.argv[tableArgIdx + 1] : null
+
 async function clearDb() {
-  console.log('⚠️ WARNING: This will delete ALL data from ALL tables (series, volumes, publishers, regions, etc.).')
-  
+  const table = targetTable?.toLowerCase()
+
+  if (table && !['series', 'volumes', 'publishers', 'regions'].includes(table)) {
+    console.error(`Error: Invalid table target "${targetTable}". Supported tables: series, volumes, publishers, regions`)
+    process.exit(1)
+  }
+
+  if (table) {
+    console.log(`⚠️ WARNING: This will delete ALL data from the target table "${table}" (and any dependent cascading records).`)
+  } else {
+    console.log('⚠️ WARNING: This will delete ALL data from ALL tables (series, volumes, publishers, regions, etc.).')
+  }
+
   // Wait 3 seconds to allow user to cancel
   console.log('Starting in 3 seconds. Press Ctrl+C to abort...')
   await new Promise(resolve => setTimeout(resolve, 3000))
-  
-  console.log('Deleting from series table...')
-  
-  // Delete all tables in reverse dependency order or use CASCADE if we could execute SQL,
-  // but using Supabase client we just delete from them individually.
-  // Actually, 'series' cascades to volumes and library entries.
-  const { count: seriesCount, error: seriesErr } = await supabase
-    .from('series')
-    .delete({ count: 'exact' })
-    .not('id', 'is', null)
 
-  if (seriesErr) console.error('Error deleting from series:', seriesErr.message)
+  // Delete matching tables
+  if (!table || table === 'series') {
+    console.log('Deleting from series table...')
+    const { count, error } = await supabase
+      .from('series')
+      .delete({ count: 'exact' })
+      .not('id', 'is', null)
+      
+    if (error) {
+      console.error('Error deleting from series:', error.message)
+    } else {
+      console.log(`- Series deleted: ${count}`)
+    }
+  }
 
-  console.log('Deleting from publishers table...')
-  const { count: pubCount, error: pubErr } = await supabase
-    .from('publishers')
-    .delete({ count: 'exact' })
-    .not('id', 'is', null)
-    
-  if (pubErr) console.error('Error deleting from publishers:', pubErr.message)
+  if (table === 'volumes') {
+    console.log('Deleting from volumes table...')
+    const { count, error } = await supabase
+      .from('volumes')
+      .delete({ count: 'exact' })
+      .not('id', 'is', null)
 
-  console.log('Deleting from regions table...')
-  const { count: regCount, error: regErr } = await supabase
-    .from('regions')
-    .delete({ count: 'exact' })
-    .not('code', 'is', null)
-    
-  if (regErr) console.error('Error deleting from regions:', regErr.message)
+    if (error) {
+      console.error('Error deleting from volumes:', error.message)
+    } else {
+      console.log(`- Volumes deleted: ${count}`)
+    }
+  }
 
-  console.log(`✅ Successfully deleted data.`)
-  console.log(`- Series deleted: ${seriesCount}`)
-  console.log(`- Publishers deleted: ${pubCount}`)
-  console.log(`- Regions deleted: ${regCount}`)
-  console.log('All data should now be cleared.')
+  if (!table || table === 'publishers') {
+    console.log('Deleting from publishers table...')
+    const { count, error } = await supabase
+      .from('publishers')
+      .delete({ count: 'exact' })
+      .not('id', 'is', null)
+      
+    if (error) {
+      console.error('Error deleting from publishers (Note: Foreign key constraints on series or volumes might prevent this if they are not cleared first):', error.message)
+    } else {
+      console.log(`- Publishers deleted: ${count}`)
+    }
+  }
+
+  if (!table || table === 'regions') {
+    console.log('Deleting from regions table...')
+    const { count, error } = await supabase
+      .from('regions')
+      .delete({ count: 'exact' })
+      .not('code', 'is', null)
+      
+    if (error) {
+      console.error('Error deleting from regions (Note: Foreign key constraints on publishers, series, or volumes might prevent this):', error.message)
+    } else {
+      console.log(`- Regions deleted: ${count}`)
+    }
+  }
+
+  console.log('✅ Clearing task complete.')
 }
 
 clearDb().catch(err => {

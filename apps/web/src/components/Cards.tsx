@@ -5,14 +5,16 @@ import type { Series, Volume } from '../lib/types'
 // ─── Series Card (covers grid) ─────────────────────────────
 interface SeriesCardProps {
   series: Series
-  size?: 'sm' | 'md'
+  size?: 'sm' | 'md' | 'fill'
 }
 
 export function SeriesCard({ series, size = 'md' }: SeriesCardProps) {
-  const width = size === 'sm' ? 130 : 170
+  const style: React.CSSProperties = size === 'fill'
+    ? { width: '100%' }
+    : { width: size === 'sm' ? 130 : 170, flexShrink: 0 }
 
   return (
-    <Link to={`/series/${series.id}`} className="volume-card animate-fade-up" style={{ width, flexShrink: 0 }} id={`series-card-${series.id}`}>
+    <Link to={`/series/${series.id}`} className="volume-card animate-fade-up" style={style} id={`series-card-${series.id}`}>
       <div className="volume-card-cover">
         {series.cover_url ? (
           <img src={series.cover_url} alt={series.title} loading="lazy" referrerPolicy="no-referrer" />

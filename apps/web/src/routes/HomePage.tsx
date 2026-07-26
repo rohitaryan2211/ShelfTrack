@@ -6,17 +6,7 @@ import { supabase } from '../lib/supabaseClient'
 import { useEffect, useState } from 'react'
 import type { Series } from '../lib/types'
 
-// ── Mock trending data (used when DB has no data yet) ─────
-const MOCK_TRENDING: Series[] = [
-  { id: '1', title: 'One Piece', original_title: 'ワンピース', type: 'manga', status: 'ongoing', cover_url: 'https://s4.anilist.co/file/anilistcdn/media/manga/cover/large/bx30013-oT7YguhDWkKq.jpg', original_publisher_id: '', created_at: '', avg_rating: 9.2, _count: { volumes: 108, readers: 12400, owned: 8900 } },
-  { id: '2', title: 'Jujutsu Kaisen', original_title: '呪術廻戦', type: 'manga', status: 'ongoing', cover_url: 'https://s4.anilist.co/file/anilistcdn/media/manga/cover/large/bx113138-G8C1GFrUUB0c.jpg', original_publisher_id: '', created_at: '', avg_rating: 8.8, _count: { volumes: 27, readers: 9800, owned: 6200 } },
-  { id: '3', title: 'Demon Slayer', original_title: '鬼滅の刃', type: 'manga', status: 'completed', cover_url: 'https://s4.anilist.co/file/anilistcdn/media/manga/cover/large/bx87216-NfA0GHSb1dxV.jpg', original_publisher_id: '', created_at: '', avg_rating: 8.6, _count: { volumes: 23, readers: 11200, owned: 9400 } },
-  { id: '4', title: 'My Hero Academia', original_title: '僕のヒーローアカデミア', type: 'manga', status: 'completed', cover_url: 'https://s4.anilist.co/file/anilistcdn/media/manga/cover/large/bx75989-JBqEHHFIQiQ6.jpg', original_publisher_id: '', created_at: '', avg_rating: 8.1, _count: { volumes: 41, readers: 8700, owned: 6100 } },
-  { id: '5', title: 'Chainsaw Man', original_title: 'チェンソーマン', type: 'manga', status: 'ongoing', cover_url: 'https://s4.anilist.co/file/anilistcdn/media/manga/cover/large/bx113755-NnH1F5Z5BFZJ.jpg', original_publisher_id: '', created_at: '', avg_rating: 9.0, _count: { volumes: 17, readers: 7300, owned: 4800 } },
-  { id: '6', title: 'Attack on Titan', original_title: '進撃の巨人', type: 'manga', status: 'completed', cover_url: 'https://s4.anilist.co/file/anilistcdn/media/manga/cover/large/bx53390-1RsuABC34P9k.jpg', original_publisher_id: '', created_at: '', avg_rating: 9.1, _count: { volumes: 34, readers: 13600, owned: 10200 } },
-]
-
-// ── Feature highlight data ────────────────────────────────
+// ── Feature highlight data (static UI copy, not mock DB data) ────
 const FEATURES = [
   {
     icon: <Eye size={28} style={{ color: 'var(--ink-green)' }} />,
@@ -62,7 +52,7 @@ export default function HomePage() {
         .eq('ingest_status', 'published')
         .order('created_at', { ascending: false })
         .limit(12)
-      setTrending(data?.length ? (data as Series[]) : MOCK_TRENDING)
+      setTrending((data as Series[]) ?? [])
       setLoadingTrending(false)
     }
     load()
@@ -103,15 +93,15 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Stunning Premium Fan Spread */}
+        {/* Fan spread of trending covers */}
         <div style={{
           position: 'absolute', right: '10%', top: '50%', transform: 'translateY(-50%)',
           width: 400, height: 500, display: 'flex', alignItems: 'center', justifyContent: 'center',
-          pointerEvents: 'none' // Don't block clicks on buttons underneath if screen shrinks
+          pointerEvents: 'none'
         }} aria-hidden="true" className="hero-fan-spread hidden-on-mobile">
-          {(trending.length > 0 ? trending : MOCK_TRENDING).slice(0, 5).map((s, i) => {
+          {trending.slice(0, 5).map((s, i) => {
             if (!s.cover_url) return null
-            const offset = i - 2 // -2, -1, 0, 1, 2
+            const offset = i - 2
             const rotation = offset * 12
             const translateX = offset * 60
             const translateY = Math.abs(offset) * 20
@@ -191,7 +181,14 @@ export default function HomePage() {
         <div className="scroll-row" id="trending-scroll-row">
           {loadingTrending
             ? Array.from({ length: 8 }).map((_, i) => <SkeletonCard key={i} height={220} />)
-            : trending.map(s => <SeriesCard key={s.id} series={s} />)
+            : trending.length > 0
+              ? trending.map(s => <SeriesCard key={s.id} series={s} />)
+              : (
+                <div className="empty-state" style={{ width: '100%', padding: 'var(--space-8)' }}>
+                  <div className="empty-state-icon"><TrendingUp size={28} /></div>
+                  <p>No series in the catalog yet. Use the ingest scripts to add data.</p>
+                </div>
+              )
           }
         </div>
       </section>

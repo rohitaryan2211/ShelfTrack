@@ -6,25 +6,6 @@ import { useAuth } from '../hooks/useAuth'
 import type { Volume, Chapter, VolumeAvailability, LibraryEntry, ReadStatus } from '../lib/types'
 import { READ_STATUS_LABELS } from '../lib/types'
 
-const MOCK_VOLUME: Volume = {
-  id: '1', series_id: '1', volume_number: 1, isbn13: '978-4-08-872509-8',
-  cover_url: 'https://s4.anilist.co/file/anilistcdn/media/manga/cover/large/bx30013-oT7YguhDWkKq.jpg',
-  release_date: '1997-12-24', publisher_id: '1', region_code: 'JP', page_count: 216,
-  publisher: { id: '1', name: 'Shueisha', country: 'JP', is_original_publisher: true },
-  series: { id: '1', title: 'One Piece', original_publisher_id: '1', type: 'manga', status: 'ongoing', created_at: '' },
-}
-
-const MOCK_CHAPTERS: Chapter[] = Array.from({ length: 8 }, (_, i) => ({
-  id: String(i + 1), series_id: '1', chapter_number: i + 1,
-  title: ['Romance Dawn', 'They Call Him Luffy', 'Morgan vs. Luffy', 'The Great Captain Usopp', 'Vs', 'The First Crew Member', "Swords, Knives, and Snots", 'Shounen Jump Special Edition'][i],
-}))
-
-const MOCK_AVAILABILITY: VolumeAvailability[] = [
-  { id: '1', volume_id: '1', retailer_id: '1', region_code: 'US', product_url: 'https://www.viz.com/read/manga/one-piece/product/1', in_print: true, retailer: { id: '1', name: 'Viz Media', region_code: 'US' } },
-  { id: '2', volume_id: '1', retailer_id: '2', region_code: 'US', product_url: 'https://www.amazon.com/dp/1591167817', in_print: true, retailer: { id: '2', name: 'Amazon US', region_code: 'US' } },
-  { id: '3', volume_id: '1', retailer_id: '3', region_code: 'JP', product_url: 'https://www.amazon.co.jp/dp/4088725093', in_print: true, retailer: { id: '3', name: 'Amazon JP', region_code: 'JP' } },
-]
-
 const STATUS_OPTIONS: ReadStatus[] = ['plan_to_read', 'reading', 'completed', 'dropped', 'on_hold']
 
 export default function VolumeDetailPage() {
@@ -46,11 +27,11 @@ export default function VolumeDetailPage() {
         supabase.from('volume_chapters').select('chapter:chapters(*)').eq('volume_id', id!).order('chapter_id'),
         supabase.from('volume_availability').select('*, retailer:retailers(*)').eq('volume_id', id!),
       ])
-      setVolume(volResult.data ?? MOCK_VOLUME)
+      setVolume(volResult.data as Volume | null)
       const rawChapters = chapResult.data ?? []
-      const mappedChapters = rawChapters.map((r: unknown) => (r as { chapter: Chapter }).chapter)
-      setChapters(mappedChapters.length ? mappedChapters : MOCK_CHAPTERS)
-      setAvailability(availResult.data?.length ? (availResult.data as VolumeAvailability[]) : MOCK_AVAILABILITY)
+      const mappedChapters = rawChapters.map((r: any) => (r as { chapter: Chapter }).chapter)
+      setChapters(mappedChapters)
+      setAvailability((availResult.data as VolumeAvailability[]) ?? [])
       setLoading(false)
 
       if (user) {
@@ -72,7 +53,38 @@ export default function VolumeDetailPage() {
     setSavingStatus(false)
   }
 
-  const vol = volume ?? MOCK_VOLUME
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-6)' }}>
+        <div className="skeleton" style={{ height: 40, width: 200 }} />
+        <div style={{ display: 'flex', gap: 'var(--space-8)', flexWrap: 'wrap' }}>
+          <div className="skeleton" style={{ width: 180, height: 270, borderRadius: 'var(--radius-lg)' }} />
+          <div style={{ flex: 1, minWidth: 240, display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
+            <div className="skeleton" style={{ height: 20, width: 100 }} />
+            <div className="skeleton" style={{ height: 36, width: '60%' }} />
+            <div className="skeleton" style={{ height: 120 }} />
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (!volume) {
+    return (
+      <>
+        <Link to="/discover" className="btn btn-ghost btn-sm" style={{ marginBottom: 'var(--space-6)', display: 'inline-flex' }}>
+          <ArrowLeft size={16} /> Discover
+        </Link>
+        <div className="card empty-state" style={{ padding: 'var(--space-8)' }}>
+          <div className="empty-state-icon"><BookMarked size={28} /></div>
+          <h3>Volume not found</h3>
+          <p>The requested volume does not exist or has not been published in the catalog.</p>
+        </div>
+      </>
+    )
+  }
+
+  const vol = volume
 
   return (
     <>
@@ -175,9 +187,7 @@ export default function VolumeDetailPage() {
         <h2 style={{ fontSize: '1.125rem', marginBottom: 'var(--space-4)', display: 'flex', alignItems: 'center', gap: 8 }}>
           <ShoppingBag size={18} style={{ color: 'var(--vermillion)' }} /> Where to Buy
         </h2>
-        {loading ? (
-          <div className="skeleton" style={{ height: 120 }} />
-        ) : availability.length > 0 ? (
+        {availability.length > 0 ? (
           <div className="card" style={{ overflow: 'hidden' }}>
             <table className="table" id="availability-table">
               <thead>

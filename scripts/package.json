@@ -7,8 +7,11 @@
     "seed": "tsx ingest/seed.ts",
     "seed:publish": "tsx ingest/seed.ts --publish",
     "seed:dry": "tsx ingest/seed.ts --dry-run",
+    "seed:regions": "tsx ingest/seed_regions.ts",
+    "seed:publishers": "tsx ingest/seed_publishers.ts",
     "update": "tsx ingest/update.ts",
-    "update:dry": "tsx ingest/update.ts --dry-run"
+    "update:dry": "tsx ingest/update.ts --dry-run",
+    "db:clear": "tsx db/clear.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.50.0",

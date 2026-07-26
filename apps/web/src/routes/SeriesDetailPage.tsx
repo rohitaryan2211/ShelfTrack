@@ -1,36 +1,199 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import {
   ArrowLeft, BookMarked, Eye, Star, ShoppingBag,
-  ChevronDown, ChevronUp, ExternalLink, BookOpen
+  ChevronDown, ChevronUp, ExternalLink, BookOpen, Globe
 } from 'lucide-react'
 import { supabase } from '../lib/supabaseClient'
 import { useAuth } from '../hooks/useAuth'
 import type { Series, Volume, Review, LibraryEntry, ReadStatus, VolumeAvailability } from '../lib/types'
 import { READ_STATUS_LABELS } from '../lib/types'
-import { SkeletonCard } from '../components/Cards'
+import { getRegionLabel } from '../lib/regionLabels'
 
-const MOCK_SERIES: Series = {
-  id: '1', title: 'One Piece', original_title: 'ワンピース', type: 'manga', status: 'ongoing',
-  cover_url: 'https://s4.anilist.co/file/anilistcdn/media/manga/cover/large/bx30013-oT7YguhDWkKq.jpg',
-  description: 'Gol D. Roger was known as the "Pirate King," the strongest and most infamous being to have sailed the Grand Line. The capture and execution of Roger by the World Government brought a change throughout the world. His last words before his death revealed the existence of the greatest treasure in the world, One Piece. It was this revelation that brought about the Grand Age of Pirates, men who dreamed of finding One Piece—which promises an unlimited amount of riches and fame—and quite possibly the pinnacle of glory and the title of the Pirate King.',
-  original_publisher_id: '1', created_at: '2020-01-01', avg_rating: 9.2,
-  _count: { volumes: 108, readers: 12400, owned: 8900 },
-  publisher: { id: '1', name: 'Shueisha', country: 'JP', is_original_publisher: true },
-}
 
-const MOCK_VOLUMES: Volume[] = Array.from({ length: 12 }, (_, i) => ({
-  id: String(i + 1), series_id: '1', volume_number: i + 1,
-  cover_url: `https://s4.anilist.co/file/anilistcdn/media/manga/cover/large/bx30013-oT7YguhDWkKq.jpg`,
-  release_date: `${2000 + i}-06-01`, publisher_id: '1', region_code: 'JP', isbn13: `978-4-08-87${String(i + 1).padStart(4, '0')}-0`,
-}))
-
-const MOCK_REVIEWS: Review[] = [
-  { id: '1', user_id: 'u1', series_id: '1', body: "One Piece is the greatest manga ever written. The world-building, the characters, the themes of freedom and found family — nothing else comes close. Oda's dedication to foreshadowing stretching 20+ years is unmatched.", rating: 10, contains_spoilers: false, created_at: '2024-06-01', profile: { id: 'u1', username: 'nakama_forever', created_at: '' } },
-  { id: '2', user_id: 'u2', series_id: '1', body: "Slow to start but once it clicks, it REALLY clicks. The Marineford arc had me crying. I've now bought all 108 volumes twice — once for reading, once for display.", rating: 9, contains_spoilers: true, created_at: '2024-04-15', profile: { id: 'u2', username: 'shelf_collector', created_at: '' } },
-]
 
 const STATUS_OPTIONS: ReadStatus[] = ['plan_to_read', 'reading', 'completed', 'dropped', 'on_hold']
+
+// ─── Volumes grouped by region ────────────────────────────
+interface VolumesSectionProps {
+  volumes: Volume[]
+  regionFilter: string
+  setRegionFilter: (v: string) => void
+}
+
+function VolumesSection({ volumes, regionFilter, setRegionFilter }: VolumesSectionProps) {
+  // Compute distinct regions from volumes
+  const regionGroups = useMemo(() => {
+    const map = new Map<string, Volume[]>()
+    volumes.forEach(v => {
+      const key = v.region_code ?? 'unknown'
+      if (!map.has(key)) map.set(key, [])
+      map.get(key)!.push(v)
+    })
+    // Sort: JP first (original), then alphabetical
+    const entries = Array.from(map.entries())
+    entries.sort(([a], [b]) => {
+      if (a === 'JP') return -1
+      if (b === 'JP') return 1
+      return a.localeCompare(b)
+    })
+    return entries
+  }, [volumes])
+
+  const regionCodes = regionGroups.map(([code]) => code)
+
+  const visibleGroups =
+    regionFilter === 'all'
+      ? regionGroups
+      : regionGroups.filter(([code]) => code === regionFilter)
+
+  return (
+    <section id="volumes-section" style={{ marginBottom: 'var(--space-8)' }}>
+      <div className="section-header">
+        <h2>
+          <BookOpen size={20} style={{ display: 'inline', marginRight: 8, color: 'var(--vermillion)' }} />
+          Volumes
+        </h2>
+        <span style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>
+          {volumes.length} volumes · {regionCodes.length} {regionCodes.length === 1 ? 'region' : 'regions'}
+        </span>
+      </div>
+
+      {/* Region filter pills */}
+      {regionCodes.length > 1 && (
+        <div
+          id="region-filter-pills"
+          className="animate-fade-in"
+          style={{
+            display: 'flex',
+            gap: 'var(--space-2)',
+            flexWrap: 'wrap',
+            marginBottom: 'var(--space-6)',
+          }}
+        >
+          <button
+            id="region-pill-all"
+            className={`btn btn-sm ${regionFilter === 'all' ? 'btn-primary' : 'btn-secondary'}`}
+            onClick={() => setRegionFilter('all')}
+            style={{ display: 'flex', alignItems: 'center', gap: 6 }}
+          >
+            <Globe size={13} /> All Regions
+          </button>
+          {regionCodes.map(code => (
+            <button
+              key={code}
+              id={`region-pill-${code}`}
+              className={`btn btn-sm ${regionFilter === code ? 'btn-primary' : 'btn-secondary'}`}
+              onClick={() => setRegionFilter(code)}
+            >
+              {getRegionLabel(code)}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {volumes.length > 0 ? (
+        visibleGroups.map(([code, regionVolumes], groupIdx) => (
+          <div
+            key={code}
+            className="animate-fade-up"
+            style={{
+              marginBottom: 'var(--space-8)',
+              animationDelay: `${groupIdx * 80}ms`,
+            }}
+          >
+            {/* Region sub-header */}
+            {regionGroups.length > 1 && (
+              <div
+                id={`region-header-${code}`}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 'var(--space-3)',
+                  marginBottom: 'var(--space-4)',
+                  paddingBottom: 'var(--space-3)',
+                  borderBottom: '1px solid var(--border-subtle)',
+                }}
+              >
+                <Globe size={16} style={{ color: 'var(--slate)', flexShrink: 0 }} />
+                <span
+                  style={{
+                    fontFamily: 'var(--font-heading)',
+                    fontWeight: 700,
+                    fontSize: '1rem',
+                    color: 'var(--text-primary)',
+                  }}
+                >
+                  {getRegionLabel(code)}
+                </span>
+                <span
+                  className="badge badge-neutral"
+                  style={{ fontSize: '0.6875rem' }}
+                >
+                  {regionVolumes.length} vol{regionVolumes.length !== 1 ? 's' : ''}
+                </span>
+              </div>
+            )}
+
+            {/* Volume grid for this region */}
+            <div className="grid-covers" id={`volumes-grid-${code}`}>
+              {regionVolumes.map(vol => (
+                <Link
+                  key={vol.id}
+                  to={`/volumes/${vol.id}`}
+                  className="volume-card animate-fade-up"
+                  id={`series-vol-card-${vol.id}`}
+                  style={{ textDecoration: 'none' }}
+                >
+                  <div className="volume-card-cover">
+                    {vol.cover_url ? (
+                      <img
+                        src={vol.cover_url}
+                        alt={`Vol. ${vol.volume_number}`}
+                        loading="lazy"
+                        referrerPolicy="no-referrer"
+                      />
+                    ) : (
+                      <div className="cover-placeholder">
+                        <BookMarked size={24} />
+                      </div>
+                    )}
+                    <div className="volume-card-cover-overlay" />
+                    <div className="volume-card-actions">
+                      <span
+                        className="badge badge-neutral"
+                        style={{ fontSize: '0.625rem' }}
+                      >
+                        Vol. {vol.volume_number}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="volume-card-body">
+                    <div className="volume-card-title">
+                      Vol. {vol.volume_number}
+                    </div>
+                    <div className="volume-card-meta">
+                      {vol.release_date
+                        ? new Date(vol.release_date).getFullYear()
+                        : '—'}
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        ))
+      ) : (
+        <div className="card empty-state" style={{ padding: 'var(--space-8)' }}>
+          <div className="empty-state-icon">
+            <BookOpen size={28} />
+          </div>
+          <p>No volumes listed for this series yet.</p>
+        </div>
+      )}
+    </section>
+  )
+}
 
 export default function SeriesDetailPage() {
   const { id } = useParams<{ id: string }>()
@@ -45,6 +208,7 @@ export default function SeriesDetailPage() {
   const [whereToByOpen, setWhereToBuyOpen] = useState(false)
   const [savingStatus, setSavingStatus] = useState(false)
   const [toast, setToast] = useState<string | null>(null)
+  const [regionFilter, setRegionFilter] = useState<string>('all')
 
   useEffect(() => {
     async function load() {
@@ -53,9 +217,9 @@ export default function SeriesDetailPage() {
         supabase.from('volumes').select('*, publisher:publishers(*)').eq('series_id', id!).eq('ingest_status', 'published').order('volume_number'),
         supabase.from('reviews').select('*, profile:profiles(id,username,avatar_url,created_at)').eq('series_id', id!).limit(10),
       ])
-      setSeries(seriesResult.data ?? MOCK_SERIES)
-      setVolumes(volumesResult.data?.length ? (volumesResult.data as Volume[]) : MOCK_VOLUMES)
-      setReviews(reviewsResult.data?.length ? (reviewsResult.data as Review[]) : MOCK_REVIEWS)
+      setSeries(seriesResult.data as Series | null)
+      setVolumes((volumesResult.data as Volume[]) ?? [])
+      setReviews((reviewsResult.data as Review[]) ?? [])
 
       if (volumesResult.data && volumesResult.data.length > 0) {
         const volumeIds = volumesResult.data.map(v => v.id)
@@ -95,7 +259,31 @@ export default function SeriesDetailPage() {
     setSavingStatus(false)
   }
 
-  const s = series ?? MOCK_SERIES
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-6)' }}>
+        <div className="skeleton" style={{ height: 40, width: 200 }} />
+        <div className="skeleton" style={{ height: 300, borderRadius: 'var(--radius-xl)' }} />
+      </div>
+    )
+  }
+
+  if (!series) {
+    return (
+      <>
+        <Link to="/discover" className="btn btn-ghost btn-sm" style={{ marginBottom: 'var(--space-6)', display: 'inline-flex' }}>
+          <ArrowLeft size={16} /> Discover
+        </Link>
+        <div className="card empty-state" style={{ padding: 'var(--space-8)' }}>
+          <div className="empty-state-icon"><BookMarked size={28} /></div>
+          <h3>Series not found</h3>
+          <p>The requested series does not exist or has not been published in the catalog.</p>
+        </div>
+      </>
+    )
+  }
+
+  const s = series
 
   return (
     <>
@@ -227,37 +415,8 @@ export default function SeriesDetailPage() {
         </section>
       )}
 
-      {/* ── Volume grid ──────────────────────────────── */}
-      <section id="volumes-section" style={{ marginBottom: 'var(--space-8)' }}>
-        <div className="section-header">
-          <h2><BookOpen size={20} style={{ display: 'inline', marginRight: 8, color: 'var(--vermillion)' }} />Volumes</h2>
-          <span style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>{volumes.length} volumes</span>
-        </div>
-
-        <div className="grid-covers" id="volumes-grid">
-          {loading
-            ? Array.from({ length: 8 }).map((_, i) => <SkeletonCard key={i} height={200} />)
-            : volumes.map(vol => (
-                <Link key={vol.id} to={`/volumes/${vol.id}`} className="volume-card animate-fade-up" id={`series-vol-card-${vol.id}`} style={{ textDecoration: 'none' }}>
-                  <div className="volume-card-cover">
-                    {vol.cover_url
-                      ? <img src={vol.cover_url} alt={`Vol. ${vol.volume_number}`} loading="lazy" referrerPolicy="no-referrer" />
-                      : <div className="cover-placeholder"><BookMarked size={24} /></div>
-                    }
-                    <div className="volume-card-cover-overlay" />
-                    <div className="volume-card-actions">
-                      <span className="badge badge-neutral" style={{ fontSize: '0.625rem' }}>Vol. {vol.volume_number}</span>
-                    </div>
-                  </div>
-                  <div className="volume-card-body">
-                    <div className="volume-card-title">Vol. {vol.volume_number}</div>
-                    <div className="volume-card-meta">{vol.release_date ? new Date(vol.release_date).getFullYear() : '—'}</div>
-                  </div>
-                </Link>
-              ))
-          }
-        </div>
-      </section>
+      {/* ── Volume grid — grouped by region ─────────── */}
+      <VolumesSection volumes={volumes} regionFilter={regionFilter} setRegionFilter={setRegionFilter} />
 
       {/* ── Where to buy ─────────────────────────────── */}
       <section id="where-to-buy-section" className="card animate-fade-up" style={{ marginBottom: 'var(--space-8)', overflow: 'hidden' }}>

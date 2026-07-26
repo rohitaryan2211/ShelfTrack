@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { ShieldCheck, RefreshCw, Check, X, Edit, Database, Plus, AlertTriangle } from 'lucide-react'
 import { supabase } from '../lib/supabaseClient'
 import { useAuth } from '../hooks/useAuth'
@@ -12,51 +12,72 @@ interface DraftItem {
   cover_url?: string
 }
 
-interface IngestLog {
-  id: string
-  run_at: string
-  series_added: number
-  volumes_added: number
-  errors: number
-  source: string
-}
-
-const MOCK_DRAFTS: DraftItem[] = [
-  { id: '1', title: 'Solo Leveling', type: 'series', ingest_status: 'draft', created_at: '2026-07-15T10:00:00Z', cover_url: 'https://s4.anilist.co/file/anilistcdn/media/manga/cover/large/bx101517-hMFpLalQVK8n.jpg' },
-  { id: '2', title: 'Oshi no Ko', type: 'series', ingest_status: 'draft', created_at: '2026-07-14T08:30:00Z', cover_url: 'https://s4.anilist.co/file/anilistcdn/media/manga/cover/large/bx127139-5x9v5a09xIGf.jpg' },
-  { id: '3', title: 'Frieren Vol. 12', type: 'volume', ingest_status: 'draft', created_at: '2026-07-13T14:00:00Z' },
-]
-
-const MOCK_LOGS: IngestLog[] = [
-  { id: '1', run_at: '2026-07-15T09:00:00Z', series_added: 3, volumes_added: 24, errors: 0, source: 'AniList + MangaUpdates' },
-  { id: '2', run_at: '2026-07-08T09:00:00Z', series_added: 2, volumes_added: 18, errors: 1, source: 'AniList + Google Books' },
-]
-
 export default function AdminIngestPage() {
   useAuth()  // auth context still wraps this (ProtectedRoute handles redirect)
-  const [drafts, setDrafts] = useState<DraftItem[]>(MOCK_DRAFTS)
-  const [logs] = useState<IngestLog[]>(MOCK_LOGS)
+  const [drafts, setDrafts] = useState<DraftItem[]>([])
+  const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState<'queue' | 'add-series' | 'add-volume' | 'availability' | 'logs'>('queue')
   const [processing, setProcessing] = useState<string | null>(null)
   const [toast, setToast] = useState<string | null>(null)
 
   const showToast = (msg: string) => { setToast(msg); setTimeout(() => setToast(null), 2500) }
 
+  const loadDrafts = async () => {
+    setLoading(true)
+    const [seriesRes, volumesRes] = await Promise.all([
+      supabase.from('series').select('id, title, ingest_status, created_at, cover_url').eq('ingest_status', 'draft'),
+      supabase.from('volumes').select('id, volume_number, series:series(title), ingest_status, created_at, cover_url').eq('ingest_status', 'draft')
+    ])
+
+    const draftSeries: DraftItem[] = (seriesRes.data ?? []).map((s: any) => ({
+      id: s.id,
+      title: s.title,
+      type: 'series',
+      ingest_status: s.ingest_status,
+      created_at: s.created_at,
+      cover_url: s.cover_url
+    }))
+
+    const draftVolumes: DraftItem[] = (volumesRes.data ?? []).map((v: any) => ({
+      id: v.id,
+      title: `${v.series?.title ?? 'Unknown Series'} Vol. ${v.volume_number}`,
+      type: 'volume',
+      ingest_status: v.ingest_status,
+      created_at: v.created_at,
+      cover_url: v.cover_url
+    }))
+
+    setDrafts([...draftSeries, ...draftVolumes].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()))
+    setLoading(false)
+  }
+
+  useEffect(() => {
+    loadDrafts()
+  }, [])
+
   const handleApprove = async (item: DraftItem) => {
     setProcessing(item.id)
     const table = item.type === 'series' ? 'series' : 'volumes'
-    await supabase.from(table).update({ ingest_status: 'published' }).eq('id', item.id)
-    setDrafts(d => d.filter(i => i.id !== item.id))
-    showToast(`✓ Published: ${item.title}`)
+    const { error } = await supabase.from(table).update({ ingest_status: 'published' }).eq('id', item.id)
+    if (!error) {
+      setDrafts(d => d.filter(i => i.id !== item.id))
+      showToast(`✓ Published: ${item.title}`)
+    } else {
+      showToast(`Error: ${error.message}`)
+    }
     setProcessing(null)
   }
 
   const handleReject = async (item: DraftItem) => {
     setProcessing(item.id)
     const table = item.type === 'series' ? 'series' : 'volumes'
-    await supabase.from(table).update({ ingest_status: 'rejected' }).eq('id', item.id)
-    setDrafts(d => d.filter(i => i.id !== item.id))
-    showToast(`Rejected: ${item.title}`)
+    const { error } = await supabase.from(table).update({ ingest_status: 'rejected' }).eq('id', item.id)
+    if (!error) {
+      setDrafts(d => d.filter(i => i.id !== item.id))
+      showToast(`Rejected: ${item.title}`)
+    } else {
+      showToast(`Error: ${error.message}`)
+    }
     setProcessing(null)
   }
 
@@ -99,7 +120,13 @@ export default function AdminIngestPage() {
       {/* ── Pending Queue ──────────────────────────── */}
       {activeTab === 'queue' && (
         <div style={{ marginTop: 'var(--space-6)' }}>
-          {drafts.length === 0 ? (
+          {loading ? (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
+              {Array.from({ length: 3 }).map((_, i) => (
+                <div key={i} className="skeleton" style={{ height: 96, borderRadius: 'var(--radius-lg)' }} />
+              ))}
+            </div>
+          ) : drafts.length === 0 ? (
             <div className="empty-state animate-fade-up" style={{ padding: 'var(--space-12)' }}>
               <div className="empty-state-icon" style={{ background: 'var(--slate-dim)' }}><Check size={28} style={{ color: 'var(--slate)' }} /></div>
               <h3>Queue is clear!</h3>
@@ -299,23 +326,10 @@ export default function AdminIngestPage() {
       {/* ── Ingest Logs ─────────────────────────────── */}
       {activeTab === 'logs' && (
         <div style={{ marginTop: 'var(--space-6)' }}>
-          <div className="card animate-fade-in" style={{ overflow: 'hidden' }}>
-            <table className="table" id="ingest-log-table">
-              <thead>
-                <tr><th>Date</th><th>Source</th><th>Series Added</th><th>Volumes Added</th><th>Errors</th></tr>
-              </thead>
-              <tbody>
-                {logs.map(log => (
-                  <tr key={log.id} id={`log-row-${log.id}`}>
-                    <td>{new Date(log.run_at).toLocaleString()}</td>
-                    <td style={{ color: 'var(--text-primary)' }}>{log.source}</td>
-                    <td><span style={{ color: 'var(--slate)', fontWeight: 600 }}>+{log.series_added}</span></td>
-                    <td><span style={{ color: 'var(--ink-green)', fontWeight: 600 }}>+{log.volumes_added}</span></td>
-                    <td>{log.errors > 0 ? <span style={{ color: '#f87171', fontWeight: 600 }}>{log.errors}</span> : <span style={{ color: 'var(--slate)' }}>0</span>}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="card empty-state" style={{ padding: 'var(--space-8)' }}>
+            <div className="empty-state-icon"><Database size={28} /></div>
+            <h3>No ingest logs available</h3>
+            <p>Ingestion script output is printed to the shell/terminal logs during ingestion execution.</p>
           </div>
         </div>
       )}

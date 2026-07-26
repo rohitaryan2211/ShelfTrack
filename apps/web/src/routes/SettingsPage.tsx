@@ -2,16 +2,9 @@ import { useEffect, useState } from 'react'
 import { Settings, User, Globe, Shield, Trash2, Save } from 'lucide-react'
 import { supabase } from '../lib/supabaseClient'
 import { useAuth } from '../hooks/useAuth'
+import { REGION_ENTRIES } from '../lib/regionLabels'
 
-const REGIONS = [
-  { code: 'US', name: '🇺🇸 United States' },
-  { code: 'GB', name: '🇬🇧 United Kingdom' },
-  { code: 'IN', name: '🇮🇳 India' },
-  { code: 'AU', name: '🇦🇺 Australia' },
-  { code: 'JP', name: '🇯🇵 Japan' },
-  { code: 'DE', name: '🇩🇪 Germany' },
-  { code: 'FR', name: '🇫🇷 France' },
-]
+const REGIONS = REGION_ENTRIES
 
 export default function SettingsPage() {
   const { user, signOut } = useAuth()

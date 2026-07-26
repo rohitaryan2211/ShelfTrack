@@ -4,17 +4,6 @@ import { Globe, BookOpen, ExternalLink } from 'lucide-react'
 import { supabase } from '../lib/supabaseClient'
 import type { Publisher } from '../lib/types'
 
-const MOCK_PUBLISHERS: (Publisher & { series_count: number })[] = [
-  { id: '1', name: 'Shueisha', country: 'JP', website: 'https://www.shueisha.co.jp', is_original_publisher: true, series_count: 320 },
-  { id: '2', name: 'Kodansha', country: 'JP', website: 'https://www.kodansha.co.jp', is_original_publisher: true, series_count: 280 },
-  { id: '3', name: 'Shogakukan', country: 'JP', website: 'https://www.shogakukan.co.jp', is_original_publisher: true, series_count: 210 },
-  { id: '4', name: 'Square Enix', country: 'JP', website: 'https://www.square-enix.co.jp', is_original_publisher: true, series_count: 95 },
-  { id: '5', name: 'Viz Media', country: 'US', website: 'https://www.viz.com', is_original_publisher: false, series_count: 180 },
-  { id: '6', name: 'Yen Press', country: 'US', website: 'https://yenpress.com', is_original_publisher: false, series_count: 150 },
-  { id: '7', name: 'Seven Seas', country: 'US', website: 'https://sevenseasentertainment.com', is_original_publisher: false, series_count: 130 },
-  { id: '8', name: 'Kodansha USA', country: 'US', website: 'https://kodanshausa.com', is_original_publisher: false, series_count: 90 },
-]
-
 const FLAG: Record<string, string> = { JP: '🇯🇵', US: '🇺🇸', GB: '🇬🇧', IN: '🇮🇳', DE: '🇩🇪', FR: '🇫🇷', AU: '🇦🇺' }
 
 type Filter = 'all' | 'original' | 'licensor'
@@ -27,7 +16,7 @@ export default function PublishersPage() {
   useEffect(() => {
     async function load() {
       const { data } = await supabase.from('publishers').select('*').order('name')
-      setPublishers(data?.length ? (data as (Publisher & { series_count: number })[]) : MOCK_PUBLISHERS)
+      setPublishers((data as (Publisher & { series_count: number })[]) ?? [])
       setLoading(false)
     }
     load()
@@ -69,7 +58,7 @@ export default function PublishersPage() {
                 <div className="skeleton" style={{ height: 14, width: '40%' }} />
               </div>
             ))
-          : filtered.map((p, i) => (
+          : filtered.length > 0 ? filtered.map((p, i) => (
               <Link
                 key={p.id}
                 to={`/publishers/${p.id}`}
@@ -114,6 +103,12 @@ export default function PublishersPage() {
                 </div>
               </Link>
             ))
+          : (
+            <div className="empty-state" style={{ gridColumn: '1 / -1', padding: 'var(--space-10)' }}>
+              <div className="empty-state-icon"><BookOpen size={28} /></div>
+              <p>No publishers in the catalog yet.</p>
+            </div>
+          )
         }
       </div>
     </>

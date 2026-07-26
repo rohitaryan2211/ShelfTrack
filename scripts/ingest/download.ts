@@ -28,7 +28,7 @@ if (args.length === 0) {
 // Actually, seed.ts had a hardcoded list. Let's just use a hardcoded list if no args, or accept pairs.
 // To keep it simple, we will just use a dummy publisher if we can't find it, or look it up.
 
-const VETTED_DIR = resolve(__dirname, '../../.data/vetted')
+const VETTED_DIR = resolve(__dirname, '../../data/vetted')
 
 async function downloadImage(url: string, destPath: string) {
   try {

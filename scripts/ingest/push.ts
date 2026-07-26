@@ -10,7 +10,7 @@ dotenv.config({ path: resolve(__dirname, '../../.env') })
 import { upsertSeries, upsertVolumes } from './upsert.ts'
 
 const DRY_RUN = process.argv.includes('--dry-run')
-const VETTED_DIR = resolve(__dirname, '../../.data/vetted')
+const VETTED_DIR = resolve(__dirname, '../../data/vetted')
 
 async function main() {
   console.log(`\n🚀 ShelfTrack Push Script (Vet Flow)`)
@@ -68,7 +68,7 @@ async function main() {
 
       // Optionally, we could delete the directory after successful push, 
       // but keeping it until the user manually deletes is safer.
-      console.log(`   💡 Tip: Delete the .data/vetted/${dirName} folder if you no longer need it.`)
+      console.log(`   💡 Tip: Delete the data/vetted/${dirName} folder if you no longer need it.`)
 
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : String(err)

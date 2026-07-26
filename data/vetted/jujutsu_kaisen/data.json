@@ -1,0 +1,3447 @@
+{
+  "series": {
+    "title": "Jujutsu Kaisen",
+    "original_title": "呪術廻戦",
+    "type": "manga",
+    "genre": "shonen",
+    "description": "In a world where cursed spirits feed on unsuspecting humans, fragments of the legendary and feared demon Ryomen Sukuna were lost and scattered about. Should any demon consume Sukuna's body parts, the power they gain could destroy the world as we know it. Fortunately, there exists a mysterious school of Jujutsu Sorcerers who exist to protect the precarious existence of the living from the supernatural!",
+    "original_publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+    "status": "completed",
+    "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/e/ea/ENG_Volume_1.png/revision/latest?cb=20191118060852",
+    "ingest_status": "published"
+  },
+  "volumes": [
+    {
+      "volume_number": 0,
+      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "region_code": "JP",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/9/9d/Volume_0.png/revision/latest?cb=20181125152842",
+      "isbn13": "9784088816722",
+      "release_date": "2018-12-04",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 1,
+          "title": "The Cursed Child",
+          "original_release_date": "2018-12-04"
+        },
+        {
+          "chapter_number": 2,
+          "title": "Blacker and Blacker",
+          "original_release_date": "2018-12-04"
+        },
+        {
+          "chapter_number": 3,
+          "title": "Punishment for the Weak",
+          "original_release_date": "2018-12-04"
+        },
+        {
+          "chapter_number": 4,
+          "title": "Bright Darkness",
+          "original_release_date": "2018-12-04"
+        }
+      ]
+    },
+    {
+      "volume_number": 0,
+      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "region_code": "US",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/0/0b/ENG_Volume_0.png/revision/latest?cb=20200919131001",
+      "isbn13": "9781974720149",
+      "release_date": "2021-01-05",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 1,
+          "title": "The Cursed Child",
+          "original_release_date": "2021-01-05"
+        },
+        {
+          "chapter_number": 2,
+          "title": "Blacker and Blacker",
+          "original_release_date": "2021-01-05"
+        },
+        {
+          "chapter_number": 3,
+          "title": "Punishment for the Weak",
+          "original_release_date": "2021-01-05"
+        },
+        {
+          "chapter_number": 4,
+          "title": "Bright Darkness",
+          "original_release_date": "2021-01-05"
+        }
+      ]
+    },
+    {
+      "volume_number": 1,
+      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "region_code": "JP",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/0/0e/Volume_1.png/revision/latest?cb=20180719214641",
+      "isbn13": "9784088815169",
+      "release_date": "2018-07-04",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 1,
+          "title": "Ryomen Sukuna",
+          "original_release_date": "2018-07-04"
+        },
+        {
+          "chapter_number": 2,
+          "title": "Secret Execution",
+          "original_release_date": "2018-07-04"
+        },
+        {
+          "chapter_number": 3,
+          "title": "For Myself",
+          "original_release_date": "2018-07-04"
+        },
+        {
+          "chapter_number": 4,
+          "title": "Girl of Steel",
+          "original_release_date": "2018-07-04"
+        },
+        {
+          "chapter_number": 5,
+          "title": "Start",
+          "original_release_date": "2018-07-04"
+        },
+        {
+          "chapter_number": 6,
+          "title": "Fearsome Womb",
+          "original_release_date": "2018-07-04"
+        },
+        {
+          "chapter_number": 7,
+          "title": "Fearsome Womb, Part 2",
+          "original_release_date": "2018-07-04"
+        }
+      ]
+    },
+    {
+      "volume_number": 1,
+      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "region_code": "US",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/e/ea/ENG_Volume_1.png/revision/latest?cb=20191118060852",
+      "isbn13": "9781974710027",
+      "release_date": "2019-12-03",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 1,
+          "title": "Ryomen Sukuna",
+          "original_release_date": "2019-12-03"
+        },
+        {
+          "chapter_number": 2,
+          "title": "Secret Execution",
+          "original_release_date": "2019-12-03"
+        },
+        {
+          "chapter_number": 3,
+          "title": "For Myself",
+          "original_release_date": "2019-12-03"
+        },
+        {
+          "chapter_number": 4,
+          "title": "Girl of Steel",
+          "original_release_date": "2019-12-03"
+        },
+        {
+          "chapter_number": 5,
+          "title": "Start",
+          "original_release_date": "2019-12-03"
+        },
+        {
+          "chapter_number": 6,
+          "title": "Fearsome Womb",
+          "original_release_date": "2019-12-03"
+        },
+        {
+          "chapter_number": 7,
+          "title": "Fearsome Womb, Part 2",
+          "original_release_date": "2019-12-03"
+        }
+      ]
+    },
+    {
+      "volume_number": 2,
+      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "region_code": "JP",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/2/2f/Volume_2.png/revision/latest?cb=20181028145329",
+      "isbn13": "9784088816081",
+      "release_date": "2018-09-04",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 8,
+          "title": "Fearsome Womb, Part 3",
+          "original_release_date": "2018-09-04"
+        },
+        {
+          "chapter_number": 9,
+          "title": "Fearsome Womb, Part 4",
+          "original_release_date": "2018-09-04"
+        },
+        {
+          "chapter_number": 10,
+          "title": "After the Rain",
+          "original_release_date": "2018-09-04"
+        },
+        {
+          "chapter_number": 11,
+          "title": "A Dream",
+          "original_release_date": "2018-09-04"
+        },
+        {
+          "chapter_number": 12,
+          "title": "Pushing Forward",
+          "original_release_date": "2018-09-04"
+        },
+        {
+          "chapter_number": 13,
+          "title": "Watching Movies",
+          "original_release_date": "2018-09-04"
+        },
+        {
+          "chapter_number": 14,
+          "title": "Assault",
+          "original_release_date": "2018-09-04"
+        },
+        {
+          "chapter_number": 15,
+          "title": "Domain",
+          "original_release_date": "2018-09-04"
+        },
+        {
+          "chapter_number": 16,
+          "title": "Affection",
+          "original_release_date": "2018-09-04"
+        }
+      ]
+    },
+    {
+      "volume_number": 2,
+      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "region_code": "US",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/d/d2/ENG_Volume_2.png/revision/latest?cb=20200204015318",
+      "isbn13": "9781974710034",
+      "release_date": "2020-02-04",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 8,
+          "title": "Fearsome Womb, Part 3",
+          "original_release_date": "2020-02-04"
+        },
+        {
+          "chapter_number": 9,
+          "title": "Fearsome Womb, Part 4",
+          "original_release_date": "2020-02-04"
+        },
+        {
+          "chapter_number": 10,
+          "title": "After the Rain",
+          "original_release_date": "2020-02-04"
+        },
+        {
+          "chapter_number": 11,
+          "title": "A Dream",
+          "original_release_date": "2020-02-04"
+        },
+        {
+          "chapter_number": 12,
+          "title": "Pushing Forward",
+          "original_release_date": "2020-02-04"
+        },
+        {
+          "chapter_number": 13,
+          "title": "Watching Movies",
+          "original_release_date": "2020-02-04"
+        },
+        {
+          "chapter_number": 14,
+          "title": "Assault",
+          "original_release_date": "2020-02-04"
+        },
+        {
+          "chapter_number": 15,
+          "title": "Domain",
+          "original_release_date": "2020-02-04"
+        },
+        {
+          "chapter_number": 16,
+          "title": "Affection",
+          "original_release_date": "2020-02-04"
+        }
+      ]
+    },
+    {
+      "volume_number": 3,
+      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "region_code": "JP",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/7/75/Volume_3.png/revision/latest?cb=20181125152835",
+      "isbn13": "9784088816661",
+      "release_date": "2018-12-04",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 17,
+          "title": "Boring",
+          "original_release_date": "2018-12-04"
+        },
+        {
+          "chapter_number": 18,
+          "title": "Bottom",
+          "original_release_date": "2018-12-04"
+        },
+        {
+          "chapter_number": 19,
+          "title": "Young Fish and Reverse Punishment",
+          "original_release_date": "2018-12-04"
+        },
+        {
+          "chapter_number": 20,
+          "title": "Young Fish and Reverse Punishment, Part 2",
+          "original_release_date": "2018-12-04"
+        },
+        {
+          "chapter_number": 21,
+          "title": "Young Fish and Reverse Punishment, Part 3",
+          "original_release_date": "2018-12-04"
+        },
+        {
+          "chapter_number": 22,
+          "title": "Young Fish and Reverse Punishment, Part 4",
+          "original_release_date": "2018-12-04"
+        },
+        {
+          "chapter_number": 23,
+          "title": "Young Fish and Reverse Punishment, Part 5",
+          "original_release_date": "2018-12-04"
+        },
+        {
+          "chapter_number": 24,
+          "title": "Young Fish and Reverse Punishment, Part 6",
+          "original_release_date": "2018-12-04"
+        },
+        {
+          "chapter_number": 25,
+          "title": "Narrow-Minded",
+          "original_release_date": "2018-12-04"
+        }
+      ]
+    },
+    {
+      "volume_number": 3,
+      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "region_code": "US",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/b/ba/ENG_Volume_3.png/revision/latest?cb=20191118061130",
+      "isbn13": "9781974710041",
+      "release_date": "2020-04-07",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 17,
+          "title": "Boring",
+          "original_release_date": "2020-04-07"
+        },
+        {
+          "chapter_number": 18,
+          "title": "Bottom",
+          "original_release_date": "2020-04-07"
+        },
+        {
+          "chapter_number": 19,
+          "title": "Young Fish and Reverse Punishment",
+          "original_release_date": "2020-04-07"
+        },
+        {
+          "chapter_number": 20,
+          "title": "Young Fish and Reverse Punishment, Part 2",
+          "original_release_date": "2020-04-07"
+        },
+        {
+          "chapter_number": 21,
+          "title": "Young Fish and Reverse Punishment, Part 3",
+          "original_release_date": "2020-04-07"
+        },
+        {
+          "chapter_number": 22,
+          "title": "Young Fish and Reverse Punishment, Part 4",
+          "original_release_date": "2020-04-07"
+        },
+        {
+          "chapter_number": 23,
+          "title": "Young Fish and Reverse Punishment, Part 5",
+          "original_release_date": "2020-04-07"
+        },
+        {
+          "chapter_number": 24,
+          "title": "Young Fish and Reverse Punishment, Part 6",
+          "original_release_date": "2020-04-07"
+        },
+        {
+          "chapter_number": 25,
+          "title": "Narrow-Minded",
+          "original_release_date": "2020-04-07"
+        }
+      ]
+    },
+    {
+      "volume_number": 4,
+      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "region_code": "JP",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/3/31/Volume_4.png/revision/latest?cb=20190226191850",
+      "isbn13": "9784088817569",
+      "release_date": "2019-03-04",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 26,
+          "title": "To You Someday",
+          "original_release_date": "2019-03-04"
+        },
+        {
+          "chapter_number": 27,
+          "title": "What If",
+          "original_release_date": "2019-03-04"
+        },
+        {
+          "chapter_number": 28,
+          "title": "I'm Gonna Kill You!",
+          "original_release_date": "2019-03-04"
+        },
+        {
+          "chapter_number": 29,
+          "title": "Growth",
+          "original_release_date": "2019-03-04"
+        },
+        {
+          "chapter_number": 30,
+          "title": "Selfishness",
+          "original_release_date": "2019-03-04"
+        },
+        {
+          "chapter_number": 31,
+          "title": "Tomorrow",
+          "original_release_date": "2019-03-04"
+        },
+        {
+          "chapter_number": 32,
+          "title": "Introspection",
+          "original_release_date": "2019-03-04"
+        },
+        {
+          "chapter_number": 33,
+          "title": "Kyoto Sister-School Goodwill Event – Team Battle, Part 0",
+          "original_release_date": "2019-03-04"
+        },
+        {
+          "chapter_number": 34,
+          "title": "Kyoto Sister-School Goodwill Event – Team Battle, Part 1",
+          "original_release_date": "2019-03-04"
+        }
+      ]
+    },
+    {
+      "volume_number": 4,
+      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "region_code": "US",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/2/24/ENG_Volume_4.png/revision/latest?cb=20200325210541",
+      "isbn13": "9781974714803",
+      "release_date": "2020-06-02",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 26,
+          "title": "To You Someday",
+          "original_release_date": "2020-06-02"
+        },
+        {
+          "chapter_number": 27,
+          "title": "What If",
+          "original_release_date": "2020-06-02"
+        },
+        {
+          "chapter_number": 28,
+          "title": "I'm Gonna Kill You!",
+          "original_release_date": "2020-06-02"
+        },
+        {
+          "chapter_number": 29,
+          "title": "Growth",
+          "original_release_date": "2020-06-02"
+        },
+        {
+          "chapter_number": 30,
+          "title": "Selfishness",
+          "original_release_date": "2020-06-02"
+        },
+        {
+          "chapter_number": 31,
+          "title": "Tomorrow",
+          "original_release_date": "2020-06-02"
+        },
+        {
+          "chapter_number": 32,
+          "title": "Introspection",
+          "original_release_date": "2020-06-02"
+        },
+        {
+          "chapter_number": 33,
+          "title": "Kyoto Sister-School Goodwill Event – Team Battle, Part 0",
+          "original_release_date": "2020-06-02"
+        },
+        {
+          "chapter_number": 34,
+          "title": "Kyoto Sister-School Goodwill Event – Team Battle, Part 1",
+          "original_release_date": "2020-06-02"
+        }
+      ]
+    },
+    {
+      "volume_number": 5,
+      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "region_code": "JP",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/8/8a/Volume_5.png/revision/latest?cb=20190424172532",
+      "isbn13": "9784088818283",
+      "release_date": "2019-05-02",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 35,
+          "title": "Kyoto Sister-School Goodwill Event – Team Battle, Part 2",
+          "original_release_date": "2019-05-02"
+        },
+        {
+          "chapter_number": 36,
+          "title": "Kyoto Sister-School Goodwill Event – Team Battle, Part 3",
+          "original_release_date": "2019-05-02"
+        },
+        {
+          "chapter_number": 37,
+          "title": "Kyoto Sister-School Goodwill Event – Team Battle, Part 4",
+          "original_release_date": "2019-05-02"
+        },
+        {
+          "chapter_number": 38,
+          "title": "Kyoto Sister-School Goodwill Event – Team Battle, Part 5",
+          "original_release_date": "2019-05-02"
+        },
+        {
+          "chapter_number": 39,
+          "title": "Kyoto Sister-School Goodwill Event – Team Battle, Part 6",
+          "original_release_date": "2019-05-02"
+        },
+        {
+          "chapter_number": 40,
+          "title": "Kyoto Sister-School Goodwill Event – Team Battle, Part 7",
+          "original_release_date": "2019-05-02"
+        },
+        {
+          "chapter_number": 41,
+          "title": "Kyoto Sister-School Goodwill Event – Team Battle, Part 8",
+          "original_release_date": "2019-05-02"
+        },
+        {
+          "chapter_number": 42,
+          "title": "Kyoto Sister-School Goodwill Event – Team Battle, Part 9",
+          "original_release_date": "2019-05-02"
+        },
+        {
+          "chapter_number": 43,
+          "title": "Kyoto Sister-School Goodwill Event – Team Battle, Part 10",
+          "original_release_date": "2019-05-02"
+        }
+      ]
+    },
+    {
+      "volume_number": 5,
+      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "region_code": "US",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/8/89/ENG_Volume_5.png/revision/latest?cb=20200417162119",
+      "isbn13": "9781974714810",
+      "release_date": "2020-08-04",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 35,
+          "title": "Kyoto Sister-School Goodwill Event – Team Battle, Part 2",
+          "original_release_date": "2020-08-04"
+        },
+        {
+          "chapter_number": 36,
+          "title": "Kyoto Sister-School Goodwill Event – Team Battle, Part 3",
+          "original_release_date": "2020-08-04"
+        },
+        {
+          "chapter_number": 37,
+          "title": "Kyoto Sister-School Goodwill Event – Team Battle, Part 4",
+          "original_release_date": "2020-08-04"
+        },
+        {
+          "chapter_number": 38,
+          "title": "Kyoto Sister-School Goodwill Event – Team Battle, Part 5",
+          "original_release_date": "2020-08-04"
+        },
+        {
+          "chapter_number": 39,
+          "title": "Kyoto Sister-School Goodwill Event – Team Battle, Part 6",
+          "original_release_date": "2020-08-04"
+        },
+        {
+          "chapter_number": 40,
+          "title": "Kyoto Sister-School Goodwill Event – Team Battle, Part 7",
+          "original_release_date": "2020-08-04"
+        },
+        {
+          "chapter_number": 41,
+          "title": "Kyoto Sister-School Goodwill Event – Team Battle, Part 8",
+          "original_release_date": "2020-08-04"
+        },
+        {
+          "chapter_number": 42,
+          "title": "Kyoto Sister-School Goodwill Event – Team Battle, Part 9",
+          "original_release_date": "2020-08-04"
+        },
+        {
+          "chapter_number": 43,
+          "title": "Kyoto Sister-School Goodwill Event – Team Battle, Part 10",
+          "original_release_date": "2020-08-04"
+        }
+      ]
+    },
+    {
+      "volume_number": 6,
+      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "region_code": "JP",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/f/fb/Volume_6.png/revision/latest?cb=20190628170622",
+      "isbn13": "9784088818764",
+      "release_date": "2019-07-04",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 44,
+          "title": "Kyoto Sister-School Goodwill Event – Team Battle, Part 11",
+          "original_release_date": "2019-07-04"
+        },
+        {
+          "chapter_number": 45,
+          "title": "Sage",
+          "original_release_date": "2019-07-04"
+        },
+        {
+          "chapter_number": 46,
+          "title": "Time",
+          "original_release_date": "2019-07-04"
+        },
+        {
+          "chapter_number": 47,
+          "title": "Cursed Tools",
+          "original_release_date": "2019-07-04"
+        },
+        {
+          "chapter_number": 48,
+          "title": "Black Flash",
+          "original_release_date": "2019-07-04"
+        },
+        {
+          "chapter_number": 49,
+          "title": "Constrained",
+          "original_release_date": "2019-07-04"
+        },
+        {
+          "chapter_number": 50,
+          "title": "Feeling",
+          "original_release_date": "2019-07-04"
+        },
+        {
+          "chapter_number": 51,
+          "title": "A Flower Offering",
+          "original_release_date": "2019-07-04"
+        },
+        {
+          "chapter_number": 52,
+          "title": "Nonstandard",
+          "original_release_date": "2019-07-04"
+        }
+      ]
+    },
+    {
+      "volume_number": 6,
+      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "region_code": "US",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/2/25/ENG_Volume_6.png/revision/latest?cb=20200525012102",
+      "isbn13": "9781974714827",
+      "release_date": "2020-10-06",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 44,
+          "title": "Kyoto Sister-School Goodwill Event – Team Battle, Part 11",
+          "original_release_date": "2020-10-06"
+        },
+        {
+          "chapter_number": 45,
+          "title": "Sage",
+          "original_release_date": "2020-10-06"
+        },
+        {
+          "chapter_number": 46,
+          "title": "Time",
+          "original_release_date": "2020-10-06"
+        },
+        {
+          "chapter_number": 47,
+          "title": "Cursed Tools",
+          "original_release_date": "2020-10-06"
+        },
+        {
+          "chapter_number": 48,
+          "title": "Black Flash",
+          "original_release_date": "2020-10-06"
+        },
+        {
+          "chapter_number": 49,
+          "title": "Constrained",
+          "original_release_date": "2020-10-06"
+        },
+        {
+          "chapter_number": 50,
+          "title": "Feeling",
+          "original_release_date": "2020-10-06"
+        },
+        {
+          "chapter_number": 51,
+          "title": "A Flower Offering",
+          "original_release_date": "2020-10-06"
+        },
+        {
+          "chapter_number": 52,
+          "title": "Nonstandard",
+          "original_release_date": "2020-10-06"
+        }
+      ]
+    },
+    {
+      "volume_number": 7,
+      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "region_code": "JP",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/2/24/Volume_7.png/revision/latest?cb=20190923171540",
+      "isbn13": "9784088820767",
+      "release_date": "2019-10-04",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 53,
+          "title": "Completion",
+          "original_release_date": "2019-10-04"
+        },
+        {
+          "chapter_number": 54,
+          "title": "Jujutsu Koshien",
+          "original_release_date": "2019-10-04"
+        },
+        {
+          "chapter_number": 55,
+          "title": "The Origin of Obedience",
+          "original_release_date": "2019-10-04"
+        },
+        {
+          "chapter_number": 56,
+          "title": "The Origin of Obedience, Part 2",
+          "original_release_date": "2019-10-04"
+        },
+        {
+          "chapter_number": 57,
+          "title": "The Origin of Obedience, Part 3",
+          "original_release_date": "2019-10-04"
+        },
+        {
+          "chapter_number": 58,
+          "title": "The Origin of Obedience, Part 4",
+          "original_release_date": "2019-10-04"
+        },
+        {
+          "chapter_number": 59,
+          "title": "The Origin of Obedience, Part 5",
+          "original_release_date": "2019-10-04"
+        },
+        {
+          "chapter_number": 60,
+          "title": "The Origin of Obedience, Part 6",
+          "original_release_date": "2019-10-04"
+        },
+        {
+          "chapter_number": 61,
+          "title": "The Origin of Obedience, Part 7",
+          "original_release_date": "2019-10-04"
+        }
+      ]
+    },
+    {
+      "volume_number": 7,
+      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "region_code": "US",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/3/3a/ENG_Volume_7.png/revision/latest?cb=20200907225526",
+      "isbn13": "9781974717118",
+      "release_date": "2020-12-01",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 53,
+          "title": "Completion",
+          "original_release_date": "2020-12-01"
+        },
+        {
+          "chapter_number": 54,
+          "title": "Jujutsu Koshien",
+          "original_release_date": "2020-12-01"
+        },
+        {
+          "chapter_number": 55,
+          "title": "The Origin of Obedience",
+          "original_release_date": "2020-12-01"
+        },
+        {
+          "chapter_number": 56,
+          "title": "The Origin of Obedience, Part 2",
+          "original_release_date": "2020-12-01"
+        },
+        {
+          "chapter_number": 57,
+          "title": "The Origin of Obedience, Part 3",
+          "original_release_date": "2020-12-01"
+        },
+        {
+          "chapter_number": 58,
+          "title": "The Origin of Obedience, Part 4",
+          "original_release_date": "2020-12-01"
+        },
+        {
+          "chapter_number": 59,
+          "title": "The Origin of Obedience, Part 5",
+          "original_release_date": "2020-12-01"
+        },
+        {
+          "chapter_number": 60,
+          "title": "The Origin of Obedience, Part 6",
+          "original_release_date": "2020-12-01"
+        },
+        {
+          "chapter_number": 61,
+          "title": "The Origin of Obedience, Part 7",
+          "original_release_date": "2020-12-01"
+        }
+      ]
+    },
+    {
+      "volume_number": 8,
+      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "region_code": "JP",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/8/82/Volume_8.png/revision/latest?cb=20191224182249",
+      "isbn13": "9784088821689",
+      "release_date": "2020-01-04",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 62,
+          "title": "The Origin of Obedience, Part 8",
+          "original_release_date": "2020-01-04"
+        },
+        {
+          "chapter_number": 63,
+          "title": "Accomplices",
+          "original_release_date": "2020-01-04"
+        },
+        {
+          "chapter_number": 64,
+          "title": "It's Like That",
+          "original_release_date": "2020-01-04"
+        },
+        {
+          "chapter_number": 65,
+          "title": "Hidden Inventory",
+          "original_release_date": "2020-01-04"
+        },
+        {
+          "chapter_number": 66,
+          "title": "Hidden Inventory, Part 2",
+          "original_release_date": "2020-01-04"
+        },
+        {
+          "chapter_number": 67,
+          "title": "Hidden Inventory, Part 3",
+          "original_release_date": "2020-01-04"
+        },
+        {
+          "chapter_number": 68,
+          "title": "Hidden Inventory, Part 4",
+          "original_release_date": "2020-01-04"
+        },
+        {
+          "chapter_number": 69,
+          "title": "Hidden Inventory, Part 5",
+          "original_release_date": "2020-01-04"
+        },
+        {
+          "chapter_number": 70,
+          "title": "Hidden Inventory, Part 6",
+          "original_release_date": "2020-01-04"
+        }
+      ]
+    },
+    {
+      "volume_number": 8,
+      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "region_code": "US",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/1/12/ENG_Volume_8.png/revision/latest?cb=20200923121203",
+      "isbn13": "9781974718719",
+      "release_date": "2021-02-02",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 62,
+          "title": "The Origin of Obedience, Part 8",
+          "original_release_date": "2021-02-02"
+        },
+        {
+          "chapter_number": 63,
+          "title": "Accomplices",
+          "original_release_date": "2021-02-02"
+        },
+        {
+          "chapter_number": 64,
+          "title": "It's Like That",
+          "original_release_date": "2021-02-02"
+        },
+        {
+          "chapter_number": 65,
+          "title": "Hidden Inventory",
+          "original_release_date": "2021-02-02"
+        },
+        {
+          "chapter_number": 66,
+          "title": "Hidden Inventory, Part 2",
+          "original_release_date": "2021-02-02"
+        },
+        {
+          "chapter_number": 67,
+          "title": "Hidden Inventory, Part 3",
+          "original_release_date": "2021-02-02"
+        },
+        {
+          "chapter_number": 68,
+          "title": "Hidden Inventory, Part 4",
+          "original_release_date": "2021-02-02"
+        },
+        {
+          "chapter_number": 69,
+          "title": "Hidden Inventory, Part 5",
+          "original_release_date": "2021-02-02"
+        },
+        {
+          "chapter_number": 70,
+          "title": "Hidden Inventory, Part 6",
+          "original_release_date": "2021-02-02"
+        }
+      ]
+    },
+    {
+      "volume_number": 9,
+      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "region_code": "JP",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/7/79/Volume_9.png/revision/latest?cb=20200105171845",
+      "isbn13": "9784088822181",
+      "release_date": "2020-03-04",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 71,
+          "title": "Hidden Inventory, Part 7",
+          "original_release_date": "2020-03-04"
+        },
+        {
+          "chapter_number": 72,
+          "title": "Hidden Inventory, Part 8",
+          "original_release_date": "2020-03-04"
+        },
+        {
+          "chapter_number": 73,
+          "title": "Hidden Inventory, Part 9",
+          "original_release_date": "2020-03-04"
+        },
+        {
+          "chapter_number": 74,
+          "title": "Hidden Inventory, Part 10",
+          "original_release_date": "2020-03-04"
+        },
+        {
+          "chapter_number": 75,
+          "title": "Hidden Inventory, Part 11",
+          "original_release_date": "2020-03-04"
+        },
+        {
+          "chapter_number": 76,
+          "title": "Premature Death",
+          "original_release_date": "2020-03-04"
+        },
+        {
+          "chapter_number": 77,
+          "title": "Premature Death, Part 2",
+          "original_release_date": "2020-03-04"
+        },
+        {
+          "chapter_number": 78,
+          "title": "Premature Death, Part 3",
+          "original_release_date": "2020-03-04"
+        },
+        {
+          "chapter_number": 79,
+          "title": "A Taste of Things to Come",
+          "original_release_date": "2020-03-04"
+        }
+      ]
+    },
+    {
+      "volume_number": 9,
+      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "region_code": "US",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/8/87/ENG_Volume_9.png/revision/latest?cb=20201118193736",
+      "isbn13": "9781974718726",
+      "release_date": "2021-04-06",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 71,
+          "title": "Hidden Inventory, Part 7",
+          "original_release_date": "2021-04-06"
+        },
+        {
+          "chapter_number": 72,
+          "title": "Hidden Inventory, Part 8",
+          "original_release_date": "2021-04-06"
+        },
+        {
+          "chapter_number": 73,
+          "title": "Hidden Inventory, Part 9",
+          "original_release_date": "2021-04-06"
+        },
+        {
+          "chapter_number": 74,
+          "title": "Hidden Inventory, Part 10",
+          "original_release_date": "2021-04-06"
+        },
+        {
+          "chapter_number": 75,
+          "title": "Hidden Inventory, Part 11",
+          "original_release_date": "2021-04-06"
+        },
+        {
+          "chapter_number": 76,
+          "title": "Premature Death",
+          "original_release_date": "2021-04-06"
+        },
+        {
+          "chapter_number": 77,
+          "title": "Premature Death, Part 2",
+          "original_release_date": "2021-04-06"
+        },
+        {
+          "chapter_number": 78,
+          "title": "Premature Death, Part 3",
+          "original_release_date": "2021-04-06"
+        },
+        {
+          "chapter_number": 79,
+          "title": "A Taste of Things to Come",
+          "original_release_date": "2021-04-06"
+        }
+      ]
+    },
+    {
+      "volume_number": 10,
+      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "region_code": "JP",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/6/6b/Volume_10.png/revision/latest?cb=20200303141915",
+      "isbn13": "9784088822747",
+      "release_date": "2020-06-04",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 80,
+          "title": "Evening Festival",
+          "original_release_date": "2020-06-04"
+        },
+        {
+          "chapter_number": 81,
+          "title": "Evening Festival, Part 2",
+          "original_release_date": "2020-06-04"
+        },
+        {
+          "chapter_number": 82,
+          "title": "Evening Festival, Part 3",
+          "original_release_date": "2020-06-04"
+        },
+        {
+          "chapter_number": 83,
+          "title": "The Shibuya Incident, Part 1",
+          "original_release_date": "2020-06-04"
+        },
+        {
+          "chapter_number": 84,
+          "title": "The Shibuya Incident, Part 2",
+          "original_release_date": "2020-06-04"
+        },
+        {
+          "chapter_number": 85,
+          "title": "The Shibuya Incident, Part 3",
+          "original_release_date": "2020-06-04"
+        },
+        {
+          "chapter_number": 86,
+          "title": "The Shibuya Incident, Part 4",
+          "original_release_date": "2020-06-04"
+        },
+        {
+          "chapter_number": 87,
+          "title": "The Shibuya Incident, Part 5",
+          "original_release_date": "2020-06-04"
+        },
+        {
+          "chapter_number": 88,
+          "title": "The Shibuya Incident, Part 6",
+          "original_release_date": "2020-06-04"
+        }
+      ]
+    },
+    {
+      "volume_number": 10,
+      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "region_code": "US",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/f/f2/ENG_Volume_10.png/revision/latest?cb=20210201081932",
+      "isbn13": "9781974720750",
+      "release_date": "2021-06-01",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 80,
+          "title": "Evening Festival",
+          "original_release_date": "2021-06-01"
+        },
+        {
+          "chapter_number": 81,
+          "title": "Evening Festival, Part 2",
+          "original_release_date": "2021-06-01"
+        },
+        {
+          "chapter_number": 82,
+          "title": "Evening Festival, Part 3",
+          "original_release_date": "2021-06-01"
+        },
+        {
+          "chapter_number": 83,
+          "title": "The Shibuya Incident, Part 1",
+          "original_release_date": "2021-06-01"
+        },
+        {
+          "chapter_number": 84,
+          "title": "The Shibuya Incident, Part 2",
+          "original_release_date": "2021-06-01"
+        },
+        {
+          "chapter_number": 85,
+          "title": "The Shibuya Incident, Part 3",
+          "original_release_date": "2021-06-01"
+        },
+        {
+          "chapter_number": 86,
+          "title": "The Shibuya Incident, Part 4",
+          "original_release_date": "2021-06-01"
+        },
+        {
+          "chapter_number": 87,
+          "title": "The Shibuya Incident, Part 5",
+          "original_release_date": "2021-06-01"
+        },
+        {
+          "chapter_number": 88,
+          "title": "The Shibuya Incident, Part 6",
+          "original_release_date": "2021-06-01"
+        }
+      ]
+    },
+    {
+      "volume_number": 11,
+      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "region_code": "JP",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/1/1b/Volume_11.png/revision/latest?cb=20200529202155",
+      "isbn13": "9784088822969",
+      "release_date": "2020-08-04",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 89,
+          "title": "The Shibuya Incident, Part 7",
+          "original_release_date": "2020-08-04"
+        },
+        {
+          "chapter_number": 90,
+          "title": "The Shibuya Incident, Part 8",
+          "original_release_date": "2020-08-04"
+        },
+        {
+          "chapter_number": 91,
+          "title": "The Shibuya Incident, Part 9",
+          "original_release_date": "2020-08-04"
+        },
+        {
+          "chapter_number": 92,
+          "title": "The Shibuya Incident, Part 10",
+          "original_release_date": "2020-08-04"
+        },
+        {
+          "chapter_number": 93,
+          "title": "The Shibuya Incident, Part 11",
+          "original_release_date": "2020-08-04"
+        },
+        {
+          "chapter_number": 94,
+          "title": "The Shibuya Incident, Part 12",
+          "original_release_date": "2020-08-04"
+        },
+        {
+          "chapter_number": 95,
+          "title": "The Shibuya Incident, Part 13",
+          "original_release_date": "2020-08-04"
+        },
+        {
+          "chapter_number": 96,
+          "title": "The Shibuya Incident, Part 14",
+          "original_release_date": "2020-08-04"
+        },
+        {
+          "chapter_number": 97,
+          "title": "The Shibuya Incident, Part 15",
+          "original_release_date": "2020-08-04"
+        }
+      ]
+    },
+    {
+      "volume_number": 11,
+      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "region_code": "US",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/a/a4/ENG_Volume_11.png/revision/latest?cb=20210329001021",
+      "isbn13": "9781974722846",
+      "release_date": "2021-08-03",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 89,
+          "title": "The Shibuya Incident, Part 7",
+          "original_release_date": "2021-08-03"
+        },
+        {
+          "chapter_number": 90,
+          "title": "The Shibuya Incident, Part 8",
+          "original_release_date": "2021-08-03"
+        },
+        {
+          "chapter_number": 91,
+          "title": "The Shibuya Incident, Part 9",
+          "original_release_date": "2021-08-03"
+        },
+        {
+          "chapter_number": 92,
+          "title": "The Shibuya Incident, Part 10",
+          "original_release_date": "2021-08-03"
+        },
+        {
+          "chapter_number": 93,
+          "title": "The Shibuya Incident, Part 11",
+          "original_release_date": "2021-08-03"
+        },
+        {
+          "chapter_number": 94,
+          "title": "The Shibuya Incident, Part 12",
+          "original_release_date": "2021-08-03"
+        },
+        {
+          "chapter_number": 95,
+          "title": "The Shibuya Incident, Part 13",
+          "original_release_date": "2021-08-03"
+        },
+        {
+          "chapter_number": 96,
+          "title": "The Shibuya Incident, Part 14",
+          "original_release_date": "2021-08-03"
+        },
+        {
+          "chapter_number": 97,
+          "title": "The Shibuya Incident, Part 15",
+          "original_release_date": "2021-08-03"
+        }
+      ]
+    },
+    {
+      "volume_number": 12,
+      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "region_code": "JP",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/4/4e/Volume_12.png/revision/latest?cb=20200728170833",
+      "isbn13": "9784088823812",
+      "release_date": "2020-10-02",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 98,
+          "title": "The Shibuya Incident, Part 16",
+          "original_release_date": "2020-10-02"
+        },
+        {
+          "chapter_number": 99,
+          "title": "The Shibuya Incident, Part 17",
+          "original_release_date": "2020-10-02"
+        },
+        {
+          "chapter_number": 100,
+          "title": "The Shibuya Incident, Part 18",
+          "original_release_date": "2020-10-02"
+        },
+        {
+          "chapter_number": 101,
+          "title": "The Shibuya Incident, Part 19",
+          "original_release_date": "2020-10-02"
+        },
+        {
+          "chapter_number": 102,
+          "title": "The Shibuya Incident, Part 20",
+          "original_release_date": "2020-10-02"
+        },
+        {
+          "chapter_number": 103,
+          "title": "The Shibuya Incident, Part 21",
+          "original_release_date": "2020-10-02"
+        },
+        {
+          "chapter_number": 104,
+          "title": "The Shibuya Incident, Part 22",
+          "original_release_date": "2020-10-02"
+        },
+        {
+          "chapter_number": 105,
+          "title": "The Shibuya Incident, Part 23",
+          "original_release_date": "2020-10-02"
+        },
+        {
+          "chapter_number": 106,
+          "title": "The Shibuya Incident, Part 24",
+          "original_release_date": "2020-10-02"
+        }
+      ]
+    },
+    {
+      "volume_number": 12,
+      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "region_code": "US",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/6/66/ENG_Volume_12.png/revision/latest?cb=20210606010147",
+      "isbn13": "9781974722853",
+      "release_date": "2021-10-05",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 98,
+          "title": "The Shibuya Incident, Part 16",
+          "original_release_date": "2021-10-05"
+        },
+        {
+          "chapter_number": 99,
+          "title": "The Shibuya Incident, Part 17",
+          "original_release_date": "2021-10-05"
+        },
+        {
+          "chapter_number": 100,
+          "title": "The Shibuya Incident, Part 18",
+          "original_release_date": "2021-10-05"
+        },
+        {
+          "chapter_number": 101,
+          "title": "The Shibuya Incident, Part 19",
+          "original_release_date": "2021-10-05"
+        },
+        {
+          "chapter_number": 102,
+          "title": "The Shibuya Incident, Part 20",
+          "original_release_date": "2021-10-05"
+        },
+        {
+          "chapter_number": 103,
+          "title": "The Shibuya Incident, Part 21",
+          "original_release_date": "2021-10-05"
+        },
+        {
+          "chapter_number": 104,
+          "title": "The Shibuya Incident, Part 22",
+          "original_release_date": "2021-10-05"
+        },
+        {
+          "chapter_number": 105,
+          "title": "The Shibuya Incident, Part 23",
+          "original_release_date": "2021-10-05"
+        },
+        {
+          "chapter_number": 106,
+          "title": "The Shibuya Incident, Part 24",
+          "original_release_date": "2021-10-05"
+        }
+      ]
+    },
+    {
+      "volume_number": 13,
+      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "region_code": "JP",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/b/b6/Volume_13.png/revision/latest?cb=20200919131131",
+      "isbn13": "9784088824291",
+      "release_date": "2021-01-04",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 107,
+          "title": "The Shibuya Incident, Part 25",
+          "original_release_date": "2021-01-04"
+        },
+        {
+          "chapter_number": 108,
+          "title": "The Shibuya Incident, Part 26",
+          "original_release_date": "2021-01-04"
+        },
+        {
+          "chapter_number": 109,
+          "title": "The Shibuya Incident, Part 27",
+          "original_release_date": "2021-01-04"
+        },
+        {
+          "chapter_number": 110,
+          "title": "The Shibuya Incident, Part 28",
+          "original_release_date": "2021-01-04"
+        },
+        {
+          "chapter_number": 111,
+          "title": "The Shibuya Incident, Part 29",
+          "original_release_date": "2021-01-04"
+        },
+        {
+          "chapter_number": 112,
+          "title": "The Shibuya Incident, Part 30",
+          "original_release_date": "2021-01-04"
+        },
+        {
+          "chapter_number": 113,
+          "title": "The Shibuya Incident, Part 31",
+          "original_release_date": "2021-01-04"
+        },
+        {
+          "chapter_number": 114,
+          "title": "The Shibuya Incident, Part 32",
+          "original_release_date": "2021-01-04"
+        },
+        {
+          "chapter_number": 115,
+          "title": "The Shibuya Incident, Part 33",
+          "original_release_date": "2021-01-04"
+        }
+      ]
+    },
+    {
+      "volume_number": 13,
+      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "region_code": "US",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/5/58/ENG_Volume_13.png/revision/latest?cb=20210728210354",
+      "isbn13": "9781974723423",
+      "release_date": "2021-12-07",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 107,
+          "title": "The Shibuya Incident, Part 25",
+          "original_release_date": "2021-12-07"
+        },
+        {
+          "chapter_number": 108,
+          "title": "The Shibuya Incident, Part 26",
+          "original_release_date": "2021-12-07"
+        },
+        {
+          "chapter_number": 109,
+          "title": "The Shibuya Incident, Part 27",
+          "original_release_date": "2021-12-07"
+        },
+        {
+          "chapter_number": 110,
+          "title": "The Shibuya Incident, Part 28",
+          "original_release_date": "2021-12-07"
+        },
+        {
+          "chapter_number": 111,
+          "title": "The Shibuya Incident, Part 29",
+          "original_release_date": "2021-12-07"
+        },
+        {
+          "chapter_number": 112,
+          "title": "The Shibuya Incident, Part 30",
+          "original_release_date": "2021-12-07"
+        },
+        {
+          "chapter_number": 113,
+          "title": "The Shibuya Incident, Part 31",
+          "original_release_date": "2021-12-07"
+        },
+        {
+          "chapter_number": 114,
+          "title": "The Shibuya Incident, Part 32",
+          "original_release_date": "2021-12-07"
+        },
+        {
+          "chapter_number": 115,
+          "title": "The Shibuya Incident, Part 33",
+          "original_release_date": "2021-12-07"
+        }
+      ]
+    },
+    {
+      "volume_number": 14,
+      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "region_code": "JP",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/1/17/Volume_14.png/revision/latest?cb=20201217023900",
+      "isbn13": "9784088825342",
+      "release_date": "2021-03-04",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 116,
+          "title": "The Shibuya Incident, Part 34",
+          "original_release_date": "2021-03-04"
+        },
+        {
+          "chapter_number": 117,
+          "title": "The Shibuya Incident, Part 35",
+          "original_release_date": "2021-03-04"
+        },
+        {
+          "chapter_number": 118,
+          "title": "The Shibuya Incident, Part 36",
+          "original_release_date": "2021-03-04"
+        },
+        {
+          "chapter_number": 119,
+          "title": "The Shibuya Incident, Part 37",
+          "original_release_date": "2021-03-04"
+        },
+        {
+          "chapter_number": 120,
+          "title": "The Shibuya Incident, Part 38",
+          "original_release_date": "2021-03-04"
+        },
+        {
+          "chapter_number": 121,
+          "title": "The Shibuya Incident, Part 39",
+          "original_release_date": "2021-03-04"
+        },
+        {
+          "chapter_number": 122,
+          "title": "The Shibuya Incident, Part 40",
+          "original_release_date": "2021-03-04"
+        },
+        {
+          "chapter_number": 123,
+          "title": "The Shibuya Incident, Part 41",
+          "original_release_date": "2021-03-04"
+        },
+        {
+          "chapter_number": 124,
+          "title": "The Shibuya Incident, Part 42",
+          "original_release_date": "2021-03-04"
+        }
+      ]
+    },
+    {
+      "volume_number": 14,
+      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "region_code": "US",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/d/d5/ENG_Volume_14.png/revision/latest?cb=20210921123639",
+      "isbn13": "9781974725328",
+      "release_date": "2022-02-01",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 116,
+          "title": "The Shibuya Incident, Part 34",
+          "original_release_date": "2022-02-01"
+        },
+        {
+          "chapter_number": 117,
+          "title": "The Shibuya Incident, Part 35",
+          "original_release_date": "2022-02-01"
+        },
+        {
+          "chapter_number": 118,
+          "title": "The Shibuya Incident, Part 36",
+          "original_release_date": "2022-02-01"
+        },
+        {
+          "chapter_number": 119,
+          "title": "The Shibuya Incident, Part 37",
+          "original_release_date": "2022-02-01"
+        },
+        {
+          "chapter_number": 120,
+          "title": "The Shibuya Incident, Part 38",
+          "original_release_date": "2022-02-01"
+        },
+        {
+          "chapter_number": 121,
+          "title": "The Shibuya Incident, Part 39",
+          "original_release_date": "2022-02-01"
+        },
+        {
+          "chapter_number": 122,
+          "title": "The Shibuya Incident, Part 40",
+          "original_release_date": "2022-02-01"
+        },
+        {
+          "chapter_number": 123,
+          "title": "The Shibuya Incident, Part 41",
+          "original_release_date": "2022-02-01"
+        },
+        {
+          "chapter_number": 124,
+          "title": "The Shibuya Incident, Part 42",
+          "original_release_date": "2022-02-01"
+        }
+      ]
+    },
+    {
+      "volume_number": 15,
+      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "region_code": "JP",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/4/4e/Volume_15.png/revision/latest?cb=20210209020850",
+      "isbn13": "9784088825816",
+      "release_date": "2021-03-04",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 125,
+          "title": "A Story About that Girl",
+          "original_release_date": "2021-03-04"
+        },
+        {
+          "chapter_number": 126,
+          "title": "The Shibuya Incident, Part 43",
+          "original_release_date": "2021-03-04"
+        },
+        {
+          "chapter_number": 127,
+          "title": "The Shibuya Incident, Part 44",
+          "original_release_date": "2021-03-04"
+        },
+        {
+          "chapter_number": 128,
+          "title": "The Shibuya Incident, Part 45",
+          "original_release_date": "2021-03-04"
+        },
+        {
+          "chapter_number": 129,
+          "title": "The Shibuya Incident, Part 46",
+          "original_release_date": "2021-03-04"
+        },
+        {
+          "chapter_number": 130,
+          "title": "The Shibuya Incident, Part 47",
+          "original_release_date": "2021-03-04"
+        },
+        {
+          "chapter_number": 131,
+          "title": "The Shibuya Incident, Part 48",
+          "original_release_date": "2021-03-04"
+        },
+        {
+          "chapter_number": 132,
+          "title": "The Shibuya Incident, Part 49",
+          "original_release_date": "2021-03-04"
+        },
+        {
+          "chapter_number": 133,
+          "title": "The Shibuya Incident, Part 50",
+          "original_release_date": "2021-03-04"
+        }
+      ]
+    },
+    {
+      "volume_number": 15,
+      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "region_code": "US",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/1/16/ENG_Volume_15.png/revision/latest?cb=20211109002309",
+      "isbn13": "9781974727100",
+      "release_date": "2022-04-05",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 125,
+          "title": "A Story About that Girl",
+          "original_release_date": "2022-04-05"
+        },
+        {
+          "chapter_number": 126,
+          "title": "The Shibuya Incident, Part 43",
+          "original_release_date": "2022-04-05"
+        },
+        {
+          "chapter_number": 127,
+          "title": "The Shibuya Incident, Part 44",
+          "original_release_date": "2022-04-05"
+        },
+        {
+          "chapter_number": 128,
+          "title": "The Shibuya Incident, Part 45",
+          "original_release_date": "2022-04-05"
+        },
+        {
+          "chapter_number": 129,
+          "title": "The Shibuya Incident, Part 46",
+          "original_release_date": "2022-04-05"
+        },
+        {
+          "chapter_number": 130,
+          "title": "The Shibuya Incident, Part 47",
+          "original_release_date": "2022-04-05"
+        },
+        {
+          "chapter_number": 131,
+          "title": "The Shibuya Incident, Part 48",
+          "original_release_date": "2022-04-05"
+        },
+        {
+          "chapter_number": 132,
+          "title": "The Shibuya Incident, Part 49",
+          "original_release_date": "2022-04-05"
+        },
+        {
+          "chapter_number": 133,
+          "title": "The Shibuya Incident, Part 50",
+          "original_release_date": "2022-04-05"
+        }
+      ]
+    },
+    {
+      "volume_number": 16,
+      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "region_code": "JP",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/4/45/Volume_16.png/revision/latest?cb=20210510020718",
+      "isbn13": "9784088826882",
+      "release_date": "2021-06-04",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 134,
+          "title": "The Shibuya Incident, Part 51",
+          "original_release_date": "2021-06-04"
+        },
+        {
+          "chapter_number": 135,
+          "title": "The Shibuya Incident, Part 52",
+          "original_release_date": "2021-06-04"
+        },
+        {
+          "chapter_number": 136,
+          "title": "The Shibuya Incident, Part 53",
+          "original_release_date": "2021-06-04"
+        },
+        {
+          "chapter_number": 137,
+          "title": "Hard and White",
+          "original_release_date": "2021-06-04"
+        },
+        {
+          "chapter_number": 138,
+          "title": "The Zen'in Clan",
+          "original_release_date": "2021-06-04"
+        },
+        {
+          "chapter_number": 139,
+          "title": "Hunter",
+          "original_release_date": "2021-06-04"
+        },
+        {
+          "chapter_number": 140,
+          "title": "Execution",
+          "original_release_date": "2021-06-04"
+        },
+        {
+          "chapter_number": 141,
+          "title": "The Front of the Back",
+          "original_release_date": "2021-06-04"
+        },
+        {
+          "chapter_number": 142,
+          "title": "A Big Brother's Back",
+          "original_release_date": "2021-06-04"
+        }
+      ]
+    },
+    {
+      "volume_number": 16,
+      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "region_code": "US",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/5/54/ENG_Volume_16.png/revision/latest?cb=20220221144941",
+      "isbn13": "9781974728985",
+      "release_date": "2022-06-21",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 134,
+          "title": "The Shibuya Incident, Part 51",
+          "original_release_date": "2022-06-21"
+        },
+        {
+          "chapter_number": 135,
+          "title": "The Shibuya Incident, Part 52",
+          "original_release_date": "2022-06-21"
+        },
+        {
+          "chapter_number": 136,
+          "title": "The Shibuya Incident, Part 53",
+          "original_release_date": "2022-06-21"
+        },
+        {
+          "chapter_number": 137,
+          "title": "Hard and White",
+          "original_release_date": "2022-06-21"
+        },
+        {
+          "chapter_number": 138,
+          "title": "The Zen'in Clan",
+          "original_release_date": "2022-06-21"
+        },
+        {
+          "chapter_number": 139,
+          "title": "Hunter",
+          "original_release_date": "2022-06-21"
+        },
+        {
+          "chapter_number": 140,
+          "title": "Execution",
+          "original_release_date": "2022-06-21"
+        },
+        {
+          "chapter_number": 141,
+          "title": "The Front of the Back",
+          "original_release_date": "2022-06-21"
+        },
+        {
+          "chapter_number": 142,
+          "title": "A Big Brother's Back",
+          "original_release_date": "2022-06-21"
+        }
+      ]
+    },
+    {
+      "volume_number": 17,
+      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "region_code": "JP",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/6/64/Volume_17.png/revision/latest?cb=20210918164256",
+      "isbn13": "9784088827360",
+      "release_date": "2021-10-04",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 143,
+          "title": "One More Time",
+          "original_release_date": "2021-10-04"
+        },
+        {
+          "chapter_number": 144,
+          "title": "That Place",
+          "original_release_date": "2021-10-04"
+        },
+        {
+          "chapter_number": 145,
+          "title": "The Back",
+          "original_release_date": "2021-10-04"
+        },
+        {
+          "chapter_number": 146,
+          "title": "About the Culling Game",
+          "original_release_date": "2021-10-04"
+        },
+        {
+          "chapter_number": 147,
+          "title": "Even Pandas",
+          "original_release_date": "2021-10-04"
+        },
+        {
+          "chapter_number": 148,
+          "title": "Perfect Preparation",
+          "original_release_date": "2021-10-04"
+        },
+        {
+          "chapter_number": 149,
+          "title": "Perfect Preparation, Part 2",
+          "original_release_date": "2021-10-04"
+        },
+        {
+          "chapter_number": 150,
+          "title": "Perfect Preparation, Part 3",
+          "original_release_date": "2021-10-04"
+        },
+        {
+          "chapter_number": 151,
+          "title": "Perfect Preparation, Part 4",
+          "original_release_date": "2021-10-04"
+        },
+        {
+          "chapter_number": 152,
+          "title": "Perfect Preparation, Epilogue",
+          "original_release_date": "2021-10-04"
+        }
+      ]
+    },
+    {
+      "volume_number": 17,
+      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "region_code": "US",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/e/e6/ENG_Volume_17.png/revision/latest?cb=20220327173527",
+      "isbn13": "9781974732333",
+      "release_date": "2022-08-16",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 143,
+          "title": "One More Time",
+          "original_release_date": "2022-08-16"
+        },
+        {
+          "chapter_number": 144,
+          "title": "That Place",
+          "original_release_date": "2022-08-16"
+        },
+        {
+          "chapter_number": 145,
+          "title": "The Back",
+          "original_release_date": "2022-08-16"
+        },
+        {
+          "chapter_number": 146,
+          "title": "About the Culling Game",
+          "original_release_date": "2022-08-16"
+        },
+        {
+          "chapter_number": 147,
+          "title": "Even Pandas",
+          "original_release_date": "2022-08-16"
+        },
+        {
+          "chapter_number": 148,
+          "title": "Perfect Preparation",
+          "original_release_date": "2022-08-16"
+        },
+        {
+          "chapter_number": 149,
+          "title": "Perfect Preparation, Part 2",
+          "original_release_date": "2022-08-16"
+        },
+        {
+          "chapter_number": 150,
+          "title": "Perfect Preparation, Part 3",
+          "original_release_date": "2022-08-16"
+        },
+        {
+          "chapter_number": 151,
+          "title": "Perfect Preparation, Part 4",
+          "original_release_date": "2022-08-16"
+        },
+        {
+          "chapter_number": 152,
+          "title": "Perfect Preparation, Epilogue",
+          "original_release_date": "2022-08-16"
+        }
+      ]
+    },
+    {
+      "volume_number": 18,
+      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "region_code": "JP",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/a/a2/Volume_18.png/revision/latest?cb=20220115224753",
+      "isbn13": "9784088828480",
+      "release_date": "2021-12-25",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 153,
+          "title": "Underground Fight Club",
+          "original_release_date": "2021-12-25"
+        },
+        {
+          "chapter_number": 154,
+          "title": "Sneaking In",
+          "original_release_date": "2021-12-25"
+        },
+        {
+          "chapter_number": 155,
+          "title": "Fever",
+          "original_release_date": "2021-12-25"
+        },
+        {
+          "chapter_number": 156,
+          "title": "Twinkling Stars",
+          "original_release_date": "2021-12-25"
+        },
+        {
+          "chapter_number": 157,
+          "title": "Cog",
+          "original_release_date": "2021-12-25"
+        },
+        {
+          "chapter_number": 158,
+          "title": "Kogane",
+          "original_release_date": "2021-12-25"
+        },
+        {
+          "chapter_number": 159,
+          "title": "Judgement",
+          "original_release_date": "2021-12-25"
+        },
+        {
+          "chapter_number": 160,
+          "title": "Colony",
+          "original_release_date": "2021-12-25"
+        },
+        {
+          "chapter_number": 161,
+          "title": "Tokyo No. 1 Colony, Part 1",
+          "original_release_date": "2021-12-25"
+        }
+      ]
+    },
+    {
+      "volume_number": 18,
+      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "region_code": "US",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/8/8d/ENG_Volume_18.png/revision/latest?cb=20220814193438",
+      "isbn13": "9781974734399",
+      "release_date": "2022-12-20",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 153,
+          "title": "Underground Fight Club",
+          "original_release_date": "2022-12-20"
+        },
+        {
+          "chapter_number": 154,
+          "title": "Sneaking In",
+          "original_release_date": "2022-12-20"
+        },
+        {
+          "chapter_number": 155,
+          "title": "Fever",
+          "original_release_date": "2022-12-20"
+        },
+        {
+          "chapter_number": 156,
+          "title": "Twinkling Stars",
+          "original_release_date": "2022-12-20"
+        },
+        {
+          "chapter_number": 157,
+          "title": "Cog",
+          "original_release_date": "2022-12-20"
+        },
+        {
+          "chapter_number": 158,
+          "title": "Kogane",
+          "original_release_date": "2022-12-20"
+        },
+        {
+          "chapter_number": 159,
+          "title": "Judgement",
+          "original_release_date": "2022-12-20"
+        },
+        {
+          "chapter_number": 160,
+          "title": "Colony",
+          "original_release_date": "2022-12-20"
+        },
+        {
+          "chapter_number": 161,
+          "title": "Tokyo No. 1 Colony, Part 1",
+          "original_release_date": "2022-12-20"
+        }
+      ]
+    },
+    {
+      "volume_number": 19,
+      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "region_code": "JP",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/c/c9/Volume_19.png/revision/latest?cb=20220307020604",
+      "isbn13": "9784088830681",
+      "release_date": "2022-04-04",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 162,
+          "title": "Tokyo No. 1 Colony, Part 2",
+          "original_release_date": "2022-04-04"
+        },
+        {
+          "chapter_number": 163,
+          "title": "Tokyo No. 1 Colony, Part 3",
+          "original_release_date": "2022-04-04"
+        },
+        {
+          "chapter_number": 164,
+          "title": "Tokyo No. 1 Colony, Part 4",
+          "original_release_date": "2022-04-04"
+        },
+        {
+          "chapter_number": 165,
+          "title": "Tokyo No. 1 Colony, Part 5",
+          "original_release_date": "2022-04-04"
+        },
+        {
+          "chapter_number": 166,
+          "title": "Tokyo No. 1 Colony, Part 6",
+          "original_release_date": "2022-04-04"
+        },
+        {
+          "chapter_number": 167,
+          "title": "Tokyo No. 1 Colony, Part 7",
+          "original_release_date": "2022-04-04"
+        },
+        {
+          "chapter_number": 168,
+          "title": "Tokyo No. 1 Colony, Part 8",
+          "original_release_date": "2022-04-04"
+        },
+        {
+          "chapter_number": 169,
+          "title": "Tokyo No. 1 Colony, Part 9",
+          "original_release_date": "2022-04-04"
+        },
+        {
+          "chapter_number": 170,
+          "title": "Tokyo No. 1 Colony, Part 10",
+          "original_release_date": "2022-04-04"
+        },
+        {
+          "chapter_number": 171,
+          "title": "Tokyo No. 1 Colony, Part 11",
+          "original_release_date": "2022-04-04"
+        }
+      ]
+    },
+    {
+      "volume_number": 19,
+      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "region_code": "US",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/8/8d/ENG_Volume_19.png/revision/latest?cb=20221107081903",
+      "isbn13": "9781974736270",
+      "release_date": "2023-03-21",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 162,
+          "title": "Tokyo No. 1 Colony, Part 2",
+          "original_release_date": "2023-03-21"
+        },
+        {
+          "chapter_number": 163,
+          "title": "Tokyo No. 1 Colony, Part 3",
+          "original_release_date": "2023-03-21"
+        },
+        {
+          "chapter_number": 164,
+          "title": "Tokyo No. 1 Colony, Part 4",
+          "original_release_date": "2023-03-21"
+        },
+        {
+          "chapter_number": 165,
+          "title": "Tokyo No. 1 Colony, Part 5",
+          "original_release_date": "2023-03-21"
+        },
+        {
+          "chapter_number": 166,
+          "title": "Tokyo No. 1 Colony, Part 6",
+          "original_release_date": "2023-03-21"
+        },
+        {
+          "chapter_number": 167,
+          "title": "Tokyo No. 1 Colony, Part 7",
+          "original_release_date": "2023-03-21"
+        },
+        {
+          "chapter_number": 168,
+          "title": "Tokyo No. 1 Colony, Part 8",
+          "original_release_date": "2023-03-21"
+        },
+        {
+          "chapter_number": 169,
+          "title": "Tokyo No. 1 Colony, Part 9",
+          "original_release_date": "2023-03-21"
+        },
+        {
+          "chapter_number": 170,
+          "title": "Tokyo No. 1 Colony, Part 10",
+          "original_release_date": "2023-03-21"
+        },
+        {
+          "chapter_number": 171,
+          "title": "Tokyo No. 1 Colony, Part 11",
+          "original_release_date": "2023-03-21"
+        }
+      ]
+    },
+    {
+      "volume_number": 20,
+      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "region_code": "JP",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/3/32/Volume_20.png/revision/latest?cb=20220704145546",
+      "isbn13": "9784088832012",
+      "release_date": "2022-08-04",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 172,
+          "title": "Tokyo No. 1 Colony, Part 12",
+          "original_release_date": "2022-08-04"
+        },
+        {
+          "chapter_number": 173,
+          "title": "Tokyo No. 1 Colony, Part 13",
+          "original_release_date": "2022-08-04"
+        },
+        {
+          "chapter_number": 174,
+          "title": "Sendai Colony, Part 1",
+          "original_release_date": "2022-08-04"
+        },
+        {
+          "chapter_number": 175,
+          "title": "Sendai Colony, Part 2",
+          "original_release_date": "2022-08-04"
+        },
+        {
+          "chapter_number": 176,
+          "title": "Sendai Colony, Part 3",
+          "original_release_date": "2022-08-04"
+        },
+        {
+          "chapter_number": 177,
+          "title": "Sendai Colony, Part 4",
+          "original_release_date": "2022-08-04"
+        },
+        {
+          "chapter_number": 178,
+          "title": "Sendai Colony, Part 5",
+          "original_release_date": "2022-08-04"
+        },
+        {
+          "chapter_number": 179,
+          "title": "Sendai Colony, Part 6",
+          "original_release_date": "2022-08-04"
+        },
+        {
+          "chapter_number": 180,
+          "title": "Sendai Colony, Part 7",
+          "original_release_date": "2022-08-04"
+        }
+      ]
+    },
+    {
+      "volume_number": 20,
+      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "region_code": "US",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/2/2e/ENG_Volume_20.png/revision/latest?cb=20230320005741",
+      "isbn13": "9781974738748",
+      "release_date": "2023-08-15",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 172,
+          "title": "Tokyo No. 1 Colony, Part 12",
+          "original_release_date": "2023-08-15"
+        },
+        {
+          "chapter_number": 173,
+          "title": "Tokyo No. 1 Colony, Part 13",
+          "original_release_date": "2023-08-15"
+        },
+        {
+          "chapter_number": 174,
+          "title": "Sendai Colony, Part 1",
+          "original_release_date": "2023-08-15"
+        },
+        {
+          "chapter_number": 175,
+          "title": "Sendai Colony, Part 2",
+          "original_release_date": "2023-08-15"
+        },
+        {
+          "chapter_number": 176,
+          "title": "Sendai Colony, Part 3",
+          "original_release_date": "2023-08-15"
+        },
+        {
+          "chapter_number": 177,
+          "title": "Sendai Colony, Part 4",
+          "original_release_date": "2023-08-15"
+        },
+        {
+          "chapter_number": 178,
+          "title": "Sendai Colony, Part 5",
+          "original_release_date": "2023-08-15"
+        },
+        {
+          "chapter_number": 179,
+          "title": "Sendai Colony, Part 6",
+          "original_release_date": "2023-08-15"
+        },
+        {
+          "chapter_number": 180,
+          "title": "Sendai Colony, Part 7",
+          "original_release_date": "2023-08-15"
+        }
+      ]
+    },
+    {
+      "volume_number": 21,
+      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "region_code": "JP",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/a/a6/Volume_21.png/revision/latest?cb=20221107081719",
+      "isbn13": "9784088833118",
+      "release_date": "2022-12-02",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 181,
+          "title": "Tokyo No. 2 Colony, Part 1",
+          "original_release_date": "2022-12-02"
+        },
+        {
+          "chapter_number": 182,
+          "title": "Tokyo No. 2 Colony, Part 2",
+          "original_release_date": "2022-12-02"
+        },
+        {
+          "chapter_number": 183,
+          "title": "Tokyo No. 2 Colony, Part 3",
+          "original_release_date": "2022-12-02"
+        },
+        {
+          "chapter_number": 184,
+          "title": "Tokyo No. 2 Colony, Part 4",
+          "original_release_date": "2022-12-02"
+        },
+        {
+          "chapter_number": 185,
+          "title": "Bye-bye",
+          "original_release_date": "2022-12-02"
+        },
+        {
+          "chapter_number": 186,
+          "title": "Tokyo No. 2 Colony, Part 5",
+          "original_release_date": "2022-12-02"
+        },
+        {
+          "chapter_number": 187,
+          "title": "Tokyo No. 2 Colony, Part 6",
+          "original_release_date": "2022-12-02"
+        },
+        {
+          "chapter_number": 188,
+          "title": "Tokyo No. 2 Colony, Part 7",
+          "original_release_date": "2022-12-02"
+        },
+        {
+          "chapter_number": 189,
+          "title": "Tokyo No. 2 Colony, Part 8",
+          "original_release_date": "2022-12-02"
+        },
+        {
+          "chapter_number": 190,
+          "title": "Tokyo No. 2 Colony, Part 9",
+          "original_release_date": "2022-12-02"
+        }
+      ]
+    },
+    {
+      "volume_number": 21,
+      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "region_code": "US",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/3/34/ENG_Volume_21.png/revision/latest?cb=20230701004720",
+      "isbn13": "9781974741229",
+      "release_date": "2023-11-21",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 181,
+          "title": "Tokyo No. 2 Colony, Part 1",
+          "original_release_date": "2023-11-21"
+        },
+        {
+          "chapter_number": 182,
+          "title": "Tokyo No. 2 Colony, Part 2",
+          "original_release_date": "2023-11-21"
+        },
+        {
+          "chapter_number": 183,
+          "title": "Tokyo No. 2 Colony, Part 3",
+          "original_release_date": "2023-11-21"
+        },
+        {
+          "chapter_number": 184,
+          "title": "Tokyo No. 2 Colony, Part 4",
+          "original_release_date": "2023-11-21"
+        },
+        {
+          "chapter_number": 185,
+          "title": "Bye-bye",
+          "original_release_date": "2023-11-21"
+        },
+        {
+          "chapter_number": 186,
+          "title": "Tokyo No. 2 Colony, Part 5",
+          "original_release_date": "2023-11-21"
+        },
+        {
+          "chapter_number": 187,
+          "title": "Tokyo No. 2 Colony, Part 6",
+          "original_release_date": "2023-11-21"
+        },
+        {
+          "chapter_number": 188,
+          "title": "Tokyo No. 2 Colony, Part 7",
+          "original_release_date": "2023-11-21"
+        },
+        {
+          "chapter_number": 189,
+          "title": "Tokyo No. 2 Colony, Part 8",
+          "original_release_date": "2023-11-21"
+        },
+        {
+          "chapter_number": 190,
+          "title": "Tokyo No. 2 Colony, Part 9",
+          "original_release_date": "2023-11-21"
+        }
+      ]
+    },
+    {
+      "volume_number": 22,
+      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "region_code": "JP",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/5/5e/Volume_22.png/revision/latest?cb=20230203040654",
+      "isbn13": "9784088834344",
+      "release_date": "2023-03-03",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 191,
+          "title": "Sakurajima Colony, Part 1",
+          "original_release_date": "2023-03-03"
+        },
+        {
+          "chapter_number": 192,
+          "title": "Sakurajima Colony, Part 2",
+          "original_release_date": "2023-03-03"
+        },
+        {
+          "chapter_number": 193,
+          "title": "Sakurajima Colony, Part 3",
+          "original_release_date": "2023-03-03"
+        },
+        {
+          "chapter_number": 194,
+          "title": "Sakurajima Colony, Part 4",
+          "original_release_date": "2023-03-03"
+        },
+        {
+          "chapter_number": 195,
+          "title": "Sakurajima Colony, Part 5",
+          "original_release_date": "2023-03-03"
+        },
+        {
+          "chapter_number": 196,
+          "title": "Sakurajima Colony, Part 6",
+          "original_release_date": "2023-03-03"
+        },
+        {
+          "chapter_number": 197,
+          "title": "Sakurajima Colony, Part 7",
+          "original_release_date": "2023-03-03"
+        },
+        {
+          "chapter_number": 198,
+          "title": "Sakurajima Colony, Part 8",
+          "original_release_date": "2023-03-03"
+        },
+        {
+          "chapter_number": 199,
+          "title": "Resentful Names",
+          "original_release_date": "2023-03-03"
+        }
+      ]
+    },
+    {
+      "volume_number": 22,
+      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "region_code": "US",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/c/c0/ENG_Volume_22.png/revision/latest?cb=20231120231140",
+      "isbn13": "9781974743414",
+      "release_date": "2024-04-16",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 191,
+          "title": "Sakurajima Colony, Part 1",
+          "original_release_date": "2024-04-16"
+        },
+        {
+          "chapter_number": 192,
+          "title": "Sakurajima Colony, Part 2",
+          "original_release_date": "2024-04-16"
+        },
+        {
+          "chapter_number": 193,
+          "title": "Sakurajima Colony, Part 3",
+          "original_release_date": "2024-04-16"
+        },
+        {
+          "chapter_number": 194,
+          "title": "Sakurajima Colony, Part 4",
+          "original_release_date": "2024-04-16"
+        },
+        {
+          "chapter_number": 195,
+          "title": "Sakurajima Colony, Part 5",
+          "original_release_date": "2024-04-16"
+        },
+        {
+          "chapter_number": 196,
+          "title": "Sakurajima Colony, Part 6",
+          "original_release_date": "2024-04-16"
+        },
+        {
+          "chapter_number": 197,
+          "title": "Sakurajima Colony, Part 7",
+          "original_release_date": "2024-04-16"
+        },
+        {
+          "chapter_number": 198,
+          "title": "Sakurajima Colony, Part 8",
+          "original_release_date": "2024-04-16"
+        },
+        {
+          "chapter_number": 199,
+          "title": "Resentful Names",
+          "original_release_date": "2024-04-16"
+        }
+      ]
+    },
+    {
+      "volume_number": 23,
+      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "region_code": "JP",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/5/5d/Volume_23.png/revision/latest?cb=20230605170055",
+      "isbn13": "9784088836287",
+      "release_date": "2023-07-04",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 200,
+          "title": "Direct Talks, Part 1",
+          "original_release_date": "2023-07-04"
+        },
+        {
+          "chapter_number": 201,
+          "title": "Direct Talks, Part 2",
+          "original_release_date": "2023-07-04"
+        },
+        {
+          "chapter_number": 202,
+          "title": "Blood and Oil",
+          "original_release_date": "2023-07-04"
+        },
+        {
+          "chapter_number": 203,
+          "title": "Blood and Oil, Part 2",
+          "original_release_date": "2023-07-04"
+        },
+        {
+          "chapter_number": 204,
+          "title": "Blood and Oil, Part 3",
+          "original_release_date": "2023-07-04"
+        },
+        {
+          "chapter_number": 205,
+          "title": "Stars and Oil",
+          "original_release_date": "2023-07-04"
+        },
+        {
+          "chapter_number": 206,
+          "title": "Stars and Oil, Part 2",
+          "original_release_date": "2023-07-04"
+        },
+        {
+          "chapter_number": 207,
+          "title": "Stars and Oil, Part 3",
+          "original_release_date": "2023-07-04"
+        },
+        {
+          "chapter_number": 208,
+          "title": "Stars and Oil, Part 4",
+          "original_release_date": "2023-07-04"
+        }
+      ]
+    },
+    {
+      "volume_number": 23,
+      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "region_code": "US",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/4/41/ENG_Volume_23.png/revision/latest?cb=20240404112002",
+      "isbn13": "9781974746293",
+      "release_date": "2024-08-20",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 200,
+          "title": "Direct Talks, Part 1",
+          "original_release_date": "2024-08-20"
+        },
+        {
+          "chapter_number": 201,
+          "title": "Direct Talks, Part 2",
+          "original_release_date": "2024-08-20"
+        },
+        {
+          "chapter_number": 202,
+          "title": "Blood and Oil",
+          "original_release_date": "2024-08-20"
+        },
+        {
+          "chapter_number": 203,
+          "title": "Blood and Oil, Part 2",
+          "original_release_date": "2024-08-20"
+        },
+        {
+          "chapter_number": 204,
+          "title": "Blood and Oil, Part 3",
+          "original_release_date": "2024-08-20"
+        },
+        {
+          "chapter_number": 205,
+          "title": "Stars and Oil",
+          "original_release_date": "2024-08-20"
+        },
+        {
+          "chapter_number": 206,
+          "title": "Stars and Oil, Part 2",
+          "original_release_date": "2024-08-20"
+        },
+        {
+          "chapter_number": 207,
+          "title": "Stars and Oil, Part 3",
+          "original_release_date": "2024-08-20"
+        },
+        {
+          "chapter_number": 208,
+          "title": "Stars and Oil, Part 4",
+          "original_release_date": "2024-08-20"
+        }
+      ]
+    },
+    {
+      "volume_number": 24,
+      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "region_code": "JP",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/6/6a/Volume_24.png/revision/latest?cb=20230919045239",
+      "isbn13": "9784088836706",
+      "release_date": "2023-10-04",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 209,
+          "title": "Offering to the Unknown",
+          "original_release_date": "2023-10-04"
+        },
+        {
+          "chapter_number": 210,
+          "title": "Offering to the Unknown, Part 2",
+          "original_release_date": "2023-10-04"
+        },
+        {
+          "chapter_number": 211,
+          "title": "The Ripening",
+          "original_release_date": "2023-10-04"
+        },
+        {
+          "chapter_number": 212,
+          "title": "The Ripening, Part 2",
+          "original_release_date": "2023-10-04"
+        },
+        {
+          "chapter_number": 213,
+          "title": "Fearsome Womb, Part 5",
+          "original_release_date": "2023-10-04"
+        },
+        {
+          "chapter_number": 214,
+          "title": "Fearsome Womb, Part 6",
+          "original_release_date": "2023-10-04"
+        },
+        {
+          "chapter_number": 215,
+          "title": "Fearsome Womb, Part 7",
+          "original_release_date": "2023-10-04"
+        },
+        {
+          "chapter_number": 216,
+          "title": "Bath",
+          "original_release_date": "2023-10-04"
+        },
+        {
+          "chapter_number": 217,
+          "title": "Bath, Part 2",
+          "original_release_date": "2023-10-04"
+        }
+      ]
+    },
+    {
+      "volume_number": 24,
+      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "region_code": "US",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/f/fd/ENG_Volume_24.png/revision/latest?cb=20240725065810",
+      "isbn13": "9781974749485",
+      "release_date": "2024-12-10",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 209,
+          "title": "Offering to the Unknown",
+          "original_release_date": "2024-12-10"
+        },
+        {
+          "chapter_number": 210,
+          "title": "Offering to the Unknown, Part 2",
+          "original_release_date": "2024-12-10"
+        },
+        {
+          "chapter_number": 211,
+          "title": "The Ripening",
+          "original_release_date": "2024-12-10"
+        },
+        {
+          "chapter_number": 212,
+          "title": "The Ripening, Part 2",
+          "original_release_date": "2024-12-10"
+        },
+        {
+          "chapter_number": 213,
+          "title": "Fearsome Womb, Part 5",
+          "original_release_date": "2024-12-10"
+        },
+        {
+          "chapter_number": 214,
+          "title": "Fearsome Womb, Part 6",
+          "original_release_date": "2024-12-10"
+        },
+        {
+          "chapter_number": 215,
+          "title": "Fearsome Womb, Part 7",
+          "original_release_date": "2024-12-10"
+        },
+        {
+          "chapter_number": 216,
+          "title": "Bath",
+          "original_release_date": "2024-12-10"
+        },
+        {
+          "chapter_number": 217,
+          "title": "Bath, Part 2",
+          "original_release_date": "2024-12-10"
+        }
+      ]
+    },
+    {
+      "volume_number": 25,
+      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "region_code": "JP",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/e/ef/Volume_25.png/revision/latest?cb=20240103235507",
+      "isbn13": "9784088837994",
+      "release_date": "2024-01-04",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 218,
+          "title": "Bath, Part 3",
+          "original_release_date": "2024-01-04"
+        },
+        {
+          "chapter_number": 219,
+          "title": "Bath, Part 4",
+          "original_release_date": "2024-01-04"
+        },
+        {
+          "chapter_number": 220,
+          "title": "Self-Purification, Self-Constraint",
+          "original_release_date": "2024-01-04"
+        },
+        {
+          "chapter_number": 221,
+          "title": "Gain and Loss",
+          "original_release_date": "2024-01-04"
+        },
+        {
+          "chapter_number": 222,
+          "title": "Foretokens",
+          "original_release_date": "2024-01-04"
+        },
+        {
+          "chapter_number": 223,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 1",
+          "original_release_date": "2024-01-04"
+        },
+        {
+          "chapter_number": 224,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 2",
+          "original_release_date": "2024-01-04"
+        },
+        {
+          "chapter_number": 225,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 3",
+          "original_release_date": "2024-01-04"
+        },
+        {
+          "chapter_number": 226,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 4",
+          "original_release_date": "2024-01-04"
+        },
+        {
+          "chapter_number": 227,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 5",
+          "original_release_date": "2024-01-04"
+        }
+      ]
+    },
+    {
+      "volume_number": 25,
+      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "region_code": "US",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/f/fb/ENG_Volume_25.png/revision/latest?cb=20241104024748",
+      "isbn13": "9781974751884",
+      "release_date": "2025-03-11",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 218,
+          "title": "Bath, Part 3",
+          "original_release_date": "2025-03-11"
+        },
+        {
+          "chapter_number": 219,
+          "title": "Bath, Part 4",
+          "original_release_date": "2025-03-11"
+        },
+        {
+          "chapter_number": 220,
+          "title": "Self-Purification, Self-Constraint",
+          "original_release_date": "2025-03-11"
+        },
+        {
+          "chapter_number": 221,
+          "title": "Gain and Loss",
+          "original_release_date": "2025-03-11"
+        },
+        {
+          "chapter_number": 222,
+          "title": "Foretokens",
+          "original_release_date": "2025-03-11"
+        },
+        {
+          "chapter_number": 223,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 1",
+          "original_release_date": "2025-03-11"
+        },
+        {
+          "chapter_number": 224,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 2",
+          "original_release_date": "2025-03-11"
+        },
+        {
+          "chapter_number": 225,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 3",
+          "original_release_date": "2025-03-11"
+        },
+        {
+          "chapter_number": 226,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 4",
+          "original_release_date": "2025-03-11"
+        },
+        {
+          "chapter_number": 227,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 5",
+          "original_release_date": "2025-03-11"
+        }
+      ]
+    },
+    {
+      "volume_number": 26,
+      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "region_code": "JP",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/0/00/Volume_26.png/revision/latest?cb=20240311122937",
+      "isbn13": "9784088838847",
+      "release_date": "2024-04-04",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 228,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 6",
+          "original_release_date": "2024-04-04"
+        },
+        {
+          "chapter_number": 229,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 7",
+          "original_release_date": "2024-04-04"
+        },
+        {
+          "chapter_number": 230,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 8",
+          "original_release_date": "2024-04-04"
+        },
+        {
+          "chapter_number": 231,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 9",
+          "original_release_date": "2024-04-04"
+        },
+        {
+          "chapter_number": 232,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 10",
+          "original_release_date": "2024-04-04"
+        },
+        {
+          "chapter_number": 233,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 11",
+          "original_release_date": "2024-04-04"
+        },
+        {
+          "chapter_number": 234,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 12",
+          "original_release_date": "2024-04-04"
+        },
+        {
+          "chapter_number": 235,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 13",
+          "original_release_date": "2024-04-04"
+        },
+        {
+          "chapter_number": 236,
+          "title": "Heading South",
+          "original_release_date": "2024-04-04"
+        }
+      ]
+    },
+    {
+      "volume_number": 26,
+      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "region_code": "US",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/3/3a/ENG_Volume_26.png/revision/latest?cb=20250726004733",
+      "isbn13": "9781974754977",
+      "release_date": "2025-05-20",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 228,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 6",
+          "original_release_date": "2025-05-20"
+        },
+        {
+          "chapter_number": 229,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 7",
+          "original_release_date": "2025-05-20"
+        },
+        {
+          "chapter_number": 230,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 8",
+          "original_release_date": "2025-05-20"
+        },
+        {
+          "chapter_number": 231,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 9",
+          "original_release_date": "2025-05-20"
+        },
+        {
+          "chapter_number": 232,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 10",
+          "original_release_date": "2025-05-20"
+        },
+        {
+          "chapter_number": 233,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 11",
+          "original_release_date": "2025-05-20"
+        },
+        {
+          "chapter_number": 234,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 12",
+          "original_release_date": "2025-05-20"
+        },
+        {
+          "chapter_number": 235,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 13",
+          "original_release_date": "2025-05-20"
+        },
+        {
+          "chapter_number": 236,
+          "title": "Heading South",
+          "original_release_date": "2025-05-20"
+        }
+      ]
+    },
+    {
+      "volume_number": 27,
+      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "region_code": "JP",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/1/1d/Volume_27.png/revision/latest?cb=20250726004209",
+      "isbn13": "9784088841151",
+      "release_date": "2024-07-04",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 237,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 14",
+          "original_release_date": "2024-07-04"
+        },
+        {
+          "chapter_number": 238,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 15",
+          "original_release_date": "2024-07-04"
+        },
+        {
+          "chapter_number": 239,
+          "title": "Foolish Survivor!!",
+          "original_release_date": "2024-07-04"
+        },
+        {
+          "chapter_number": 240,
+          "title": "Live On!!",
+          "original_release_date": "2024-07-04"
+        },
+        {
+          "chapter_number": 241,
+          "title": "Win and Remain!!",
+          "original_release_date": "2024-07-04"
+        },
+        {
+          "chapter_number": 242,
+          "title": "Flying High!!",
+          "original_release_date": "2024-07-04"
+        },
+        {
+          "chapter_number": 243,
+          "title": "Laughing It Up!!",
+          "original_release_date": "2024-07-04"
+        },
+        {
+          "chapter_number": 244,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 16",
+          "original_release_date": "2024-07-04"
+        },
+        {
+          "chapter_number": 245,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 17",
+          "original_release_date": "2024-07-04"
+        }
+      ]
+    },
+    {
+      "volume_number": 27,
+      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "region_code": "US",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/5/56/ENG_Volume_27.png/revision/latest?cb=20250726004021",
+      "isbn13": "9781974755592",
+      "release_date": "2025-08-19",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 237,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 14",
+          "original_release_date": "2025-08-19"
+        },
+        {
+          "chapter_number": 238,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 15",
+          "original_release_date": "2025-08-19"
+        },
+        {
+          "chapter_number": 239,
+          "title": "Foolish Survivor!!",
+          "original_release_date": "2025-08-19"
+        },
+        {
+          "chapter_number": 240,
+          "title": "Live On!!",
+          "original_release_date": "2025-08-19"
+        },
+        {
+          "chapter_number": 241,
+          "title": "Win and Remain!!",
+          "original_release_date": "2025-08-19"
+        },
+        {
+          "chapter_number": 242,
+          "title": "Flying High!!",
+          "original_release_date": "2025-08-19"
+        },
+        {
+          "chapter_number": 243,
+          "title": "Laughing It Up!!",
+          "original_release_date": "2025-08-19"
+        },
+        {
+          "chapter_number": 244,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 16",
+          "original_release_date": "2025-08-19"
+        },
+        {
+          "chapter_number": 245,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 17",
+          "original_release_date": "2025-08-19"
+        }
+      ]
+    },
+    {
+      "volume_number": 28,
+      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "region_code": "JP",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/a/a5/Volume_28.png/revision/latest?cb=20240826042846",
+      "isbn13": "9784088842110",
+      "release_date": "2024-10-04",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 246,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 18",
+          "original_release_date": "2024-10-04"
+        },
+        {
+          "chapter_number": 247,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 19",
+          "original_release_date": "2024-10-04"
+        },
+        {
+          "chapter_number": 248,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 20",
+          "original_release_date": "2024-10-04"
+        },
+        {
+          "chapter_number": 249,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 21",
+          "original_release_date": "2024-10-04"
+        },
+        {
+          "chapter_number": 250,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 22",
+          "original_release_date": "2024-10-04"
+        },
+        {
+          "chapter_number": 251,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 23",
+          "original_release_date": "2024-10-04"
+        },
+        {
+          "chapter_number": 252,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 24",
+          "original_release_date": "2024-10-04"
+        },
+        {
+          "chapter_number": 253,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 25",
+          "original_release_date": "2024-10-04"
+        },
+        {
+          "chapter_number": 254,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 26",
+          "original_release_date": "2024-10-04"
+        }
+      ]
+    },
+    {
+      "volume_number": 28,
+      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "region_code": "US",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/3/33/ENG_Volume_28.png/revision/latest?cb=20250701204507",
+      "isbn13": "9781974758906",
+      "release_date": "2025-11-04",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 246,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 18",
+          "original_release_date": "2025-11-04"
+        },
+        {
+          "chapter_number": 247,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 19",
+          "original_release_date": "2025-11-04"
+        },
+        {
+          "chapter_number": 248,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 20",
+          "original_release_date": "2025-11-04"
+        },
+        {
+          "chapter_number": 249,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 21",
+          "original_release_date": "2025-11-04"
+        },
+        {
+          "chapter_number": 250,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 22",
+          "original_release_date": "2025-11-04"
+        },
+        {
+          "chapter_number": 251,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 23",
+          "original_release_date": "2025-11-04"
+        },
+        {
+          "chapter_number": 252,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 24",
+          "original_release_date": "2025-11-04"
+        },
+        {
+          "chapter_number": 253,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 25",
+          "original_release_date": "2025-11-04"
+        },
+        {
+          "chapter_number": 254,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 26",
+          "original_release_date": "2025-11-04"
+        }
+      ]
+    },
+    {
+      "volume_number": 29,
+      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "region_code": "JP",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/1/1a/Volume_29.png/revision/latest?cb=20241117150709",
+      "isbn13": "9784088843773",
+      "release_date": "2024-12-25",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 255,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 27",
+          "original_release_date": "2024-12-25"
+        },
+        {
+          "chapter_number": 256,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 28",
+          "original_release_date": "2024-12-25"
+        },
+        {
+          "chapter_number": 257,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 29",
+          "original_release_date": "2024-12-25"
+        },
+        {
+          "chapter_number": 258,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 30",
+          "original_release_date": "2024-12-25"
+        },
+        {
+          "chapter_number": 259,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 31",
+          "original_release_date": "2024-12-25"
+        },
+        {
+          "chapter_number": 260,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 32",
+          "original_release_date": "2024-12-25"
+        },
+        {
+          "chapter_number": 261,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 33",
+          "original_release_date": "2024-12-25"
+        },
+        {
+          "chapter_number": 262,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 34",
+          "original_release_date": "2024-12-25"
+        },
+        {
+          "chapter_number": 263,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 35",
+          "original_release_date": "2024-12-25"
+        }
+      ]
+    },
+    {
+      "volume_number": 29,
+      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "region_code": "US",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/c/c3/ENG_Volume_29.png/revision/latest?cb=20250929010228",
+      "isbn13": "9781974762019",
+      "release_date": "2026-02-17",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 255,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 27",
+          "original_release_date": "2026-02-17"
+        },
+        {
+          "chapter_number": 256,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 28",
+          "original_release_date": "2026-02-17"
+        },
+        {
+          "chapter_number": 257,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 29",
+          "original_release_date": "2026-02-17"
+        },
+        {
+          "chapter_number": 258,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 30",
+          "original_release_date": "2026-02-17"
+        },
+        {
+          "chapter_number": 259,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 31",
+          "original_release_date": "2026-02-17"
+        },
+        {
+          "chapter_number": 260,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 32",
+          "original_release_date": "2026-02-17"
+        },
+        {
+          "chapter_number": 261,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 33",
+          "original_release_date": "2026-02-17"
+        },
+        {
+          "chapter_number": 262,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 34",
+          "original_release_date": "2026-02-17"
+        },
+        {
+          "chapter_number": 263,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 35",
+          "original_release_date": "2026-02-17"
+        }
+      ]
+    },
+    {
+      "volume_number": 30,
+      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "region_code": "JP",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/5/52/Volume_30.png/revision/latest?cb=20250726004803",
+      "isbn13": "9784088843780",
+      "release_date": "2024-12-25",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 264,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 36",
+          "original_release_date": "2024-12-25"
+        },
+        {
+          "chapter_number": 265,
+          "title": "That Day",
+          "original_release_date": "2024-12-25"
+        },
+        {
+          "chapter_number": 266,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 37",
+          "original_release_date": "2024-12-25"
+        },
+        {
+          "chapter_number": 267,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 38",
+          "original_release_date": "2024-12-25"
+        },
+        {
+          "chapter_number": 268,
+          "title": "Settling Matters",
+          "original_release_date": "2024-12-25"
+        },
+        {
+          "chapter_number": 269,
+          "title": "Considerations",
+          "original_release_date": "2024-12-25"
+        },
+        {
+          "chapter_number": 270,
+          "title": "The End of the Dream",
+          "original_release_date": "2024-12-25"
+        },
+        {
+          "chapter_number": 271,
+          "title": "From Now On",
+          "original_release_date": "2024-12-25"
+        }
+      ]
+    },
+    {
+      "volume_number": 30,
+      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "region_code": "US",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/a/ac/ENG_Volume_30.png/revision/latest?cb=20251225191153",
+      "isbn13": "9781974763405",
+      "release_date": "2026-05-12",
+      "ingest_status": "published",
+      "chapters": [
+        {
+          "chapter_number": 264,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 36",
+          "original_release_date": "2026-05-12"
+        },
+        {
+          "chapter_number": 265,
+          "title": "That Day",
+          "original_release_date": "2026-05-12"
+        },
+        {
+          "chapter_number": 266,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 37",
+          "original_release_date": "2026-05-12"
+        },
+        {
+          "chapter_number": 267,
+          "title": "Inhuman Makyo Shinjuku Showdown, Part 38",
+          "original_release_date": "2026-05-12"
+        },
+        {
+          "chapter_number": 268,
+          "title": "Settling Matters",
+          "original_release_date": "2026-05-12"
+        },
+        {
+          "chapter_number": 269,
+          "title": "Considerations",
+          "original_release_date": "2026-05-12"
+        },
+        {
+          "chapter_number": 270,
+          "title": "The End of the Dream",
+          "original_release_date": "2026-05-12"
+        },
+        {
+          "chapter_number": 271,
+          "title": "From Now On",
+          "original_release_date": "2026-05-12"
+        }
+      ]
+    }
+  ]
+}

@@ -2,6 +2,26 @@
 // Core catalog types (mirror the DB schema)
 // ─────────────────────────────────────────────────────────
 
+export type SeriesGenre =
+  | 'shonen' | 'shojo' | 'seinen' | 'josei'
+  | 'fantasy' | 'romance' | 'horror' | 'sci_fi'
+  | 'slice_of_life' | 'action' | 'comedy' | 'other'
+
+export const GENRE_LABELS: Record<SeriesGenre, string> = {
+  shonen: 'Shōnen',
+  shojo: 'Shōjo',
+  seinen: 'Seinen',
+  josei: 'Josei',
+  fantasy: 'Fantasy',
+  romance: 'Romance',
+  horror: 'Horror',
+  sci_fi: 'Sci-Fi',
+  slice_of_life: 'Slice of Life',
+  action: 'Action',
+  comedy: 'Comedy',
+  other: 'Other',
+}
+
 export interface Publisher {
   id: string
   name: string
@@ -15,6 +35,7 @@ export interface Series {
   title: string
   original_title?: string
   type: 'manga' | 'novel' | 'light_novel'
+  genre?: SeriesGenre
   description?: string
   original_publisher_id: string
   status: 'ongoing' | 'completed' | 'hiatus'

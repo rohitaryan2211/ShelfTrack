@@ -21,11 +21,12 @@ export interface SeriesInsert {
   title: string
   original_title: string | null
   type: 'manga' | 'novel' | 'light_novel'
+  genre?: string
   description: string | null
   original_publisher_id: string | null
   status: 'ongoing' | 'completed' | 'hiatus'
   cover_url: string | null
-  ingest_status: 'draft' | 'published'
+  ingest_status: 'draft' | 'published' | 'rejected'
   _mal_id?: number            // fallback ID
 }
 
@@ -56,15 +57,25 @@ export function extractMUVolumes(statusStr: string): number {
 }
 
 // ── Volume transformer ──────────────────────────────────────────────
+export interface ChapterInsert {
+  series_id: string
+  chapter_number: number
+  title?: string | null
+  original_release_date?: string | null
+}
+
 export interface VolumeInsert {
   series_id: string
   volume_number: number
+  title?: string | null
   publisher_id: string | null
   region_code: string
   cover_url: string | null
   isbn13: string | null
   release_date: string | null
-  ingest_status: 'draft' | 'published'
+  page_count?: number | null
+  ingest_status: 'draft' | 'published' | 'rejected'
+  chapters?: any[]
 }
 
 export function buildVolumeInserts(

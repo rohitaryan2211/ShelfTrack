@@ -3,13 +3,14 @@ import { useParams, Link } from 'react-router-dom'
 import { Calendar, BookMarked, Star, Library } from 'lucide-react'
 import { supabase } from '../lib/supabaseClient'
 import { useAuth } from '../hooks/useAuth'
-import type { Profile, LibraryEntry, Review } from '../lib/types'
+import { VolumeCard } from '../components/Cards'
+import type { Profile, LibraryEntry, Review, Volume } from '../lib/types'
 
 export default function ProfilePage() {
   const { username } = useParams<{ username: string }>()
   const { user } = useAuth()
   const [profile, setProfile] = useState<Profile | null>(null)
-  const [entries, setEntries] = useState<LibraryEntry[]>([])
+  const [shelfVolumes, setShelfVolumes] = useState<Volume[]>([])
   const [reviews, setReviews] = useState<Review[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -26,10 +27,38 @@ export default function ProfilePage() {
 
       if (prof) {
         const [entriesResult, reviewsResult] = await Promise.all([
-          supabase.from('library_entries').select('*, series:series(id,title,cover_url), volume:volumes(id,volume_number,cover_url)').eq('user_id', prof.id).eq('owned', true).limit(12),
-          supabase.from('reviews').select('*, series:series(id,title,cover_url)').eq('user_id', prof.id).order('created_at', { ascending: false }).limit(5),
+          supabase
+            .from('library_entries')
+            .select(`
+              *,
+              volume:volumes(
+                id, series_id, volume_number, title, isbn13, publisher_id, region_code,
+                release_date, cover_url, page_count,
+                series:series(id, title, original_title, type, genre, status, cover_url, description,
+                  publisher:publishers!original_publisher_id(id, name, country)
+                ),
+                publisher:publishers(id, name, country)
+              ),
+              series:series(id, title, cover_url)
+            `)
+            .eq('user_id', prof.id)
+            .eq('owned', true)
+            .limit(60),
+          supabase
+            .from('reviews')
+            .select('*, series:series(id,title,cover_url)')
+            .eq('user_id', prof.id)
+            .order('created_at', { ascending: false })
+            .limit(5),
         ])
-        setEntries((entriesResult.data ?? []) as LibraryEntry[])
+
+        // Extract volumes from library entries for collection
+        const entries = (entriesResult.data ?? []) as LibraryEntry[]
+        const vols: Volume[] = entries
+          .filter(e => e.volume)
+          .map(e => e.volume!)
+
+        setShelfVolumes(vols)
         setReviews((reviewsResult.data ?? []) as Review[])
       }
       setLoading(false)
@@ -55,7 +84,7 @@ export default function ProfilePage() {
               <Calendar size={14} /> Joined {joinDate}
             </span>
             <span style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '0.875rem', color: 'var(--text-muted)' }}>
-              <BookMarked size={14} /> {entries.length} owned
+              <BookMarked size={14} /> {shelfVolumes.length} owned
             </span>
             <span style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '0.875rem', color: 'var(--text-muted)' }}>
               <Star size={14} /> {reviews.length} reviews
@@ -67,37 +96,29 @@ export default function ProfilePage() {
         )}
       </div>
 
-      {/* Shelf (owned volumes) */}
+      {/* Collection (owned volumes) */}
       <section id="profile-shelf-section" style={{ marginBottom: 'var(--space-10)' }}>
         <div className="section-header">
-          <h2><BookMarked size={20} style={{ display: 'inline', marginRight: 8, color: 'var(--vermillion)' }} />Shelf</h2>
+          <h2><BookMarked size={20} style={{ display: 'inline', marginRight: 8, color: 'var(--vermillion)' }} />Collection</h2>
           {isOwn && <Link to="/library?tab=owned" className="btn btn-ghost btn-sm" id="profile-view-all-shelf-btn">View all</Link>}
         </div>
+
         {loading ? (
-          <div className="scroll-row">{Array.from({ length: 6 }).map((_, i) => <div key={i} className="skeleton" style={{ width: 130, height: 195, borderRadius: 'var(--radius-lg)', flexShrink: 0 }} />)}</div>
-        ) : entries.length === 0 ? (
+          <div style={{ display: 'flex', gap: 'var(--space-4)', overflowX: 'auto' }}>
+            {Array.from({ length: 4 }).map((_, i) => <div key={i} className="skeleton" style={{ width: 140, height: 210, borderRadius: 'var(--radius-md)', flexShrink: 0 }} />)}
+          </div>
+        ) : shelfVolumes.length === 0 ? (
           <div className="empty-state" style={{ padding: 'var(--space-8)' }}>
             <div className="empty-state-icon"><BookMarked size={28} /></div>
-            <p>{isOwn ? 'Your shelf is empty — start adding volumes!' : `${displayName} hasn't added anything to their shelf yet.`}</p>
+            <p>{isOwn ? 'Your collection is empty — start adding volumes!' : `${displayName} hasn't added anything to their collection yet.`}</p>
           </div>
         ) : (
-          <div className="scroll-row" id="profile-shelf-row">
-            {entries.map(entry => {
-              const cover = entry.series?.cover_url ?? entry.volume?.cover_url
-              const title = entry.series?.title ?? `Vol. ${entry.volume?.volume_number}`
-              const href = entry.series_id ? `/series/${entry.series_id}` : `/volumes/${entry.volume_id}`
-              return (
-                <Link key={entry.id} to={href} className="volume-card animate-fade-up" style={{ width: 130, flexShrink: 0, textDecoration: 'none' }} id={`profile-shelf-${entry.id}`}>
-                  <div className="volume-card-cover">
-                    {cover ? <img src={cover} alt={title} loading="lazy" referrerPolicy="no-referrer" /> : <div className="cover-placeholder"><BookMarked size={20} /></div>}
-                  </div>
-                  <div className="volume-card-body">
-                    <div className="volume-card-title" title={title}>{title}</div>
-                    <div className="volume-card-meta"><span className="badge badge-vermillion" style={{ fontSize: '0.625rem' }}>Owned</span></div>
-                  </div>
-                </Link>
-              )
-            })}
+          <div style={{ display: 'flex', gap: 'var(--space-4)', overflowX: 'auto', paddingBottom: 'var(--space-2)' }}>
+            {shelfVolumes.map(vol => (
+              <div key={vol.id} style={{ width: 140, flexShrink: 0 }}>
+                <VolumeCard volume={vol} />
+              </div>
+            ))}
           </div>
         )}
       </section>

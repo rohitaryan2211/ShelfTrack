@@ -54,5 +54,5 @@ Thumbs.db
 
 # ─── Type generation cache ─────────────────────────────────────────────────────
 *.tsbuildinfo
-.data/
 
+# NOTE: catalog data lives in data/ (public, tracked in git)
