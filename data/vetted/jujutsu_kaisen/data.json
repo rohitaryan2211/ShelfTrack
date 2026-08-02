@@ -1,11 +1,12 @@
 {
+  "$version": 2,
   "series": {
     "title": "Jujutsu Kaisen",
     "original_title": "呪術廻戦",
     "type": "manga",
     "genre": "shonen",
     "description": "In a world where cursed spirits feed on unsuspecting humans, fragments of the legendary and feared demon Ryomen Sukuna were lost and scattered about. Should any demon consume Sukuna's body parts, the power they gain could destroy the world as we know it. Fortunately, there exists a mysterious school of Jujutsu Sorcerers who exist to protect the precarious existence of the living from the supernatural!",
-    "original_publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+    "original_publisher_slug": "shueisha",
     "status": "completed",
     "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/e/ea/ENG_Volume_1.png/revision/latest?cb=20191118060852",
     "ingest_status": "published"
@@ -13,11 +14,16 @@
   "volumes": [
     {
       "volume_number": 0,
-      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "title": null,
+      "description": null,
+      "publisher_slug": "shueisha",
       "region_code": "JP",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/9/9d/Volume_0.png/revision/latest?cb=20181125152842",
-      "isbn13": "9784088816722",
+      "edition_type": "single",
+      "language_code": "jp",
+      "isbn": "9784088816722",
       "release_date": "2018-12-04",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/9/9d/Volume_0.png/revision/latest?cb=20181125152842",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -44,11 +50,16 @@
     },
     {
       "volume_number": 0,
-      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "title": null,
+      "description": null,
+      "publisher_slug": "viz_media",
       "region_code": "US",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/0/0b/ENG_Volume_0.png/revision/latest?cb=20200919131001",
-      "isbn13": "9781974720149",
+      "edition_type": "single",
+      "language_code": "us",
+      "isbn": "9781974720149",
       "release_date": "2021-01-05",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/0/0b/ENG_Volume_0.png/revision/latest?cb=20200919131001",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -75,11 +86,16 @@
     },
     {
       "volume_number": 1,
-      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "title": null,
+      "description": null,
+      "publisher_slug": "shueisha",
       "region_code": "JP",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/0/0e/Volume_1.png/revision/latest?cb=20180719214641",
-      "isbn13": "9784088815169",
+      "edition_type": "single",
+      "language_code": "jp",
+      "isbn": "9784088815169",
       "release_date": "2018-07-04",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/0/0e/Volume_1.png/revision/latest?cb=20180719214641",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -121,11 +137,16 @@
     },
     {
       "volume_number": 1,
-      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "title": null,
+      "description": null,
+      "publisher_slug": "viz_media",
       "region_code": "US",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/e/ea/ENG_Volume_1.png/revision/latest?cb=20191118060852",
-      "isbn13": "9781974710027",
+      "edition_type": "single",
+      "language_code": "us",
+      "isbn": "9781974710027",
       "release_date": "2019-12-03",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/e/ea/ENG_Volume_1.png/revision/latest?cb=20191118060852",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -167,11 +188,16 @@
     },
     {
       "volume_number": 2,
-      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "title": null,
+      "description": null,
+      "publisher_slug": "shueisha",
       "region_code": "JP",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/2/2f/Volume_2.png/revision/latest?cb=20181028145329",
-      "isbn13": "9784088816081",
+      "edition_type": "single",
+      "language_code": "jp",
+      "isbn": "9784088816081",
       "release_date": "2018-09-04",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/2/2f/Volume_2.png/revision/latest?cb=20181028145329",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -223,11 +249,16 @@
     },
     {
       "volume_number": 2,
-      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "title": null,
+      "description": null,
+      "publisher_slug": "viz_media",
       "region_code": "US",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/d/d2/ENG_Volume_2.png/revision/latest?cb=20200204015318",
-      "isbn13": "9781974710034",
+      "edition_type": "single",
+      "language_code": "us",
+      "isbn": "9781974710034",
       "release_date": "2020-02-04",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/d/d2/ENG_Volume_2.png/revision/latest?cb=20200204015318",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -279,11 +310,16 @@
     },
     {
       "volume_number": 3,
-      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "title": null,
+      "description": null,
+      "publisher_slug": "shueisha",
       "region_code": "JP",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/7/75/Volume_3.png/revision/latest?cb=20181125152835",
-      "isbn13": "9784088816661",
+      "edition_type": "single",
+      "language_code": "jp",
+      "isbn": "9784088816661",
       "release_date": "2018-12-04",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/7/75/Volume_3.png/revision/latest?cb=20181125152835",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -335,11 +371,16 @@
     },
     {
       "volume_number": 3,
-      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "title": null,
+      "description": null,
+      "publisher_slug": "viz_media",
       "region_code": "US",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/b/ba/ENG_Volume_3.png/revision/latest?cb=20191118061130",
-      "isbn13": "9781974710041",
+      "edition_type": "single",
+      "language_code": "us",
+      "isbn": "9781974710041",
       "release_date": "2020-04-07",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/b/ba/ENG_Volume_3.png/revision/latest?cb=20191118061130",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -391,11 +432,16 @@
     },
     {
       "volume_number": 4,
-      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "title": null,
+      "description": null,
+      "publisher_slug": "shueisha",
       "region_code": "JP",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/3/31/Volume_4.png/revision/latest?cb=20190226191850",
-      "isbn13": "9784088817569",
+      "edition_type": "single",
+      "language_code": "jp",
+      "isbn": "9784088817569",
       "release_date": "2019-03-04",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/3/31/Volume_4.png/revision/latest?cb=20190226191850",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -447,11 +493,16 @@
     },
     {
       "volume_number": 4,
-      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "title": null,
+      "description": null,
+      "publisher_slug": "viz_media",
       "region_code": "US",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/2/24/ENG_Volume_4.png/revision/latest?cb=20200325210541",
-      "isbn13": "9781974714803",
+      "edition_type": "single",
+      "language_code": "us",
+      "isbn": "9781974714803",
       "release_date": "2020-06-02",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/2/24/ENG_Volume_4.png/revision/latest?cb=20200325210541",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -503,11 +554,16 @@
     },
     {
       "volume_number": 5,
-      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "title": null,
+      "description": null,
+      "publisher_slug": "shueisha",
       "region_code": "JP",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/8/8a/Volume_5.png/revision/latest?cb=20190424172532",
-      "isbn13": "9784088818283",
+      "edition_type": "single",
+      "language_code": "jp",
+      "isbn": "9784088818283",
       "release_date": "2019-05-02",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/8/8a/Volume_5.png/revision/latest?cb=20190424172532",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -559,11 +615,16 @@
     },
     {
       "volume_number": 5,
-      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "title": null,
+      "description": null,
+      "publisher_slug": "viz_media",
       "region_code": "US",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/8/89/ENG_Volume_5.png/revision/latest?cb=20200417162119",
-      "isbn13": "9781974714810",
+      "edition_type": "single",
+      "language_code": "us",
+      "isbn": "9781974714810",
       "release_date": "2020-08-04",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/8/89/ENG_Volume_5.png/revision/latest?cb=20200417162119",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -615,11 +676,16 @@
     },
     {
       "volume_number": 6,
-      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "title": null,
+      "description": null,
+      "publisher_slug": "shueisha",
       "region_code": "JP",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/f/fb/Volume_6.png/revision/latest?cb=20190628170622",
-      "isbn13": "9784088818764",
+      "edition_type": "single",
+      "language_code": "jp",
+      "isbn": "9784088818764",
       "release_date": "2019-07-04",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/f/fb/Volume_6.png/revision/latest?cb=20190628170622",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -671,11 +737,16 @@
     },
     {
       "volume_number": 6,
-      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "title": null,
+      "description": null,
+      "publisher_slug": "viz_media",
       "region_code": "US",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/2/25/ENG_Volume_6.png/revision/latest?cb=20200525012102",
-      "isbn13": "9781974714827",
+      "edition_type": "single",
+      "language_code": "us",
+      "isbn": "9781974714827",
       "release_date": "2020-10-06",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/2/25/ENG_Volume_6.png/revision/latest?cb=20200525012102",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -727,11 +798,16 @@
     },
     {
       "volume_number": 7,
-      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "title": null,
+      "description": null,
+      "publisher_slug": "shueisha",
       "region_code": "JP",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/2/24/Volume_7.png/revision/latest?cb=20190923171540",
-      "isbn13": "9784088820767",
+      "edition_type": "single",
+      "language_code": "jp",
+      "isbn": "9784088820767",
       "release_date": "2019-10-04",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/2/24/Volume_7.png/revision/latest?cb=20190923171540",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -783,11 +859,16 @@
     },
     {
       "volume_number": 7,
-      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "title": null,
+      "description": null,
+      "publisher_slug": "viz_media",
       "region_code": "US",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/3/3a/ENG_Volume_7.png/revision/latest?cb=20200907225526",
-      "isbn13": "9781974717118",
+      "edition_type": "single",
+      "language_code": "us",
+      "isbn": "9781974717118",
       "release_date": "2020-12-01",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/3/3a/ENG_Volume_7.png/revision/latest?cb=20200907225526",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -839,11 +920,16 @@
     },
     {
       "volume_number": 8,
-      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "title": null,
+      "description": null,
+      "publisher_slug": "shueisha",
       "region_code": "JP",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/8/82/Volume_8.png/revision/latest?cb=20191224182249",
-      "isbn13": "9784088821689",
+      "edition_type": "single",
+      "language_code": "jp",
+      "isbn": "9784088821689",
       "release_date": "2020-01-04",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/8/82/Volume_8.png/revision/latest?cb=20191224182249",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -895,11 +981,16 @@
     },
     {
       "volume_number": 8,
-      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "title": null,
+      "description": null,
+      "publisher_slug": "viz_media",
       "region_code": "US",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/1/12/ENG_Volume_8.png/revision/latest?cb=20200923121203",
-      "isbn13": "9781974718719",
+      "edition_type": "single",
+      "language_code": "us",
+      "isbn": "9781974718719",
       "release_date": "2021-02-02",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/1/12/ENG_Volume_8.png/revision/latest?cb=20200923121203",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -951,11 +1042,16 @@
     },
     {
       "volume_number": 9,
-      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "title": null,
+      "description": null,
+      "publisher_slug": "shueisha",
       "region_code": "JP",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/7/79/Volume_9.png/revision/latest?cb=20200105171845",
-      "isbn13": "9784088822181",
+      "edition_type": "single",
+      "language_code": "jp",
+      "isbn": "9784088822181",
       "release_date": "2020-03-04",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/7/79/Volume_9.png/revision/latest?cb=20200105171845",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -1007,11 +1103,16 @@
     },
     {
       "volume_number": 9,
-      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "title": null,
+      "description": null,
+      "publisher_slug": "viz_media",
       "region_code": "US",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/8/87/ENG_Volume_9.png/revision/latest?cb=20201118193736",
-      "isbn13": "9781974718726",
+      "edition_type": "single",
+      "language_code": "us",
+      "isbn": "9781974718726",
       "release_date": "2021-04-06",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/8/87/ENG_Volume_9.png/revision/latest?cb=20201118193736",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -1063,11 +1164,16 @@
     },
     {
       "volume_number": 10,
-      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "title": null,
+      "description": null,
+      "publisher_slug": "shueisha",
       "region_code": "JP",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/6/6b/Volume_10.png/revision/latest?cb=20200303141915",
-      "isbn13": "9784088822747",
+      "edition_type": "single",
+      "language_code": "jp",
+      "isbn": "9784088822747",
       "release_date": "2020-06-04",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/6/6b/Volume_10.png/revision/latest?cb=20200303141915",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -1119,11 +1225,16 @@
     },
     {
       "volume_number": 10,
-      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "title": null,
+      "description": null,
+      "publisher_slug": "viz_media",
       "region_code": "US",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/f/f2/ENG_Volume_10.png/revision/latest?cb=20210201081932",
-      "isbn13": "9781974720750",
+      "edition_type": "single",
+      "language_code": "us",
+      "isbn": "9781974720750",
       "release_date": "2021-06-01",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/f/f2/ENG_Volume_10.png/revision/latest?cb=20210201081932",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -1175,11 +1286,16 @@
     },
     {
       "volume_number": 11,
-      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "title": null,
+      "description": null,
+      "publisher_slug": "shueisha",
       "region_code": "JP",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/1/1b/Volume_11.png/revision/latest?cb=20200529202155",
-      "isbn13": "9784088822969",
+      "edition_type": "single",
+      "language_code": "jp",
+      "isbn": "9784088822969",
       "release_date": "2020-08-04",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/1/1b/Volume_11.png/revision/latest?cb=20200529202155",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -1231,11 +1347,16 @@
     },
     {
       "volume_number": 11,
-      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "title": null,
+      "description": null,
+      "publisher_slug": "viz_media",
       "region_code": "US",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/a/a4/ENG_Volume_11.png/revision/latest?cb=20210329001021",
-      "isbn13": "9781974722846",
+      "edition_type": "single",
+      "language_code": "us",
+      "isbn": "9781974722846",
       "release_date": "2021-08-03",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/a/a4/ENG_Volume_11.png/revision/latest?cb=20210329001021",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -1287,11 +1408,16 @@
     },
     {
       "volume_number": 12,
-      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "title": null,
+      "description": null,
+      "publisher_slug": "shueisha",
       "region_code": "JP",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/4/4e/Volume_12.png/revision/latest?cb=20200728170833",
-      "isbn13": "9784088823812",
+      "edition_type": "single",
+      "language_code": "jp",
+      "isbn": "9784088823812",
       "release_date": "2020-10-02",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/4/4e/Volume_12.png/revision/latest?cb=20200728170833",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -1343,11 +1469,16 @@
     },
     {
       "volume_number": 12,
-      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "title": null,
+      "description": null,
+      "publisher_slug": "viz_media",
       "region_code": "US",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/6/66/ENG_Volume_12.png/revision/latest?cb=20210606010147",
-      "isbn13": "9781974722853",
+      "edition_type": "single",
+      "language_code": "us",
+      "isbn": "9781974722853",
       "release_date": "2021-10-05",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/6/66/ENG_Volume_12.png/revision/latest?cb=20210606010147",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -1399,11 +1530,16 @@
     },
     {
       "volume_number": 13,
-      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "title": null,
+      "description": null,
+      "publisher_slug": "shueisha",
       "region_code": "JP",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/b/b6/Volume_13.png/revision/latest?cb=20200919131131",
-      "isbn13": "9784088824291",
+      "edition_type": "single",
+      "language_code": "jp",
+      "isbn": "9784088824291",
       "release_date": "2021-01-04",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/b/b6/Volume_13.png/revision/latest?cb=20200919131131",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -1455,11 +1591,16 @@
     },
     {
       "volume_number": 13,
-      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "title": null,
+      "description": null,
+      "publisher_slug": "viz_media",
       "region_code": "US",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/5/58/ENG_Volume_13.png/revision/latest?cb=20210728210354",
-      "isbn13": "9781974723423",
+      "edition_type": "single",
+      "language_code": "us",
+      "isbn": "9781974723423",
       "release_date": "2021-12-07",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/5/58/ENG_Volume_13.png/revision/latest?cb=20210728210354",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -1511,11 +1652,16 @@
     },
     {
       "volume_number": 14,
-      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "title": null,
+      "description": null,
+      "publisher_slug": "shueisha",
       "region_code": "JP",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/1/17/Volume_14.png/revision/latest?cb=20201217023900",
-      "isbn13": "9784088825342",
+      "edition_type": "single",
+      "language_code": "jp",
+      "isbn": "9784088825342",
       "release_date": "2021-03-04",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/1/17/Volume_14.png/revision/latest?cb=20201217023900",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -1567,11 +1713,16 @@
     },
     {
       "volume_number": 14,
-      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "title": null,
+      "description": null,
+      "publisher_slug": "viz_media",
       "region_code": "US",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/d/d5/ENG_Volume_14.png/revision/latest?cb=20210921123639",
-      "isbn13": "9781974725328",
+      "edition_type": "single",
+      "language_code": "us",
+      "isbn": "9781974725328",
       "release_date": "2022-02-01",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/d/d5/ENG_Volume_14.png/revision/latest?cb=20210921123639",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -1623,11 +1774,16 @@
     },
     {
       "volume_number": 15,
-      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "title": null,
+      "description": null,
+      "publisher_slug": "shueisha",
       "region_code": "JP",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/4/4e/Volume_15.png/revision/latest?cb=20210209020850",
-      "isbn13": "9784088825816",
+      "edition_type": "single",
+      "language_code": "jp",
+      "isbn": "9784088825816",
       "release_date": "2021-03-04",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/4/4e/Volume_15.png/revision/latest?cb=20210209020850",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -1679,11 +1835,16 @@
     },
     {
       "volume_number": 15,
-      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "title": null,
+      "description": null,
+      "publisher_slug": "viz_media",
       "region_code": "US",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/1/16/ENG_Volume_15.png/revision/latest?cb=20211109002309",
-      "isbn13": "9781974727100",
+      "edition_type": "single",
+      "language_code": "us",
+      "isbn": "9781974727100",
       "release_date": "2022-04-05",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/1/16/ENG_Volume_15.png/revision/latest?cb=20211109002309",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -1735,11 +1896,16 @@
     },
     {
       "volume_number": 16,
-      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "title": null,
+      "description": null,
+      "publisher_slug": "shueisha",
       "region_code": "JP",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/4/45/Volume_16.png/revision/latest?cb=20210510020718",
-      "isbn13": "9784088826882",
+      "edition_type": "single",
+      "language_code": "jp",
+      "isbn": "9784088826882",
       "release_date": "2021-06-04",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/4/45/Volume_16.png/revision/latest?cb=20210510020718",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -1791,11 +1957,16 @@
     },
     {
       "volume_number": 16,
-      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "title": null,
+      "description": null,
+      "publisher_slug": "viz_media",
       "region_code": "US",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/5/54/ENG_Volume_16.png/revision/latest?cb=20220221144941",
-      "isbn13": "9781974728985",
+      "edition_type": "single",
+      "language_code": "us",
+      "isbn": "9781974728985",
       "release_date": "2022-06-21",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/5/54/ENG_Volume_16.png/revision/latest?cb=20220221144941",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -1847,11 +2018,16 @@
     },
     {
       "volume_number": 17,
-      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "title": null,
+      "description": null,
+      "publisher_slug": "shueisha",
       "region_code": "JP",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/6/64/Volume_17.png/revision/latest?cb=20210918164256",
-      "isbn13": "9784088827360",
+      "edition_type": "single",
+      "language_code": "jp",
+      "isbn": "9784088827360",
       "release_date": "2021-10-04",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/6/64/Volume_17.png/revision/latest?cb=20210918164256",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -1908,11 +2084,16 @@
     },
     {
       "volume_number": 17,
-      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "title": null,
+      "description": null,
+      "publisher_slug": "viz_media",
       "region_code": "US",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/e/e6/ENG_Volume_17.png/revision/latest?cb=20220327173527",
-      "isbn13": "9781974732333",
+      "edition_type": "single",
+      "language_code": "us",
+      "isbn": "9781974732333",
       "release_date": "2022-08-16",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/e/e6/ENG_Volume_17.png/revision/latest?cb=20220327173527",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -1969,11 +2150,16 @@
     },
     {
       "volume_number": 18,
-      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "title": null,
+      "description": null,
+      "publisher_slug": "shueisha",
       "region_code": "JP",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/a/a2/Volume_18.png/revision/latest?cb=20220115224753",
-      "isbn13": "9784088828480",
+      "edition_type": "single",
+      "language_code": "jp",
+      "isbn": "9784088828480",
       "release_date": "2021-12-25",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/a/a2/Volume_18.png/revision/latest?cb=20220115224753",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -2025,11 +2211,16 @@
     },
     {
       "volume_number": 18,
-      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "title": null,
+      "description": null,
+      "publisher_slug": "viz_media",
       "region_code": "US",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/8/8d/ENG_Volume_18.png/revision/latest?cb=20220814193438",
-      "isbn13": "9781974734399",
+      "edition_type": "single",
+      "language_code": "us",
+      "isbn": "9781974734399",
       "release_date": "2022-12-20",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/8/8d/ENG_Volume_18.png/revision/latest?cb=20220814193438",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -2081,11 +2272,16 @@
     },
     {
       "volume_number": 19,
-      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "title": null,
+      "description": null,
+      "publisher_slug": "shueisha",
       "region_code": "JP",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/c/c9/Volume_19.png/revision/latest?cb=20220307020604",
-      "isbn13": "9784088830681",
+      "edition_type": "single",
+      "language_code": "jp",
+      "isbn": "9784088830681",
       "release_date": "2022-04-04",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/c/c9/Volume_19.png/revision/latest?cb=20220307020604",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -2142,11 +2338,16 @@
     },
     {
       "volume_number": 19,
-      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "title": null,
+      "description": null,
+      "publisher_slug": "viz_media",
       "region_code": "US",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/8/8d/ENG_Volume_19.png/revision/latest?cb=20221107081903",
-      "isbn13": "9781974736270",
+      "edition_type": "single",
+      "language_code": "us",
+      "isbn": "9781974736270",
       "release_date": "2023-03-21",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/8/8d/ENG_Volume_19.png/revision/latest?cb=20221107081903",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -2203,11 +2404,16 @@
     },
     {
       "volume_number": 20,
-      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "title": null,
+      "description": null,
+      "publisher_slug": "shueisha",
       "region_code": "JP",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/3/32/Volume_20.png/revision/latest?cb=20220704145546",
-      "isbn13": "9784088832012",
+      "edition_type": "single",
+      "language_code": "jp",
+      "isbn": "9784088832012",
       "release_date": "2022-08-04",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/3/32/Volume_20.png/revision/latest?cb=20220704145546",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -2259,11 +2465,16 @@
     },
     {
       "volume_number": 20,
-      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "title": null,
+      "description": null,
+      "publisher_slug": "viz_media",
       "region_code": "US",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/2/2e/ENG_Volume_20.png/revision/latest?cb=20230320005741",
-      "isbn13": "9781974738748",
+      "edition_type": "single",
+      "language_code": "us",
+      "isbn": "9781974738748",
       "release_date": "2023-08-15",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/2/2e/ENG_Volume_20.png/revision/latest?cb=20230320005741",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -2315,11 +2526,16 @@
     },
     {
       "volume_number": 21,
-      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "title": null,
+      "description": null,
+      "publisher_slug": "shueisha",
       "region_code": "JP",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/a/a6/Volume_21.png/revision/latest?cb=20221107081719",
-      "isbn13": "9784088833118",
+      "edition_type": "single",
+      "language_code": "jp",
+      "isbn": "9784088833118",
       "release_date": "2022-12-02",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/a/a6/Volume_21.png/revision/latest?cb=20221107081719",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -2376,11 +2592,16 @@
     },
     {
       "volume_number": 21,
-      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "title": null,
+      "description": null,
+      "publisher_slug": "viz_media",
       "region_code": "US",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/3/34/ENG_Volume_21.png/revision/latest?cb=20230701004720",
-      "isbn13": "9781974741229",
+      "edition_type": "single",
+      "language_code": "us",
+      "isbn": "9781974741229",
       "release_date": "2023-11-21",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/3/34/ENG_Volume_21.png/revision/latest?cb=20230701004720",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -2437,11 +2658,16 @@
     },
     {
       "volume_number": 22,
-      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "title": null,
+      "description": null,
+      "publisher_slug": "shueisha",
       "region_code": "JP",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/5/5e/Volume_22.png/revision/latest?cb=20230203040654",
-      "isbn13": "9784088834344",
+      "edition_type": "single",
+      "language_code": "jp",
+      "isbn": "9784088834344",
       "release_date": "2023-03-03",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/5/5e/Volume_22.png/revision/latest?cb=20230203040654",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -2493,11 +2719,16 @@
     },
     {
       "volume_number": 22,
-      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "title": null,
+      "description": null,
+      "publisher_slug": "viz_media",
       "region_code": "US",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/c/c0/ENG_Volume_22.png/revision/latest?cb=20231120231140",
-      "isbn13": "9781974743414",
+      "edition_type": "single",
+      "language_code": "us",
+      "isbn": "9781974743414",
       "release_date": "2024-04-16",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/c/c0/ENG_Volume_22.png/revision/latest?cb=20231120231140",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -2549,11 +2780,16 @@
     },
     {
       "volume_number": 23,
-      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "title": null,
+      "description": null,
+      "publisher_slug": "shueisha",
       "region_code": "JP",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/5/5d/Volume_23.png/revision/latest?cb=20230605170055",
-      "isbn13": "9784088836287",
+      "edition_type": "single",
+      "language_code": "jp",
+      "isbn": "9784088836287",
       "release_date": "2023-07-04",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/5/5d/Volume_23.png/revision/latest?cb=20230605170055",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -2605,11 +2841,16 @@
     },
     {
       "volume_number": 23,
-      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "title": null,
+      "description": null,
+      "publisher_slug": "viz_media",
       "region_code": "US",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/4/41/ENG_Volume_23.png/revision/latest?cb=20240404112002",
-      "isbn13": "9781974746293",
+      "edition_type": "single",
+      "language_code": "us",
+      "isbn": "9781974746293",
       "release_date": "2024-08-20",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/4/41/ENG_Volume_23.png/revision/latest?cb=20240404112002",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -2661,11 +2902,16 @@
     },
     {
       "volume_number": 24,
-      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "title": null,
+      "description": null,
+      "publisher_slug": "shueisha",
       "region_code": "JP",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/6/6a/Volume_24.png/revision/latest?cb=20230919045239",
-      "isbn13": "9784088836706",
+      "edition_type": "single",
+      "language_code": "jp",
+      "isbn": "9784088836706",
       "release_date": "2023-10-04",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/6/6a/Volume_24.png/revision/latest?cb=20230919045239",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -2717,11 +2963,16 @@
     },
     {
       "volume_number": 24,
-      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "title": null,
+      "description": null,
+      "publisher_slug": "viz_media",
       "region_code": "US",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/f/fd/ENG_Volume_24.png/revision/latest?cb=20240725065810",
-      "isbn13": "9781974749485",
+      "edition_type": "single",
+      "language_code": "us",
+      "isbn": "9781974749485",
       "release_date": "2024-12-10",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/f/fd/ENG_Volume_24.png/revision/latest?cb=20240725065810",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -2773,11 +3024,16 @@
     },
     {
       "volume_number": 25,
-      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "title": null,
+      "description": null,
+      "publisher_slug": "shueisha",
       "region_code": "JP",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/e/ef/Volume_25.png/revision/latest?cb=20240103235507",
-      "isbn13": "9784088837994",
+      "edition_type": "single",
+      "language_code": "jp",
+      "isbn": "9784088837994",
       "release_date": "2024-01-04",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/e/ef/Volume_25.png/revision/latest?cb=20240103235507",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -2834,11 +3090,16 @@
     },
     {
       "volume_number": 25,
-      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "title": null,
+      "description": null,
+      "publisher_slug": "viz_media",
       "region_code": "US",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/f/fb/ENG_Volume_25.png/revision/latest?cb=20241104024748",
-      "isbn13": "9781974751884",
+      "edition_type": "single",
+      "language_code": "us",
+      "isbn": "9781974751884",
       "release_date": "2025-03-11",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/f/fb/ENG_Volume_25.png/revision/latest?cb=20241104024748",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -2895,11 +3156,16 @@
     },
     {
       "volume_number": 26,
-      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "title": null,
+      "description": null,
+      "publisher_slug": "shueisha",
       "region_code": "JP",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/0/00/Volume_26.png/revision/latest?cb=20240311122937",
-      "isbn13": "9784088838847",
+      "edition_type": "single",
+      "language_code": "jp",
+      "isbn": "9784088838847",
       "release_date": "2024-04-04",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/0/00/Volume_26.png/revision/latest?cb=20240311122937",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -2951,11 +3217,16 @@
     },
     {
       "volume_number": 26,
-      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "title": null,
+      "description": null,
+      "publisher_slug": "viz_media",
       "region_code": "US",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/3/3a/ENG_Volume_26.png/revision/latest?cb=20250726004733",
-      "isbn13": "9781974754977",
+      "edition_type": "single",
+      "language_code": "us",
+      "isbn": "9781974754977",
       "release_date": "2025-05-20",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/3/3a/ENG_Volume_26.png/revision/latest?cb=20250726004733",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -3007,11 +3278,16 @@
     },
     {
       "volume_number": 27,
-      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "title": null,
+      "description": null,
+      "publisher_slug": "shueisha",
       "region_code": "JP",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/1/1d/Volume_27.png/revision/latest?cb=20250726004209",
-      "isbn13": "9784088841151",
+      "edition_type": "single",
+      "language_code": "jp",
+      "isbn": "9784088841151",
       "release_date": "2024-07-04",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/1/1d/Volume_27.png/revision/latest?cb=20250726004209",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -3063,11 +3339,16 @@
     },
     {
       "volume_number": 27,
-      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "title": null,
+      "description": null,
+      "publisher_slug": "viz_media",
       "region_code": "US",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/5/56/ENG_Volume_27.png/revision/latest?cb=20250726004021",
-      "isbn13": "9781974755592",
+      "edition_type": "single",
+      "language_code": "us",
+      "isbn": "9781974755592",
       "release_date": "2025-08-19",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/5/56/ENG_Volume_27.png/revision/latest?cb=20250726004021",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -3119,11 +3400,16 @@
     },
     {
       "volume_number": 28,
-      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "title": null,
+      "description": null,
+      "publisher_slug": "shueisha",
       "region_code": "JP",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/a/a5/Volume_28.png/revision/latest?cb=20240826042846",
-      "isbn13": "9784088842110",
+      "edition_type": "single",
+      "language_code": "jp",
+      "isbn": "9784088842110",
       "release_date": "2024-10-04",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/a/a5/Volume_28.png/revision/latest?cb=20240826042846",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -3175,11 +3461,16 @@
     },
     {
       "volume_number": 28,
-      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "title": null,
+      "description": null,
+      "publisher_slug": "viz_media",
       "region_code": "US",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/3/33/ENG_Volume_28.png/revision/latest?cb=20250701204507",
-      "isbn13": "9781974758906",
+      "edition_type": "single",
+      "language_code": "us",
+      "isbn": "9781974758906",
       "release_date": "2025-11-04",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/3/33/ENG_Volume_28.png/revision/latest?cb=20250701204507",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -3231,11 +3522,16 @@
     },
     {
       "volume_number": 29,
-      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "title": null,
+      "description": null,
+      "publisher_slug": "shueisha",
       "region_code": "JP",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/1/1a/Volume_29.png/revision/latest?cb=20241117150709",
-      "isbn13": "9784088843773",
+      "edition_type": "single",
+      "language_code": "jp",
+      "isbn": "9784088843773",
       "release_date": "2024-12-25",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/1/1a/Volume_29.png/revision/latest?cb=20241117150709",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -3287,11 +3583,16 @@
     },
     {
       "volume_number": 29,
-      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "title": null,
+      "description": null,
+      "publisher_slug": "viz_media",
       "region_code": "US",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/c/c3/ENG_Volume_29.png/revision/latest?cb=20250929010228",
-      "isbn13": "9781974762019",
+      "edition_type": "single",
+      "language_code": "us",
+      "isbn": "9781974762019",
       "release_date": "2026-02-17",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/c/c3/ENG_Volume_29.png/revision/latest?cb=20250929010228",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -3343,11 +3644,16 @@
     },
     {
       "volume_number": 30,
-      "publisher_id": "6df82f14-7d82-4798-85b6-bbb91e9413a9",
+      "title": null,
+      "description": null,
+      "publisher_slug": "shueisha",
       "region_code": "JP",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/5/52/Volume_30.png/revision/latest?cb=20250726004803",
-      "isbn13": "9784088843780",
+      "edition_type": "single",
+      "language_code": "jp",
+      "isbn": "9784088843780",
       "release_date": "2024-12-25",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/5/52/Volume_30.png/revision/latest?cb=20250726004803",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {
@@ -3394,11 +3700,16 @@
     },
     {
       "volume_number": 30,
-      "publisher_id": "da6e070d-4bf7-4399-8cf1-ac814060f995",
+      "title": null,
+      "description": null,
+      "publisher_slug": "viz_media",
       "region_code": "US",
-      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/a/ac/ENG_Volume_30.png/revision/latest?cb=20251225191153",
-      "isbn13": "9781974763405",
+      "edition_type": "single",
+      "language_code": "us",
+      "isbn": "9781974763405",
       "release_date": "2026-05-12",
+      "cover_url": "https://static.wikia.nocookie.net/jujutsu-kaisen/images/a/ac/ENG_Volume_30.png/revision/latest?cb=20251225191153",
+      "page_count": null,
       "ingest_status": "published",
       "chapters": [
         {

@@ -5,6 +5,7 @@ import { useAuth } from '../hooks/useAuth'
 import { supabase } from '../lib/supabaseClient'
 import { useEffect, useState } from 'react'
 import type { Series } from '../lib/types'
+import ActivityFeed from '../components/ActivityFeed'
 
 // ── Feature highlight data (static UI copy, not mock DB data) ────
 const FEATURES = [
@@ -191,6 +192,14 @@ export default function HomePage() {
               )
           }
         </div>
+      </section>
+
+      {/* ── Community Activity Feed ────────────────────── */}
+      <section id="community-activity-section" style={{ marginBottom: 'var(--space-12)' }}>
+        <div className="section-header">
+          <h2><Users size={22} style={{ display: 'inline', marginRight: 8, color: 'var(--vermillion)' }} />Community Activity</h2>
+        </div>
+        <ActivityFeed limit={8} />
       </section>
 
       {/* ── CTA banner ───────────────────────────────────── */}

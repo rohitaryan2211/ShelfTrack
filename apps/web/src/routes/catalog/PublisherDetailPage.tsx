@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { ArrowLeft, Globe, ExternalLink, BookOpen } from 'lucide-react'
-import { SeriesCard, SkeletonCard } from '../components/Cards'
-import { supabase } from '../lib/supabaseClient'
-import type { Publisher, Series } from '../lib/types'
+import { SeriesCard, SkeletonCard } from '../../components/Cards'
+import { supabase } from '../../lib/supabaseClient'
+import type { Publisher, Series } from '../../lib/types'
 
 const FLAG: Record<string, string> = { JP: '🇯🇵', US: '🇺🇸', GB: '🇬🇧', IN: '🇮🇳' }
 

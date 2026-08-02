@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { useSearchParams, Link } from 'react-router-dom'
 import { Search, BookOpen, BookMarked, User } from 'lucide-react'
-import { supabase } from '../lib/supabaseClient'
-import type { Series, Publisher } from '../lib/types'
+import { supabase } from '../../lib/supabaseClient'
+import type { Series, Publisher } from '../../lib/types'
 
 type ResultType = 'series' | 'publishers'
 

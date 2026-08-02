@@ -10,7 +10,6 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 dotenv.config({ path: resolve(__dirname, '../../.env') })
 
 import { createClient } from '@supabase/supabase-js'
-import type { SeriesInsert, VolumeInsert } from './transform.ts'
 
 const supabase = createClient(
   process.env.SUPABASE_URL!,
@@ -22,27 +21,88 @@ export interface UpsertResult {
   inserted: boolean
 }
 
-/** Upsert a series row. Deduplication key: title (case-insensitive). */
-export async function upsertSeries(series: SeriesInsert, dryRun = false): Promise<UpsertResult | null> {
+/** Cache publisher slug/name -> DB UUID */
+const publisherCache = new Map<string, string>()
+
+/** Resolve publisher slug or name to a database UUID, inserting if missing */
+export async function resolvePublisherId(slugOrNameOrUuid: string): Promise<string> {
+  const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(slugOrNameOrUuid)
+  if (isUuid) return slugOrNameOrUuid
+
+  const normalized = slugOrNameOrUuid.trim().toLowerCase()
+  if (publisherCache.has(normalized)) {
+    return publisherCache.get(normalized)!
+  }
+
+  // 1. Try matching existing publisher by name
+  const formattedName = slugOrNameOrUuid.replace(/_/g, ' ')
+  const { data: existing } = await supabase
+    .from('publishers')
+    .select('id, name')
+    .ilike('name', formattedName)
+    .maybeSingle()
+
+  if (existing) {
+    publisherCache.set(normalized, existing.id)
+    return existing.id
+  }
+
+  // 2. Insert new publisher on-the-fly
+  const { data: inserted, error } = await supabase
+    .from('publishers')
+    .insert({
+      name: formattedName.replace(/\b\w/g, l => l.toUpperCase()),
+      country: 'JP',
+      is_original_publisher: true
+    })
+    .select('id')
+    .single()
+
+  if (error || !inserted) {
+    throw new Error(`Failed to create/resolve publisher "${slugOrNameOrUuid}": ${error?.message}`)
+  }
+
+  publisherCache.set(normalized, inserted.id)
+  return inserted.id
+}
+
+/** Deep Idempotent Series Upsert: updates series metadata if modified. */
+export async function upsertSeries(series: any, dryRun = false): Promise<UpsertResult | null> {
   if (dryRun) {
     console.log(`[dry-run] Would upsert series: ${series.title}`)
     return { id: 'dry-run-series-id', inserted: true }
   }
 
-  // Check if a series with this title already exists
+  // Resolve publisher ID if passed as slug
+  const pubRef = series.original_publisher_slug || series.original_publisher_id
+  if (pubRef) {
+    series.original_publisher_id = await resolvePublisherId(pubRef)
+  }
+
+  const { _anilist_id, _mal_id, original_publisher_slug, ...insertData } = series
+
+  // Check if series exists by title
   const { data: existing } = await supabase
     .from('series')
     .select('id')
     .ilike('title', series.title)
-    .single()
+    .maybeSingle()
 
   if (existing) {
-    console.log(`[skip] Series already exists: ${series.title} (${existing.id})`)
+    const { error } = await supabase
+      .from('series')
+      .update(insertData)
+      .eq('id', existing.id)
+
+    if (error) {
+      console.error(`[error] Failed to update series "${series.title}":`, error.message)
+      return null
+    }
+
+    console.log(`[~] Updated series: ${series.title} (${existing.id})`)
     return { id: existing.id, inserted: false }
   }
 
-  // Remove internal _anilist_id and _mal_id fields before inserting
-  const { _anilist_id, _mal_id, ...insertData } = series as SeriesInsert & { _anilist_id?: number, _mal_id?: number }
   const { data, error } = await supabase.from('series').insert(insertData).select('id').single()
 
   if (error || !data) {
@@ -54,28 +114,28 @@ export async function upsertSeries(series: SeriesInsert, dryRun = false): Promis
   return { id: data.id, inserted: true }
 }
 
-/** Upsert volumes for a series. Dedup: (series_id, volume_number, region_code). */
-export async function upsertVolumes(volumes: VolumeInsert[], dryRun = false): Promise<number> {
+/** Deep Idempotent Volume Upsert */
+export async function upsertVolumes(volumes: any[], dryRun = false): Promise<number> {
   const prefix = dryRun ? '[dry-run] Would upsert' : '[live] Upserting'
   console.log(`${prefix} ${volumes.length} volumes for series ${volumes[0]?.series_id}`)
-  
-  for (const vol of volumes) {
-    console.log(`  - Volume ${vol.volume_number} (Region: ${vol.region_code})`)
-    if (vol.chapters && Array.isArray(vol.chapters)) {
-      const chapNumbers = vol.chapters.map(c => c.chapter_number)
-      console.log(`    ↳ Chapters: ${chapNumbers.join(', ')}`)
-    }
-  }
 
   if (dryRun) {
+    for (const vol of volumes) {
+      console.log(`  - Volume ${vol.volume_number} (Region: ${vol.region_code})`)
+    }
     return 0
   }
 
   let inserted = 0
   for (const vol of volumes) {
-    const { chapters, ...volData } = vol
+    const pubRef = vol.publisher_slug || vol.publisher_id
+    if (pubRef) {
+      vol.publisher_id = await resolvePublisherId(pubRef)
+    }
 
-    // 1. Upsert Volume and get its ID
+    const { chapters, publisher_slug, ...volData } = vol
+
+    // 1. Upsert Volume
     const { data: volResult, error: volError } = await supabase
       .from('volumes')
       .upsert(volData, { onConflict: 'series_id,volume_number,region_code' })
@@ -94,11 +154,7 @@ export async function upsertVolumes(volumes: VolumeInsert[], dryRun = false): Pr
     if (chapters && Array.isArray(chapters)) {
       for (const rawChap of chapters) {
         const cNum = Number(rawChap.chapter_number)
-
-        if (isNaN(cNum)) {
-          console.warn(`[warn] Invalid chapter number for volume ${vol.volume_number}:`, rawChap.chapter_number)
-          continue
-        }
+        if (isNaN(cNum)) continue
 
         const chapterPayload = {
           series_id: vol.series_id,
@@ -107,19 +163,17 @@ export async function upsertVolumes(volumes: VolumeInsert[], dryRun = false): Pr
           original_release_date: rawChap.original_release_date || null
         }
 
-        // Check if chapter exists for this series
         const { data: existingChap } = await supabase
           .from('chapters')
           .select('id')
           .eq('series_id', vol.series_id)
           .eq('chapter_number', cNum)
-          .single()
+          .maybeSingle()
 
         let chapterId: string
 
         if (existingChap) {
           chapterId = existingChap.id
-          // Optionally update existing chapter details if needed
           await supabase.from('chapters').update(chapterPayload).eq('id', chapterId)
         } else {
           const { data: newChap, error: chapError } = await supabase
@@ -128,29 +182,15 @@ export async function upsertVolumes(volumes: VolumeInsert[], dryRun = false): Pr
             .select('id')
             .single()
 
-          if (chapError || !newChap) {
-            console.warn(`[warn] Failed to insert chapter ${cNum}:`, chapError?.message)
-            continue
-          }
+          if (chapError || !newChap) continue
           chapterId = newChap.id
         }
 
-        // Link chapter to volume
-        const { error: linkError } = await supabase
+        await supabase
           .from('volume_chapters')
           .upsert({ volume_id: volumeId, chapter_id: chapterId }, { onConflict: 'volume_id,chapter_id' })
-
-        if (linkError) {
-          console.warn(`[warn] Failed to link chapter ${cNum} to volume ${vol.volume_number}:`, linkError.message)
-        }
       }
     }
   }
   return inserted
-}
-
-/** Fetch all publishers from DB to seed the name→ID cache. */
-export async function fetchPublishers(): Promise<{ name: string; id: string }[]> {
-  const { data } = await supabase.from('publishers').select('id,name')
-  return (data ?? []) as { name: string; id: string }[]
 }

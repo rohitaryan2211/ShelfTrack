@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { Calendar, BookMarked, Star, Library } from 'lucide-react'
-import { supabase } from '../lib/supabaseClient'
-import { useAuth } from '../hooks/useAuth'
-import { VolumeCard } from '../components/Cards'
-import type { Profile, LibraryEntry, Review, Volume } from '../lib/types'
+import { supabase } from '../../lib/supabaseClient'
+import { useAuth } from '../../hooks/useAuth'
+import { VolumeCard } from '../../components/Cards'
+import ActivityFeed from '../../components/ActivityFeed'
+import type { Profile, LibraryEntry, Review, Volume } from '../../lib/types'
 
 export default function ProfilePage() {
   const { username } = useParams<{ username: string }>()
@@ -20,10 +21,16 @@ export default function ProfilePage() {
       if (!target) return
 
       const [profResult] = await Promise.all([
-        supabase.from('profiles').select('*').eq('username', target).single(),
+        supabase.from('profiles').select('*').eq('username', target).maybeSingle(),
       ])
       const prof = profResult.data as Profile | null
       setProfile(prof)
+      
+      // Always refresh profile for logged-in user to get latest data
+      if (!username && user) {
+        const { data: userProf } = await supabase.from('profiles').select('*').eq('id', user.id).maybeSingle()
+        if (userProf) setProfile(userProf as Profile)
+      }
 
       if (prof) {
         const [entriesResult, reviewsResult] = await Promise.all([
@@ -52,7 +59,6 @@ export default function ProfilePage() {
             .limit(5),
         ])
 
-        // Extract volumes from library entries for collection
         const entries = (entriesResult.data ?? []) as LibraryEntry[]
         const vols: Volume[] = entries
           .filter(e => e.volume)
@@ -67,8 +73,7 @@ export default function ProfilePage() {
   }, [username, user])
 
   const isOwn = user && (!username || username === user.email?.split('@')[0])
-
-  const displayName = profile?.username ?? username ?? 'User'
+  const displayName = profile?.username ?? username ?? user?.email?.split('@')[0] ?? 'User'
   const joinDate = profile?.created_at ? new Date(profile.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long' }) : '—'
 
   return (
@@ -122,6 +127,16 @@ export default function ProfilePage() {
           </div>
         )}
       </section>
+
+      {/* User Activity Feed */}
+      {profile?.id && (
+        <section id="profile-activity-section" style={{ marginBottom: 'var(--space-10)' }}>
+          <div className="section-header">
+            <h2><BookMarked size={20} style={{ display: 'inline', marginRight: 8, color: 'var(--vermillion)' }} />Recent Activity</h2>
+          </div>
+          <ActivityFeed userId={profile.id} limit={5} />
+        </section>
+      )}
 
       {/* Reviews */}
       <section id="profile-reviews-section">

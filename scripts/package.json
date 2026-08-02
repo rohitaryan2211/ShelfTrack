@@ -11,7 +11,9 @@
     "seed:publishers": "tsx ingest/seed_publishers.ts",
     "update": "tsx ingest/update.ts",
     "update:dry": "tsx ingest/update.ts --dry-run",
-    "db:clear": "tsx db/clear.ts"
+    "db:clear": "tsx db/clear.ts",
+    "data:migrate": "tsx ingest/migrate_data.ts",
+    "push": "tsx ingest/push.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.50.0",

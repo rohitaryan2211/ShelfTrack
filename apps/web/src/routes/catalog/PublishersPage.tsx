@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Globe, BookOpen, ExternalLink } from 'lucide-react'
-import { supabase } from '../lib/supabaseClient'
-import type { Publisher } from '../lib/types'
+import { supabase } from '../../lib/supabaseClient'
+import type { Publisher } from '../../lib/types'
 
 const FLAG: Record<string, string> = { JP: '🇯🇵', US: '🇺🇸', GB: '🇬🇧', IN: '🇮🇳', DE: '🇩🇪', FR: '🇫🇷', AU: '🇦🇺' }
 

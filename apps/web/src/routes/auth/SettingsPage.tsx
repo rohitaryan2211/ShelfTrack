@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Settings, User, Globe, Shield, Trash2, Save } from 'lucide-react'
-import { supabase } from '../lib/supabaseClient'
-import { useAuth } from '../hooks/useAuth'
-import { REGION_ENTRIES } from '../lib/regionLabels'
+import { supabase } from '../../lib/supabaseClient'
+import { useAuth } from '../../hooks/useAuth'
+import { REGION_ENTRIES } from '../../lib/regionLabels'
 
 const REGIONS = REGION_ENTRIES
 
@@ -17,7 +17,7 @@ export default function SettingsPage() {
 
   useEffect(() => {
     if (!user) return
-    supabase.from('profiles').select('*').eq('id', user.id).single().then(({ data }) => {
+    supabase.from('profiles').select('*').eq('id', user.id).maybeSingle().then(({ data }) => {
       if (data) {
         setUsername(data.username ?? '')
         setBio(data.bio ?? '')
@@ -30,11 +30,20 @@ export default function SettingsPage() {
   const handleSave = async () => {
     if (!user) return
     setSaving(true)
-    const { error } = await supabase.from('profiles').upsert({
-      id: user.id, username, bio, updated_at: new Date().toISOString(),
-    }, { onConflict: 'id' })
-    if (error) showToast(`Error: ${error.message}`)
-    else showToast('Profile saved!')
+    const finalUsername = username.trim() || (user.email ? user.email.split('@')[0] : `user_${user.id.slice(0, 6)}`)
+    const { error, data } = await supabase.from('profiles').upsert({
+      id: user.id, username: finalUsername, bio: bio.trim(),
+    }, { onConflict: 'id' }).select().maybeSingle()
+    if (error) {
+      showToast(`Error: ${error.message}`)
+    } else {
+      // Update local state with server response to persist changes
+      if (data) {
+        setUsername(data.username ?? '')
+        setBio(data.bio ?? '')
+      }
+      showToast('Profile saved!')
+    }
     setSaving(false)
   }
 
@@ -57,9 +66,9 @@ export default function SettingsPage() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
             {/* Avatar preview */}
             <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)', marginBottom: 'var(--space-2)' }}>
-              <div className="avatar avatar-xl">{(username || user?.email || 'U')[0].toUpperCase()}</div>
+              <div className="avatar avatar-xl">{(username || user?.email?.split('@')[0] || 'U')[0].toUpperCase()}</div>
               <div>
-                <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{username || 'Your Username'}</div>
+                <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>@{username || user?.email?.split('@')[0] || 'User'}</div>
                 <div style={{ fontSize: '0.8125rem', color: 'var(--text-muted)' }}>{user?.email}</div>
               </div>
             </div>

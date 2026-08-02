@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Compass, SlidersHorizontal, Layers, Search } from 'lucide-react'
-import { supabase } from '../lib/supabaseClient'
-import { SeriesCard, SkeletonCard } from '../components/Cards'
-import type { Series, SeriesGenre } from '../lib/types'
-import { GENRE_LABELS } from '../lib/types'
+import { supabase } from '../../lib/supabaseClient'
+import { SeriesCard, SkeletonCard } from '../../components/Cards'
+import type { Series, SeriesGenre } from '../../lib/types'
+import { GENRE_LABELS } from '../../lib/types'
 
 type StatusFilter = 'all' | 'ongoing' | 'completed' | 'hiatus'
 type GenreFilter = 'all' | SeriesGenre

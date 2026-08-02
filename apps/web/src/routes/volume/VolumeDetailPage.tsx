@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { ArrowLeft, BookMarked, ShoppingBag, ExternalLink, List } from 'lucide-react'
-import { supabase } from '../lib/supabaseClient'
-import { useAuth } from '../hooks/useAuth'
-import type { Volume, Chapter, VolumeAvailability, LibraryEntry, ReadStatus } from '../lib/types'
-import { READ_STATUS_LABELS } from '../lib/types'
+import { supabase } from '../../lib/supabaseClient'
+import { useAuth } from '../../hooks/useAuth'
+import type { Volume, Chapter, VolumeAvailability, LibraryEntry, ReadStatus, ReadFormat } from '../../lib/types'
+import { READ_STATUS_LABELS } from '../../lib/types'
 
 const STATUS_OPTIONS: ReadStatus[] = ['plan_to_read', 'reading', 'completed', 'dropped', 'on_hold']
 
@@ -19,6 +19,9 @@ export default function VolumeDetailPage() {
   const [loading, setLoading] = useState(true)
   const [savingStatus, setSavingStatus] = useState(false)
   const [toast, setToast] = useState<string | null>(null)
+
+  const [userChapterReads, setUserChapterReads] = useState<Record<string, ReadFormat>>({})
+  const [selectedFormat, setSelectedFormat] = useState<ReadFormat>('digital')
 
   useEffect(() => {
     async function load() {
@@ -35,8 +38,23 @@ export default function VolumeDetailPage() {
       setLoading(false)
 
       if (user) {
-        const { data: entry } = await supabase.from('library_entries').select('*').eq('user_id', user.id).eq('volume_id', id!).single()
+        const { data: entry } = await supabase.from('library_entries').select('*').eq('user_id', user.id).eq('volume_id', id!).maybeSingle()
         setLibraryEntry(entry)
+
+        if (mappedChapters.length > 0) {
+          const chapIds = mappedChapters.map(c => c.id)
+          const { data: reads } = await supabase
+            .from('user_chapter_reads')
+            .select('chapter_id, read_format')
+            .eq('user_id', user.id)
+            .in('chapter_id', chapIds)
+
+          if (reads) {
+            const map: Record<string, ReadFormat> = {}
+            reads.forEach((r: any) => { map[r.chapter_id] = r.read_format })
+            setUserChapterReads(map)
+          }
+        }
       }
     }
     if (id) load()
@@ -44,12 +62,74 @@ export default function VolumeDetailPage() {
 
   const showToast = (msg: string) => { setToast(msg); setTimeout(() => setToast(null), 2500) }
 
+  const toggleChapterRead = async (chapterId: string) => {
+    if (!user) return
+    const isRead = !!userChapterReads[chapterId]
+    if (isRead) {
+      const { error } = await supabase
+        .from('user_chapter_reads')
+        .delete()
+        .eq('user_id', user.id)
+        .eq('chapter_id', chapterId)
+
+      if (!error) {
+        const updated = { ...userChapterReads }
+        delete updated[chapterId]
+        setUserChapterReads(updated)
+        showToast('Chapter unread')
+      } else {
+        showToast(`Error: ${error.message}`)
+      }
+    } else {
+      const check = await supabase.from('user_chapter_reads').select('id').eq('user_id', user.id).eq('chapter_id', chapterId).maybeSingle()
+      let error = null
+      if (check.data?.id) {
+        const res = await supabase.from('user_chapter_reads').update({ read_format: selectedFormat }).eq('id', check.data.id)
+        error = res.error
+      } else {
+        const res = await supabase.from('user_chapter_reads').insert({ user_id: user.id, chapter_id: chapterId, read_format: selectedFormat })
+        error = res.error
+      }
+
+      if (!error) {
+        setUserChapterReads(prev => ({ ...prev, [chapterId]: selectedFormat }))
+        showToast(`Marked read (${selectedFormat})`)
+      } else {
+        showToast(`Error: ${error.message}`)
+      }
+    }
+  }
+
   const upsertEntry = async (updates: Partial<LibraryEntry>) => {
     if (!user) return
     setSavingStatus(true)
-    const payload = { ...libraryEntry, ...updates, user_id: user.id, volume_id: id }
-    const { data, error } = await supabase.from('library_entries').upsert(payload, { onConflict: 'user_id,volume_id' }).select().single()
-    if (!error && data) { setLibraryEntry(data as LibraryEntry); showToast('Saved!') }
+    let error = null
+    let updatedEntry = null
+
+    const existingId = libraryEntry?.id
+    if (existingId) {
+      const res = await supabase.from('library_entries').update({ ...updates, updated_at: new Date().toISOString() }).eq('id', existingId).select().maybeSingle()
+      error = res.error
+      updatedEntry = res.data
+    } else {
+      const check = await supabase.from('library_entries').select('id').eq('user_id', user.id).eq('volume_id', id!).maybeSingle()
+      if (check.data?.id) {
+        const res = await supabase.from('library_entries').update({ ...updates, updated_at: new Date().toISOString() }).eq('id', check.data.id).select().maybeSingle()
+        error = res.error
+        updatedEntry = res.data
+      } else {
+        const res = await supabase.from('library_entries').insert({ ...updates, user_id: user.id, volume_id: id }).select().maybeSingle()
+        error = res.error
+        updatedEntry = res.data
+      }
+    }
+
+    if (!error && updatedEntry) {
+      setLibraryEntry(updatedEntry as LibraryEntry)
+      showToast('Saved!')
+    } else if (error) {
+      showToast(`Error: ${error.message}`)
+    }
     setSavingStatus(false)
   }
 
@@ -113,15 +193,21 @@ export default function VolumeDetailPage() {
             Volume {vol.volume_number}{vol.title ? ` — ${vol.title}` : ''}
           </h1>
 
+          {vol.description && (
+            <p className="animate-fade-up delay-150" style={{ color: 'var(--text-secondary)', marginBottom: 'var(--space-4)', fontSize: '0.9375rem', lineHeight: 1.6 }}>
+              {vol.description}
+            </p>
+          )}
+
           {/* Metadata grid */}
           <div className="animate-fade-up delay-200" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 'var(--space-4)', marginBottom: 'var(--space-6)' }}>
             {[
               { label: 'Publisher', value: vol.publisher?.name ?? '—' },
               { label: 'Release Date', value: vol.release_date ? new Date(vol.release_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long' }) : '—' },
-              { label: 'ISBN-13', value: vol.isbn13 ?? '—' },
+              { label: 'Edition', value: vol.edition_type ? vol.edition_type.toUpperCase() : 'SINGLE' },
+              { label: 'Language', value: vol.language_code ? vol.language_code.toUpperCase() : vol.region_code },
+              { label: 'ISBN', value: vol.isbn ?? vol.isbn13 ?? '—' },
               { label: 'Pages', value: vol.page_count ? `${vol.page_count} pages` : '—' },
-              { label: 'Region', value: vol.region_code },
-              { label: 'Chapters', value: chapters.length > 0 ? `${chapters.length} chapters` : '—' },
             ].map(item => (
               <div key={item.label} className="card" style={{ padding: 'var(--space-3)' }}>
                 <div style={{ fontSize: '0.6875rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'var(--text-muted)', marginBottom: 4 }}>{item.label}</div>
@@ -164,20 +250,54 @@ export default function VolumeDetailPage() {
         </div>
       </div>
 
-      {/* ── Chapter list ─────────────────────────────── */}
+      {/* ── Chapter list with format selector ─────────────────────────────── */}
       {chapters.length > 0 && (
         <section id="chapters-section" className="card animate-fade-up" style={{ marginBottom: 'var(--space-6)', padding: 'var(--space-6)' }}>
-          <h2 style={{ fontSize: '1.125rem', marginBottom: 'var(--space-4)', display: 'flex', alignItems: 'center', gap: 8 }}>
-            <List size={18} style={{ color: 'var(--ink-green)' }} />
-            Chapters in this volume
-          </h2>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-1)' }}>
-            {chapters.map(ch => (
-              <div key={ch.id} style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)', padding: 'var(--space-2) var(--space-3)', borderRadius: 'var(--radius-sm)', transition: 'background var(--dur-fast)' }} className="chapter-row" id={`chapter-row-${ch.id}`}>
-                <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', minWidth: 40 }}>Ch. {ch.chapter_number}</span>
-                <span style={{ fontSize: '0.9375rem', color: 'var(--text-primary)', flex: 1 }}>{ch.title ?? `Chapter ${ch.chapter_number}`}</span>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-4)', flexWrap: 'wrap', gap: 'var(--space-3)' }}>
+            <h2 style={{ fontSize: '1.125rem', display: 'flex', alignItems: 'center', gap: 8, margin: 0 }}>
+              <List size={18} style={{ color: 'var(--ink-green)' }} />
+              Chapters in this volume
+            </h2>
+            {user && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
+                <span style={{ fontSize: '0.8125rem', color: 'var(--text-muted)' }}>Read format:</span>
+                {(['digital', 'physical', 'scanlation'] as ReadFormat[]).map(fmt => (
+                  <button
+                    key={fmt}
+                    className={`btn btn-sm ${selectedFormat === fmt ? 'btn-primary' : 'btn-secondary'}`}
+                    onClick={() => setSelectedFormat(fmt)}
+                    style={{ textTransform: 'capitalize' }}
+                  >
+                    {fmt}
+                  </button>
+                ))}
               </div>
-            ))}
+            )}
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-1)' }}>
+            {chapters.map(ch => {
+              const readFormat = userChapterReads[ch.id]
+              const isRead = !!readFormat
+              return (
+                <div key={ch.id} style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)', padding: 'var(--space-2) var(--space-3)', borderRadius: 'var(--radius-sm)', background: isRead ? 'rgba(62, 92, 62, 0.15)' : 'transparent', transition: 'background var(--dur-fast)' }} className="chapter-row" id={`chapter-row-${ch.id}`}>
+                  {user && (
+                    <input
+                      type="checkbox"
+                      checked={isRead}
+                      onChange={() => toggleChapterRead(ch.id)}
+                      style={{ cursor: 'pointer', width: 16, height: 16, accentColor: 'var(--ink-green)' }}
+                    />
+                  )}
+                  <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', minWidth: 40 }}>Ch. {ch.chapter_number}</span>
+                  <span style={{ fontSize: '0.9375rem', color: 'var(--text-primary)', flex: 1 }}>{ch.title ?? `Chapter ${ch.chapter_number}`}</span>
+                  {readFormat && (
+                    <span className="badge badge-ink-green" style={{ fontSize: '0.7rem', textTransform: 'uppercase' }}>
+                      {readFormat}
+                    </span>
+                  )}
+                </div>
+              )
+            })}
           </div>
         </section>
       )}

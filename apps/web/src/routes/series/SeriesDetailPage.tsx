@@ -4,11 +4,11 @@ import {
   ArrowLeft, BookMarked, Eye, Star, ShoppingBag,
   ChevronDown, ChevronUp, ExternalLink, BookOpen, Globe
 } from 'lucide-react'
-import { supabase } from '../lib/supabaseClient'
-import { useAuth } from '../hooks/useAuth'
-import type { Series, Volume, Review, LibraryEntry, ReadStatus, VolumeAvailability } from '../lib/types'
-import { READ_STATUS_LABELS } from '../lib/types'
-import { getRegionLabel } from '../lib/regionLabels'
+import { supabase } from '../../lib/supabaseClient'
+import { useAuth } from '../../hooks/useAuth'
+import type { Series, Volume, Review, LibraryEntry, ReadStatus, VolumeAvailability } from '../../lib/types'
+import { READ_STATUS_LABELS } from '../../lib/types'
+import { getRegionLabel } from '../../lib/regionLabels'
 
 
 
@@ -235,7 +235,7 @@ export default function SeriesDetailPage() {
       setLoading(false)
 
       if (user) {
-        const { data: entry } = await supabase.from('library_entries').select('*').eq('user_id', user.id).eq('series_id', id!).single()
+        const { data: entry } = await supabase.from('library_entries').select('*').eq('user_id', user.id).eq('series_id', id!).maybeSingle()
         setLibraryEntry(entry)
       }
     }
@@ -250,11 +250,32 @@ export default function SeriesDetailPage() {
   const upsertLibraryEntry = async (updates: Partial<LibraryEntry>) => {
     if (!user) return
     setSavingStatus(true)
-    const payload = { ...libraryEntry, ...updates, user_id: user.id, series_id: id }
-    const { data, error } = await supabase.from('library_entries').upsert(payload, { onConflict: 'user_id,series_id' }).select().single()
-    if (!error && data) {
-      setLibraryEntry(data as LibraryEntry)
+    let error = null
+    let updatedEntry = null
+
+    const existingId = libraryEntry?.id
+    if (existingId) {
+      const res = await supabase.from('library_entries').update({ ...updates, updated_at: new Date().toISOString() }).eq('id', existingId).select().maybeSingle()
+      error = res.error
+      updatedEntry = res.data
+    } else {
+      const check = await supabase.from('library_entries').select('id').eq('user_id', user.id).eq('series_id', id!).maybeSingle()
+      if (check.data?.id) {
+        const res = await supabase.from('library_entries').update({ ...updates, updated_at: new Date().toISOString() }).eq('id', check.data.id).select().maybeSingle()
+        error = res.error
+        updatedEntry = res.data
+      } else {
+        const res = await supabase.from('library_entries').insert({ ...updates, user_id: user.id, series_id: id }).select().maybeSingle()
+        error = res.error
+        updatedEntry = res.data
+      }
+    }
+
+    if (!error && updatedEntry) {
+      setLibraryEntry(updatedEntry as LibraryEntry)
       showToast('Saved!')
+    } else if (error) {
+      showToast(`Error: ${error.message}`)
     }
     setSavingStatus(false)
   }
@@ -368,19 +389,6 @@ export default function SeriesDetailPage() {
                   <option value="">📖 Add to list…</option>
                   {STATUS_OPTIONS.map(s => <option key={s} value={s}>{READ_STATUS_LABELS[s]}</option>)}
                 </select>
-
-                {/* Owned toggle */}
-                <button
-                  id="owned-toggle-btn"
-                  className={`btn ${libraryEntry?.owned ? 'active-owned status-toggle' : 'status-toggle'}`}
-                  onClick={() => upsertLibraryEntry({ owned: !libraryEntry?.owned, read_status: libraryEntry?.read_status ?? 'plan_to_read' })}
-                  disabled={savingStatus}
-                  aria-pressed={!!libraryEntry?.owned}
-                  title={libraryEntry?.owned ? 'Remove from shelf' : 'Add to shelf (own this series)'}
-                >
-                  <BookMarked size={15} />
-                  {libraryEntry?.owned ? 'On shelf' : 'Add to shelf'}
-                </button>
 
                 {/* Rating */}
                 <div style={{ display: 'flex', gap: 2 }} aria-label="Your rating" role="group">

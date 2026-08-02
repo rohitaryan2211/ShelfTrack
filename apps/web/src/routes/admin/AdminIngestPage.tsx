@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { ShieldCheck, RefreshCw, Check, X, Edit, Database, Plus, AlertTriangle } from 'lucide-react'
-import { supabase } from '../lib/supabaseClient'
-import { useAuth } from '../hooks/useAuth'
+import { supabase } from '../../lib/supabaseClient'
+import { useAuth } from '../../hooks/useAuth'
 
 interface DraftItem {
   id: string

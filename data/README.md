@@ -2,15 +2,13 @@
 
 This folder contains the hand-curated catalog data for ShelfTrack. It is tracked in git so contributors can submit new series by opening pull requests.
 
-> **Note**: This was previously the hidden `.data/` folder. It has been made public so the community can contribute series data directly via PR.
-
 ---
 
 ## Structure
 
 ```
 data/
-├── mock_schema_reference.json     # JSON schema template — read this before adding a series
+├── mock_schema_reference.json     # JSON schema template ($version: 2) — read this before adding a series
 └── vetted/
     └── <series_slug>/
         └── data.json              # Series + volumes metadata
@@ -22,24 +20,23 @@ Each subdirectory under `vetted/` represents one series and must contain a `data
 
 ### `mock_schema_reference.json`
 
-A reference JSON template showing the exact shape of a valid `data.json` file. **Read this first** before authoring series data.
+A reference JSON template showing the exact shape of a valid `$version: 2` `data.json` file. **Read this first** before authoring series data.
 
 ---
 
 ## Adding a New Series
 
 1. Create a new folder under `data/vetted/` named after the series (lowercase + underscores).
-2. Inside it, create `data.json` following the schema in `mock_schema_reference.json`.
+2. Inside it, create `data.json` following `$version: 2` schema in `mock_schema_reference.json`.
 3. Verify your JSON structure with a dry-run push:
    ```bash
-   cd scripts
-   pnpm tsx ingest/push.ts --dry-run
+   pnpm push --dry-run
    ```
 4. Open a pull request — a curator will review and push it to the live database.
 
 ---
 
-## JSON Schema Summary
+## JSON Schema Summary ($version: 2)
 
 See the full field specification in [docs/data_ingestion_guide.md](../docs/data_ingestion_guide.md).
 
@@ -52,7 +49,7 @@ See the full field specification in [docs/data_ingestion_guide.md](../docs/data_
 | `type` | `"manga" \| "novel" \| "light_novel"` | ✅ | |
 | `genre` | `"shonen" \| "shojo" \| "seinen" \| "josei" \| "fantasy" \| "romance" \| "horror" \| "sci_fi" \| "slice_of_life" \| "action" \| "comedy" \| "other"` | — | |
 | `description` | `string \| null` | — | Synopsis |
-| `original_publisher_id` | `uuid` | ✅ | Look up from the `publishers` DB table |
+| `original_publisher_slug` | `string` | ✅ | Human-readable publisher slug (e.g. `"shueisha"` or `"kodansha"`) |
 | `status` | `"ongoing" \| "completed" \| "hiatus"` | ✅ | |
 | `cover_url` | `string \| null` | — | Fully qualified URL |
 | `ingest_status` | `"draft" \| "published" \| "rejected"` | ✅ | Use `"published"` to go live immediately |
@@ -65,11 +62,14 @@ Each entry in `volumes` represents one regional edition (e.g. JP volume 1 and US
 |---|---|---|---|
 | `volume_number` | `number` | ✅ | Supports decimals (e.g. `1.5`) |
 | `title` | `string \| null` | — | Volume-specific title if any |
-| `publisher_id` | `uuid` | ✅ | Original publisher or licensor UUID |
+| `description` | `string \| null` | — | Volume summary or synopsis (defaults to `null`) |
+| `publisher_slug` | `string` | ✅ | Publisher slug (e.g. `"viz_media"`, `"shueisha"`, `"seven_seas"`) |
 | `region_code` | `string` | ✅ | `JP`, `US`, `GB`, `IN`, `DE`, `FR`, etc. |
-| `cover_url` | `string \| null` | — | |
-| `isbn13` | `string \| null` | — | 13-digit, no hyphens (e.g. `9784088815169`) |
+| `edition_type` | `"single" \| "omnibus" \| "deluxe" \| "digital_only"` | — | Edition variant format (defaults to `"single"`) |
+| `language_code` | `string` | — | Language ISO code (defaults to lowercase `region_code`) |
+| `isbn` | `string \| null` | — | 13-digit ISBN (e.g. `9784088815169`) |
 | `release_date` | `string \| null` | — | `YYYY-MM-DD` |
+| `cover_url` | `string \| null` | — | Cover illustration URL |
 | `page_count` | `number \| null` | — | |
 | `ingest_status` | `"draft" \| "published" \| "rejected"` | ✅ | |
 | `chapters` | `Chapter[]` | — | Optional array of chapters in this volume |
@@ -84,21 +84,12 @@ Each entry in `volumes` represents one regional edition (e.g. JP volume 1 and US
 
 ---
 
-## Publisher UUIDs
+## Migration Utility (`pnpm data:migrate`)
 
-The `publisher_id` and `original_publisher_id` fields require UUIDs from the live database. To look one up:
-
-```typescript
-const { data } = await supabase
-  .from('publishers')
-  .select('id, name')
-  .ilike('name', 'Shueisha')
-  .single()
-// data.id is the UUID to use
-```
-
-Or run the db inspect script from `scripts/`:
+If you have legacy `$version: 1` data files using database UUIDs, run:
 
 ```bash
-pnpm tsx db_inspect.ts
+pnpm data:migrate
 ```
+
+This will automatically format all JSON files in `data/vetted/` to `$version: 2` with publisher slugs.

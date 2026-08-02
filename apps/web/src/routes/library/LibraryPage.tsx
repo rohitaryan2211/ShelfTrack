@@ -1,17 +1,21 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Library, BookMarked, Eye, Clock, Bookmark, XCircle, Grid, List } from 'lucide-react'
-import { supabase } from '../lib/supabaseClient'
-import { useAuth } from '../hooks/useAuth'
-import type { LibraryEntry, ReadStatus } from '../lib/types'
-import { READ_STATUS_LABELS } from '../lib/types'
+import { supabase } from '../../lib/supabaseClient'
+import { useAuth } from '../../hooks/useAuth'
+import type { LibraryEntry, ReadStatus } from '../../lib/types'
+import { READ_STATUS_LABELS } from '../../lib/types'
 
-type ActiveTab = 'all' | ReadStatus | 'owned'
+type Section = 'shelf' | 'tracker'
+type ShelfTab = 'owned' | 'wishlisted'
 type ViewMode = 'grid' | 'list'
 
-const TABS: { key: ActiveTab; label: string; icon: React.ReactNode }[] = [
-  { key: 'all',          label: 'All',          icon: <Library size={15} /> },
-  { key: 'owned',        label: 'Shelf',         icon: <BookMarked size={15} /> },
+const SHELF_TABS: { key: ShelfTab; label: string; icon: React.ReactNode }[] = [
+  { key: 'owned',       label: 'Owned',        icon: <BookMarked size={15} /> },
+  { key: 'wishlisted',  label: 'Wishlist',     icon: <Bookmark size={15} /> },
+]
+
+const TRACKER_TABS: { key: ReadStatus; label: string; icon: React.ReactNode }[] = [
   { key: 'reading',      label: 'Reading',       icon: <Eye size={15} /> },
   { key: 'completed',    label: 'Completed',     icon: <Eye size={15} /> },
   { key: 'plan_to_read', label: 'Plan to Read',  icon: <Clock size={15} /> },
@@ -23,7 +27,9 @@ export default function LibraryPage() {
   const { user } = useAuth()
   const [entries, setEntries] = useState<LibraryEntry[]>([])
   const [loading, setLoading] = useState(true)
-  const [activeTab, setActiveTab] = useState<ActiveTab>('all')
+  const [section, setSection] = useState<Section>('shelf')
+  const [shelfTab, setShelfTab] = useState<ShelfTab>('owned')
+  const [trackerTab, setTrackerTab] = useState<ReadStatus>('reading')
   const [viewMode, setViewMode] = useState<ViewMode>('grid')
 
   useEffect(() => {
@@ -36,10 +42,12 @@ export default function LibraryPage() {
         .eq('user_id', user!.id)
         .order('updated_at', { ascending: false })
 
-      if (activeTab === 'owned') {
-        query = query.eq('owned', true)
-      } else if (activeTab !== 'all') {
-        query = query.eq('read_status', activeTab as ReadStatus)
+      if (section === 'shelf') {
+        // Shelf only shows volumes, not series
+        query = query.not('volume_id', 'is', null).eq('owned', shelfTab === 'owned')
+      } else if (section === 'tracker') {
+        // Tracker shows series-level tracking only
+        query = query.not('series_id', 'is', null).eq('read_status', trackerTab)
       }
 
       const { data } = await query
@@ -47,14 +55,14 @@ export default function LibraryPage() {
       setLoading(false)
     }
     load()
-  }, [user, activeTab])
+  }, [user, section, shelfTab, trackerTab])
 
   const stats = {
-    total: entries.length,
-    owned: entries.filter(e => e.owned).length,
-    read: entries.filter(e => e.read_status === 'completed').length,
+    current: entries.length,
     avgRating: entries.filter(e => e.personal_rating).reduce((sum, e) => sum + (e.personal_rating ?? 0), 0) / (entries.filter(e => e.personal_rating).length || 1),
   }
+  
+  const currentSection = section === 'shelf' ? `${shelfTab.charAt(0).toUpperCase() + shelfTab.slice(1)}` : `${READ_STATUS_LABELS[trackerTab]}`
 
   return (
     <>
@@ -70,9 +78,7 @@ export default function LibraryPage() {
       {/* Stats */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: 'var(--space-4)', marginBottom: 'var(--space-8)' }}>
         {[
-          { label: 'Total tracked', value: stats.total, color: 'var(--text-primary)' },
-          { label: 'Volumes owned', value: stats.owned, color: 'var(--vermillion)' },
-          { label: 'Completed', value: stats.read, color: 'var(--ink-green)' },
+          { label: currentSection, value: stats.current, color: 'var(--text-primary)' },
           { label: 'Avg rating', value: stats.avgRating > 0 ? `${stats.avgRating.toFixed(1)} ★` : '—', color: 'var(--ochre)' },
         ].map((s, i) => (
           <div key={i} className="card animate-fade-up" style={{ padding: 'var(--space-5)', textAlign: 'center', animationDelay: `${i * 60}ms` }}>
@@ -83,18 +89,43 @@ export default function LibraryPage() {
       </div>
 
       {/* Tabs + View mode */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 0 }}>
-        <div className="tabs" style={{ flex: 1, margin: 0, overflowX: 'auto' }} id="library-tabs">
-          {TABS.map(t => (
-            <button key={t.key} className={`tab ${activeTab === t.key ? 'active' : ''}`} id={`library-tab-${t.key}`} onClick={() => setActiveTab(t.key)}>
-              <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>{t.icon}{t.label}</span>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)', marginBottom: 0 }}>
+        {/* Main section tabs */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div className="tabs" style={{ margin: 0 }} id="library-main-tabs">
+            <button className={`tab ${section === 'shelf' ? 'active' : ''}`} id={`library-tab-shelf`} onClick={() => setSection('shelf')}>
+              <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}><BookMarked size={15} />Shelf</span>
             </button>
-          ))}
+            <button className={`tab ${section === 'tracker' ? 'active' : ''}`} id={`library-tab-tracker`} onClick={() => setSection('tracker')}>
+              <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}><Library size={15} />Tracker</span>
+            </button>
+          </div>
+          <div style={{ display: 'flex', gap: 'var(--space-1)', marginLeft: 'var(--space-4)', flexShrink: 0 }}>
+            <button className={`btn btn-icon ${viewMode === 'grid' ? 'btn-primary' : 'btn-ghost'}`} id="view-grid-btn" onClick={() => setViewMode('grid')} title="Grid view"><Grid size={16} /></button>
+            <button className={`btn btn-icon ${viewMode === 'list' ? 'btn-primary' : 'btn-ghost'}`} id="view-list-btn" onClick={() => setViewMode('list')} title="List view"><List size={16} /></button>
+          </div>
         </div>
-        <div style={{ display: 'flex', gap: 'var(--space-1)', marginLeft: 'var(--space-4)', flexShrink: 0 }}>
-          <button className={`btn btn-icon ${viewMode === 'grid' ? 'btn-primary' : 'btn-ghost'}`} id="view-grid-btn" onClick={() => setViewMode('grid')} title="Grid view"><Grid size={16} /></button>
-          <button className={`btn btn-icon ${viewMode === 'list' ? 'btn-primary' : 'btn-ghost'}`} id="view-list-btn" onClick={() => setViewMode('list')} title="List view"><List size={16} /></button>
-        </div>
+
+        {/* Subtabs based on section */}
+        {section === 'shelf' && (
+          <div style={{ display: 'flex', overflowX: 'auto' }} className="tabs" id="library-shelf-tabs">
+            {SHELF_TABS.map(t => (
+              <button key={t.key} className={`tab ${shelfTab === t.key ? 'active' : ''}`} id={`library-shelf-tab-${t.key}`} onClick={() => setShelfTab(t.key)}>
+                <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>{t.icon}{t.label}</span>
+              </button>
+            ))}
+          </div>
+        )}
+
+        {section === 'tracker' && (
+          <div style={{ display: 'flex', overflowX: 'auto' }} className="tabs" id="library-tracker-tabs">
+            {TRACKER_TABS.map(t => (
+              <button key={t.key} className={`tab ${trackerTab === t.key ? 'active' : ''}`} id={`library-tracker-tab-${t.key}`} onClick={() => setTrackerTab(t.key)}>
+                <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>{t.icon}{t.label}</span>
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Content */}

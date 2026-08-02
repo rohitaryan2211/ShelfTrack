@@ -113,6 +113,38 @@ export interface Profile {
 
 export type ReadStatus = 'plan_to_read' | 'reading' | 'completed' | 'dropped' | 'on_hold'
 export type OwnedFormat = 'physical' | 'digital' | 'both'
+export type ReadFormat = 'physical' | 'digital' | 'scanlation'
+export type EditionType = 'single' | 'omnibus' | 'deluxe' | 'digital_only'
+
+export interface UserChapterRead {
+  id: string
+  user_id: string
+  chapter_id: string
+  read_format: ReadFormat
+  read_at: string
+}
+
+export interface Volume {
+  id: string
+  series_id: string
+  volume_number: number
+  title?: string
+  description?: string | null
+  isbn13?: string
+  isbn?: string
+  language_code?: string
+  edition_type?: EditionType
+  publisher_id: string
+  region_code: string
+  release_date?: string
+  cover_url?: string
+  page_count?: number
+  ingest_status?: 'draft' | 'published' | 'rejected'
+  // joined
+  publisher?: Publisher
+  series?: Series
+  chapters?: Chapter[]
+}
 
 export interface LibraryEntry {
   id: string
@@ -129,6 +161,23 @@ export interface LibraryEntry {
   // joined
   volume?: Volume
   series?: Series
+}
+
+export interface ActivityFeedItem {
+  id: string
+  user_id: string
+  event_type: 'completed_volume' | 'completed_series' | 'chapter_logged' | 'review_published'
+  series_id?: string
+  volume_id?: string
+  review_id?: string
+  metadata?: Record<string, unknown>
+  created_at: string
+  user_profile?: Profile
+  series?: Series
+  volume?: Volume
+  review?: Review
+  likes_count?: number
+  comments_count?: number
 }
 
 export interface Review {
@@ -165,3 +214,10 @@ export const READ_STATUS_COLORS: Record<ReadStatus, string> = {
   dropped: 'badge-neutral',
   on_hold: 'badge-ochre',
 }
+
+export const READ_FORMAT_LABELS: Record<ReadFormat, string> = {
+  physical: 'Physical',
+  digital: 'Digital',
+  scanlation: 'Scanlation',
+}
+
