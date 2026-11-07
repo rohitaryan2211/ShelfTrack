@@ -100,7 +100,7 @@ ShelfTrack uses a hand-crafted dark-mode-first design system (no Tailwind) defin
 | `/profile/:username` | `routes/profile/ProfilePage.tsx` | Public user profile — shelf, reviews, activity stream, stats |
 | `/settings` | `routes/auth/SettingsPage.tsx` | Profile management, region preference, account settings |
 | `/admin/ingest` | `routes/admin/AdminIngestPage.tsx` | Curator-only — draft queue, manual add, availability manager |
-| `/login` | `routes/auth/LoginPage.tsx` | Passwordless sign in / sign up via Magic Link (OTP) & Google OAuth |
+| `/login` | `routes/auth/LoginPage.tsx` | Passwordless sign in / sign up with a one-time email code |
 
 ---
 
@@ -142,6 +142,25 @@ pnpm push             # reads data/vetted/ → upserts to Supabase
 # 7. Start the dev server
 pnpm dev
 ```
+
+### Email sign-in codes (one-time Supabase setup)
+
+Sign-in is email-only: the user enters their email, receives a 6-digit code, and types it in.
+Supabase's default email templates send a link instead of the code, so change them once:
+
+1. Supabase dashboard → **Authentication → Emails → Templates**.
+2. In both **Magic Link** and **Confirm signup**, replace the body with something like:
+
+   ```html
+   <h2>Your ShelfTrack code</h2>
+   <p>Enter this code to sign in:</p>
+   <p style="font-size:28px;font-weight:700;letter-spacing:6px">{{ .Token }}</p>
+   <p>It expires in 1 hour. If you didn't request it, ignore this email.</p>
+   ```
+3. **Authentication → Sign In / Providers**: keep **Email** enabled; Google can be disabled.
+
+The built-in Supabase mailer is free but limited to a few emails per hour. If you outgrow it,
+plug in any free-tier SMTP provider under **Authentication → Emails → SMTP Settings**.
 
 ### Key CLI Commands
 
