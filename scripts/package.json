@@ -4,13 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "seed": "tsx ingest/seed.ts",
-    "seed:publish": "tsx ingest/seed.ts --publish",
-    "seed:dry": "tsx ingest/seed.ts --dry-run",
+    "sync": "tsx sync/index.ts",
+    "sync:dry": "tsx sync/index.ts --dry-run",
+    "test": "tsx --test sync/*.test.ts",
+    "typecheck": "tsc --noEmit -p .",
     "seed:regions": "tsx ingest/seed_regions.ts",
     "seed:publishers": "tsx ingest/seed_publishers.ts",
-    "update": "tsx ingest/update.ts",
-    "update:dry": "tsx ingest/update.ts --dry-run",
     "db:clear": "tsx db/clear.ts",
     "data:migrate": "tsx ingest/migrate_data.ts",
     "push": "tsx ingest/push.ts",
@@ -21,7 +20,8 @@
     "dotenv": "^16.5.0"
   },
   "devDependencies": {
+    "@types/node": "^20.0.0",
     "tsx": "^4.19.4",
-    "@types/node": "^20.0.0"
+    "typescript": "~6.0.3"
   }
 }

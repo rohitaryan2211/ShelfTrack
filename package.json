@@ -14,12 +14,19 @@
     "typecheck": "pnpm -r typecheck",
     "data:migrate": "pnpm --filter scripts data:migrate",
     "push": "pnpm --filter scripts push",
-    "push:v2": "pnpm --filter scripts push:v2"
+    "push:v2": "pnpm --filter scripts push:v2",
+    "sync": "pnpm --filter scripts sync",
+    "sync:dry": "pnpm --filter scripts sync:dry",
+    "test": "pnpm --filter scripts test"
   },
   "engines": {
     "node": ">=20"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["esbuild", "@swc/core", "sharp"]
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "@swc/core",
+      "sharp"
+    ]
   }
 }

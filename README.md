@@ -56,20 +56,19 @@ shelftrack/
 │   │       └── data.json ($version: 2 format with publisher slugs)
 │   └── mock_schema_reference.json  # JSON schema reference for data authors
 ├── scripts/
-│   ├── ingest/           # Data ingestion: download, transform, upsert, push, migrate
-│   │   ├── migrate_data.ts # CLI utility to convert catalog JSON files to v2 ($version: 2)
-│   │   ├── push.ts       # Main push script: reads data/vetted/ → upserts to Supabase
-│   │   ├── download.ts   # Downloads cover images from external URLs
-│   │   ├── seed.ts       # One-shot bulk seed from AniList/MangaUpdates/Google Books
-│   │   ├── update.ts     # Weekly delta updater (run by GitHub Actions cron)
-│   │   ├── upsert.ts     # Supabase upsert helpers (bypasses RLS via service key)
-│   │   └── transform.ts  # Maps API responses → our DB schema
+│   ├── sync/             # Autonomous catalog sync (AniList + MangaDex + MangaUpdates)
+│   │   ├── index.ts      # CLI entry: weekly refresh + discovery, run by GitHub Actions
+│   │   ├── build.ts      # Combines the three sources into one series bundle
+│   │   ├── map.ts        # Pure mapping rules (status, genre, chapters→volumes, licensors)
+│   │   ├── db.ts         # Supabase writes (service key; curated data is never overwritten)
+│   │   └── sources/      # API clients
+│   ├── ingest/           # Manual curation: push data/vetted/ JSON to Supabase
 │   └── db/
 │       └── clear.ts      # Full/partial database wipe (with 3-second abort window)
 ├── supabase/
 │   └── migrations/       # SQL migrations — consolidated baseline schema (0001_initial_schema.sql)
 └── .github/
-    └── workflows/        # CI/CD: deploy, weekly ingest cron
+    └── workflows/        # CI/CD: deploy, weekly catalog sync, Supabase keep-alive
 ```
 
 ---
@@ -135,9 +134,10 @@ cd scripts
 pnpm run seed:regions
 pnpm run seed:publishers
 
-# 6. Push catalog data
+# 6. Fill the catalog (free public APIs, no keys)
 cd ..
-pnpm push             # reads data/vetted/ → upserts to Supabase
+pnpm sync             # AniList + MangaDex + MangaUpdates → Supabase
+pnpm push             # optional: hand-curated data/vetted/ JSON
 
 # 7. Start the dev server
 pnpm dev
@@ -169,10 +169,41 @@ From root:
 - `pnpm build`: Run typechecks and build production web bundle.
 - `pnpm push`: Dry run or live push vetted JSON catalog data to Supabase.
 - `pnpm data:migrate`: Bulk-migrate legacy `$version: 1` JSON files in `data/vetted/` to `$version: 2`.
+- `pnpm sync` / `pnpm sync:dry`: Run the catalog sync (see below).
+- `pnpm test`: Unit tests for the sync's mapping rules.
 
 ---
 
-## Data Ingestion & Versioning ($version: 2)
+## Catalog: fully automatic
+
+The catalog fills and maintains itself from free public APIs — no API keys, no cost:
+
+| Source | Used for |
+|---|---|
+| [AniList](https://docs.anilist.co) | Which series exist (top popular + trending), titles, synopsis, author, status, popularity, cover |
+| [MangaDex](https://api.mangadex.org/docs/) | Exact ID match via its AniList link, demographic (shōnen/seinen…), per-volume covers, chapter → volume mapping |
+| [MangaUpdates](https://api.mangaupdates.com) | Original publisher, English licensor and its volume count |
+
+`.github/workflows/catalog-sync.yml` runs every Monday. Each run:
+1. Refreshes every tracked series (ongoing ones fully; completed ones monthly).
+2. Adds up to 150 new series from AniList's top 300 popular + top 50 trending.
+3. Adds new volumes (original + English edition) and chapters. Nothing is deleted, and
+   hand-curated series in `data/vetted/` keep their values — the sync only fills blanks.
+4. Logs the run to the `sync_runs` table (shown on `/admin/ingest`) and the job summary.
+
+**One-time setup:** add the `SUPABASE_SERVICE_KEY` repository secret (Settings → Secrets and
+variables → Actions; `VITE_SUPABASE_URL` is reused for the URL), apply the migrations, then
+trigger **Actions → Catalog Sync → Run workflow** once with `max_new` = 300 to backfill.
+
+Run locally:
+```bash
+pnpm sync:dry -- --only=30013          # fetch One Piece and print it, no DB access
+pnpm sync                              # real run using .env
+pnpm sync -- --discover=1000 --max-new=500   # bigger backfill
+pnpm test                              # mapping unit tests
+```
+
+## Manual curation ($version: 2)
 
 Catalog data lives in `data/vetted/<series_slug>/data.json`.
 Files use `$version: 2` which replaces environment-dependent database UUIDs with human-readable publisher slugs (`original_publisher_slug`, `publisher_slug`).

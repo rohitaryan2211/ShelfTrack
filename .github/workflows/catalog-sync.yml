@@ -1,0 +1,87 @@
+name: Catalog Sync
+
+# Keeps the manga catalog up to date from free public APIs (AniList, MangaDex,
+# MangaUpdates). Adds new popular/trending series, new volumes and chapters, and
+# refreshes status/popularity. Everything is published automatically.
+
+on:
+  schedule:
+    - cron: '0 9 * * 1'   # Mondays 09:00 UTC
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (fetch only, no DB writes)'
+        type: boolean
+        default: false
+      discover:
+        description: 'Top-N popular series to consider'
+        default: '300'
+      max_new:
+        description: 'Max new series to add this run'
+        default: '150'
+      only:
+        description: 'Only these AniList IDs (comma separated, optional)'
+        default: ''
+
+permissions:
+  contents: read
+  actions: write   # lets the job reset GitHub's 60-day inactivity timer on itself
+
+concurrency:
+  group: catalog-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Unit tests
+        run: pnpm --filter scripts test
+
+      - name: Check secrets
+        if: ${{ github.event.inputs.dry_run != 'true' }}
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL || secrets.VITE_SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: |
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_SERVICE_KEY" ]; then
+            echo "::error::Add SUPABASE_SERVICE_KEY (and SUPABASE_URL or VITE_SUPABASE_URL) under Settings → Secrets and variables → Actions."
+            exit 1
+          fi
+
+      - name: Sync catalog
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL || secrets.VITE_SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          DRY_RUN: ${{ github.event.inputs.dry_run }}
+          DISCOVER: ${{ github.event.inputs.discover || '300' }}
+          MAX_NEW: ${{ github.event.inputs.max_new || '150' }}
+          ONLY: ${{ github.event.inputs.only }}
+        run: |
+          FLAGS="--discover=$DISCOVER --max-new=$MAX_NEW --budget-min=50"
+          if [ "$DRY_RUN" = "true" ]; then FLAGS="$FLAGS --dry-run"; fi
+          if [ -n "$ONLY" ]; then FLAGS="$FLAGS --only=$ONLY"; fi
+          pnpm --filter scripts sync $FLAGS
+
+      # GitHub disables scheduled workflows after 60 days without repository activity.
+      # Re-enabling the workflow via the API resets that timer, so the sync never silently stops.
+      - name: Keep schedule alive
+        if: always() && github.event_name == 'schedule'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X PUT "repos/${{ github.repository }}/actions/workflows/catalog-sync.yml/enable" || true
