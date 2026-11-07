@@ -3,10 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 import { ArrowLeft, BookMarked, ShoppingBag, ExternalLink, List } from 'lucide-react'
 import { supabase } from '../../lib/supabaseClient'
 import { useAuth } from '../../hooks/useAuth'
-import type { Volume, Chapter, VolumeAvailability, LibraryEntry, ReadStatus, ReadFormat } from '../../lib/types'
-import { READ_STATUS_LABELS } from '../../lib/types'
-
-const STATUS_OPTIONS: ReadStatus[] = ['plan_to_read', 'reading', 'completed', 'dropped', 'on_hold']
+import type { Volume, Chapter, VolumeAvailability, LibraryEntry, CollectionStatus } from '../../lib/types'
 
 export default function VolumeDetailPage() {
   const { id } = useParams<{ id: string }>()
@@ -20,19 +17,21 @@ export default function VolumeDetailPage() {
   const [savingStatus, setSavingStatus] = useState(false)
   const [toast, setToast] = useState<string | null>(null)
 
-  const [userChapterReads, setUserChapterReads] = useState<Record<string, ReadFormat>>({})
-  const [selectedFormat, setSelectedFormat] = useState<ReadFormat>('digital')
+  const [userChapterReads, setUserChapterReads] = useState<Set<string>>(new Set())
 
   useEffect(() => {
     async function load() {
       const [volResult, chapResult, availResult] = await Promise.all([
         supabase.from('volumes').select('*, publisher:publishers(*), series:series(id,title,type,status,original_publisher_id,created_at)').eq('id', id!).single(),
-        supabase.from('volume_chapters').select('chapter:chapters(*)').eq('volume_id', id!).order('chapter_id'),
+        supabase.from('volume_chapters').select('chapter:chapters(*)').eq('volume_id', id!),
         supabase.from('volume_availability').select('*, retailer:retailers(*)').eq('volume_id', id!),
       ])
       setVolume(volResult.data as Volume | null)
-      const rawChapters = chapResult.data ?? []
-      const mappedChapters = rawChapters.map((r: any) => (r as { chapter: Chapter }).chapter)
+      const rawChapters = (chapResult.data ?? []) as unknown as { chapter: Chapter | null }[]
+      const mappedChapters = rawChapters
+        .map(r => r.chapter)
+        .filter((c): c is Chapter => !!c)
+        .sort((a, b) => a.chapter_number - b.chapter_number)
       setChapters(mappedChapters)
       setAvailability((availResult.data as VolumeAvailability[]) ?? [])
       setLoading(false)
@@ -45,14 +44,12 @@ export default function VolumeDetailPage() {
           const chapIds = mappedChapters.map(c => c.id)
           const { data: reads } = await supabase
             .from('user_chapter_reads')
-            .select('chapter_id, read_format')
+            .select('chapter_id')
             .eq('user_id', user.id)
             .in('chapter_id', chapIds)
 
           if (reads) {
-            const map: Record<string, ReadFormat> = {}
-            reads.forEach((r: any) => { map[r.chapter_id] = r.read_format })
-            setUserChapterReads(map)
+            setUserChapterReads(new Set(reads.map(r => r.chapter_id as string)))
           }
         }
       }
@@ -64,7 +61,7 @@ export default function VolumeDetailPage() {
 
   const toggleChapterRead = async (chapterId: string) => {
     if (!user) return
-    const isRead = !!userChapterReads[chapterId]
+    const isRead = userChapterReads.has(chapterId)
     if (isRead) {
       const { error } = await supabase
         .from('user_chapter_reads')
@@ -73,65 +70,74 @@ export default function VolumeDetailPage() {
         .eq('chapter_id', chapterId)
 
       if (!error) {
-        const updated = { ...userChapterReads }
-        delete updated[chapterId]
+        const updated = new Set(userChapterReads)
+        updated.delete(chapterId)
         setUserChapterReads(updated)
-        showToast('Chapter unread')
+        showToast('Chapter marked unread')
       } else {
         showToast(`Error: ${error.message}`)
       }
     } else {
-      const check = await supabase.from('user_chapter_reads').select('id').eq('user_id', user.id).eq('chapter_id', chapterId).maybeSingle()
-      let error = null
-      if (check.data?.id) {
-        const res = await supabase.from('user_chapter_reads').update({ read_format: selectedFormat }).eq('id', check.data.id)
-        error = res.error
-      } else {
-        const res = await supabase.from('user_chapter_reads').insert({ user_id: user.id, chapter_id: chapterId, read_format: selectedFormat })
-        error = res.error
-      }
+      const { error } = await supabase
+        .from('user_chapter_reads')
+        .insert({ user_id: user.id, chapter_id: chapterId })
 
       if (!error) {
-        setUserChapterReads(prev => ({ ...prev, [chapterId]: selectedFormat }))
-        showToast(`Marked read (${selectedFormat})`)
+        const updated = new Set(userChapterReads)
+        updated.add(chapterId)
+        setUserChapterReads(updated)
+        showToast('Chapter marked read')
       } else {
         showToast(`Error: ${error.message}`)
       }
     }
   }
 
-  const upsertEntry = async (updates: Partial<LibraryEntry>) => {
+  // Volume entries only track collection (owned / wishlist); reading status lives on the series.
+  // Toggling the active status off removes the entry entirely rather than leaving an empty row.
+  const setCollectionStatus = async (next: CollectionStatus | null) => {
     if (!user) return
     setSavingStatus(true)
-    let error = null
-    let updatedEntry = null
 
-    const existingId = libraryEntry?.id
-    if (existingId) {
-      const res = await supabase.from('library_entries').update({ ...updates, updated_at: new Date().toISOString() }).eq('id', existingId).select().maybeSingle()
-      error = res.error
-      updatedEntry = res.data
-    } else {
-      const check = await supabase.from('library_entries').select('id').eq('user_id', user.id).eq('volume_id', id!).maybeSingle()
-      if (check.data?.id) {
-        const res = await supabase.from('library_entries').update({ ...updates, updated_at: new Date().toISOString() }).eq('id', check.data.id).select().maybeSingle()
-        error = res.error
-        updatedEntry = res.data
+    if (next === null) {
+      const { error } = await supabase
+        .from('library_entries')
+        .delete()
+        .eq('user_id', user.id)
+        .eq('volume_id', id!)
+      if (error) {
+        showToast(`Error: ${error.message}`)
       } else {
-        const res = await supabase.from('library_entries').insert({ ...updates, user_id: user.id, volume_id: id }).select().maybeSingle()
-        error = res.error
-        updatedEntry = res.data
+        setLibraryEntry(null)
+        showToast('Removed')
       }
+      setSavingStatus(false)
+      return
     }
 
-    if (!error && updatedEntry) {
-      setLibraryEntry(updatedEntry as LibraryEntry)
-      showToast('Saved!')
-    } else if (error) {
+    const { data, error } = await supabase
+      .from('library_entries')
+      .upsert({
+        user_id: user.id,
+        volume_id: id,
+        collection_status: next,
+        // Keep the legacy column in sync — the volume_popularity view counts `owned`
+        owned: next === 'owned',
+        updated_at: new Date().toISOString(),
+      }, { onConflict: 'user_id,volume_id' })
+      .select()
+      .maybeSingle()
+
+    if (error) {
       showToast(`Error: ${error.message}`)
+    } else if (data) {
+      setLibraryEntry(data as LibraryEntry)
+      showToast(next === 'owned' ? 'Added to shelf' : 'Added to wishlist')
     }
     setSavingStatus(false)
   }
+
+  const collectionStatus = libraryEntry?.collection_status ?? null
 
   if (loading) {
     return (
@@ -219,27 +225,25 @@ export default function VolumeDetailPage() {
           {/* Action bar */}
           {user ? (
             <div className="animate-fade-up delay-300" style={{ display: 'flex', gap: 'var(--space-3)', flexWrap: 'wrap' }}>
-              <select
-                id="volume-read-status-select"
-                className="input select"
-                style={{ width: 'auto', padding: '8px 36px 8px 12px' }}
-                value={libraryEntry?.read_status ?? ''}
-                disabled={savingStatus}
-                onChange={e => upsertEntry({ read_status: e.target.value as ReadStatus })}
-              >
-                <option value="">📖 Add to list…</option>
-                {STATUS_OPTIONS.map(s => <option key={s} value={s}>{READ_STATUS_LABELS[s]}</option>)}
-              </select>
-
               <button
                 id="volume-owned-toggle-btn"
-                className={`btn ${libraryEntry?.owned ? 'active-owned status-toggle' : 'status-toggle'}`}
-                onClick={() => upsertEntry({ owned: !libraryEntry?.owned, read_status: libraryEntry?.read_status ?? 'plan_to_read' })}
+                className={`btn status-toggle ${collectionStatus === 'owned' ? 'active-owned' : ''}`}
+                onClick={() => setCollectionStatus(collectionStatus === 'owned' ? null : 'owned')}
                 disabled={savingStatus}
-                aria-pressed={!!libraryEntry?.owned}
+                aria-pressed={collectionStatus === 'owned'}
               >
                 <BookMarked size={15} />
-                {libraryEntry?.owned ? '✓ On shelf' : 'Add to shelf'}
+                {collectionStatus === 'owned' ? '✓ On shelf' : 'Add to shelf'}
+              </button>
+              
+              <button
+                id="volume-wishlist-toggle-btn"
+                className={`btn status-toggle ${collectionStatus === 'wishlist' ? 'active-wishlist' : ''}`}
+                onClick={() => setCollectionStatus(collectionStatus === 'wishlist' ? null : 'wishlist')}
+                disabled={savingStatus}
+                aria-pressed={collectionStatus === 'wishlist'}
+              >
+                ★ {collectionStatus === 'wishlist' ? 'Wishlisted' : 'Add to wishlist'}
               </button>
             </div>
           ) : (
@@ -258,26 +262,10 @@ export default function VolumeDetailPage() {
               <List size={18} style={{ color: 'var(--ink-green)' }} />
               Chapters in this volume
             </h2>
-            {user && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
-                <span style={{ fontSize: '0.8125rem', color: 'var(--text-muted)' }}>Read format:</span>
-                {(['digital', 'physical', 'scanlation'] as ReadFormat[]).map(fmt => (
-                  <button
-                    key={fmt}
-                    className={`btn btn-sm ${selectedFormat === fmt ? 'btn-primary' : 'btn-secondary'}`}
-                    onClick={() => setSelectedFormat(fmt)}
-                    style={{ textTransform: 'capitalize' }}
-                  >
-                    {fmt}
-                  </button>
-                ))}
-              </div>
-            )}
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-1)' }}>
             {chapters.map(ch => {
-              const readFormat = userChapterReads[ch.id]
-              const isRead = !!readFormat
+              const isRead = userChapterReads.has(ch.id)
               return (
                 <div key={ch.id} style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)', padding: 'var(--space-2) var(--space-3)', borderRadius: 'var(--radius-sm)', background: isRead ? 'rgba(62, 92, 62, 0.15)' : 'transparent', transition: 'background var(--dur-fast)' }} className="chapter-row" id={`chapter-row-${ch.id}`}>
                   {user && (
@@ -290,11 +278,6 @@ export default function VolumeDetailPage() {
                   )}
                   <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-muted)', minWidth: 40 }}>Ch. {ch.chapter_number}</span>
                   <span style={{ fontSize: '0.9375rem', color: 'var(--text-primary)', flex: 1 }}>{ch.title ?? `Chapter ${ch.chapter_number}`}</span>
-                  {readFormat && (
-                    <span className="badge badge-ink-green" style={{ fontSize: '0.7rem', textTransform: 'uppercase' }}>
-                      {readFormat}
-                    </span>
-                  )}
                 </div>
               )
             })}

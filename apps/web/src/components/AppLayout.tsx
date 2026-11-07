@@ -34,7 +34,7 @@ const CURATOR_NAV: NavItem[] = [
 
 // ─── Sidebar ──────────────────────────────────────────────
 function Sidebar({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const { user, signOut } = useAuth()
+  const { user, signOut, profile } = useAuth()
   const navigate = useNavigate()
 
   const handleSignOut = async () => {
@@ -127,11 +127,11 @@ function Sidebar({ open, onClose }: { open: boolean; onClose: () => void }) {
           {user ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               <div className="avatar avatar-sm" style={{ flexShrink: 0 }}>
-                {user.email?.[0].toUpperCase()}
+                {(profile?.username || user.email)?.[0].toUpperCase()}
               </div>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ fontSize: '0.8125rem', fontWeight: 600, color: 'var(--text-primary)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                  {user.email}
+                  @{profile?.username || user.email?.split('@')[0]}
                 </div>
               </div>
               <button
@@ -166,7 +166,7 @@ function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
   const navigate = useNavigate()
   const [query, setQuery] = useState('')
   const [dropdownOpen, setDropdownOpen] = useState(false)
-  const { user, signOut } = useAuth()
+  const { user, signOut, profile } = useAuth()
   const searchInputRef = useRef<HTMLInputElement>(null)
 
   const handleSearch = (e: React.FormEvent) => {
@@ -249,11 +249,12 @@ function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
               id="topbar-user-menu-btn"
               style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
             >
-              {user.email?.[0].toUpperCase()}
+              {(profile?.username || user.email)?.[0].toUpperCase()}
             </button>
             {dropdownOpen && (
               <div className="topbar-dropdown" id="topbar-dropdown-menu">
                 <div className="dropdown-user-info">
+                  <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>@{profile?.username || user.email?.split('@')[0]}</div>
                   <div className="dropdown-user-email" title={user.email}>{user.email}</div>
                 </div>
                 <hr className="dropdown-divider" />

@@ -595,14 +595,9 @@ small { font-size: 0.8125rem; color: var(--text-muted); }
   right: var(--space-3);
   display: flex;
   gap: var(--space-2);
-  opacity: 0;
-  transform: translateY(6px);
-  transition: all var(--dur-base) var(--ease-out);
-}
-
-.volume-card:hover .volume-card-actions {
   opacity: 1;
   transform: translateY(0);
+  transition: all var(--dur-base) var(--ease-out);
 }
 
 .volume-card-body {
@@ -736,6 +731,12 @@ small { font-size: 0.8125rem; color: var(--text-muted); }
   background: var(--vermillion-dim);
   border-color: var(--vermillion-border);
   color: var(--vermillion);
+}
+
+.status-toggle.active-wishlist {
+  background: var(--ochre-dim);
+  border-color: var(--ochre);
+  color: var(--ochre);
 }
 
 /* =========================================================

@@ -16,12 +16,13 @@ const STATUS_OPTIONS: ReadStatus[] = ['plan_to_read', 'reading', 'completed', 'd
 
 // ─── Volumes grouped by region ────────────────────────────
 interface VolumesSectionProps {
+  series: Series
   volumes: Volume[]
   regionFilter: string
   setRegionFilter: (v: string) => void
 }
 
-function VolumesSection({ volumes, regionFilter, setRegionFilter }: VolumesSectionProps) {
+function VolumesSection({ series, volumes, regionFilter, setRegionFilter }: VolumesSectionProps) {
   // Compute distinct regions from volumes
   const regionGroups = useMemo(() => {
     const map = new Map<string, Volume[]>()
@@ -173,8 +174,9 @@ function VolumesSection({ volumes, regionFilter, setRegionFilter }: VolumesSecti
                       Vol. {vol.volume_number}
                     </div>
                     <div className="volume-card-meta">
+                      {series?.author && <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{series.author}</span>}
                       {vol.release_date
-                        ? new Date(vol.release_date).getFullYear()
+                        ? <span>{new Date(vol.release_date).getFullYear()}</span>
                         : '—'}
                     </div>
                   </div>
@@ -424,7 +426,7 @@ export default function SeriesDetailPage() {
       )}
 
       {/* ── Volume grid — grouped by region ─────────── */}
-      <VolumesSection volumes={volumes} regionFilter={regionFilter} setRegionFilter={setRegionFilter} />
+      <VolumesSection series={series} volumes={volumes} regionFilter={regionFilter} setRegionFilter={setRegionFilter} />
 
       {/* ── Where to buy ─────────────────────────────── */}
       <section id="where-to-buy-section" className="card animate-fade-up" style={{ marginBottom: 'var(--space-8)', overflow: 'hidden' }}>

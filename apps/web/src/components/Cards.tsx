@@ -50,13 +50,15 @@ export function SeriesCard({ series, size = 'md' }: SeriesCardProps) {
 // ─── Volume Card ──────────────────────────────────────────
 interface VolumeCardProps {
   volume: Volume
+  series?: Series
   readStatus?: string
-  owned?: boolean
+  collectionStatus?: 'owned' | 'wishlist'
   onToggleOwned?: () => void
   onToggleRead?: () => void
 }
 
-export function VolumeCard({ volume, readStatus, owned, onToggleOwned, onToggleRead }: VolumeCardProps) {
+export function VolumeCard({ volume, series, readStatus, collectionStatus, onToggleOwned, onToggleRead }: VolumeCardProps) {
+  const displaySeries = series ?? volume.series
   return (
     <div className="volume-card animate-fade-up" id={`volume-card-${volume.id}`}>
       <div className="volume-card-cover">
@@ -81,9 +83,9 @@ export function VolumeCard({ volume, readStatus, owned, onToggleOwned, onToggleR
           )}
           {onToggleOwned && (
             <button
-              className={`btn btn-sm ${owned ? 'active-owned' : 'btn-secondary'}`}
+              className={`btn btn-sm ${collectionStatus === 'owned' ? 'active-owned' : 'btn-secondary'}`}
               onClick={e => { e.preventDefault(); e.stopPropagation(); onToggleOwned() }}
-              title={owned ? 'Remove from shelf' : 'Add to shelf'}
+              title={collectionStatus === 'owned' ? 'Remove from shelf' : 'Add to shelf'}
               id={`toggle-owned-${volume.id}`}
             >
               <BookMarked size={12} />
@@ -94,6 +96,7 @@ export function VolumeCard({ volume, readStatus, owned, onToggleOwned, onToggleR
       <div className="volume-card-body">
         <div className="volume-card-title">Vol. {volume.volume_number}{volume.title ? ` — ${volume.title}` : ''}</div>
         <div className="volume-card-meta">
+          {displaySeries?.author && <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{displaySeries.author}</span>}
           {volume.release_date && <span>{new Date(volume.release_date).getFullYear()}</span>}
         </div>
       </div>

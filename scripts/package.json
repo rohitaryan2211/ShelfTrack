@@ -13,7 +13,8 @@
     "update:dry": "tsx ingest/update.ts --dry-run",
     "db:clear": "tsx db/clear.ts",
     "data:migrate": "tsx ingest/migrate_data.ts",
-    "push": "tsx ingest/push.ts"
+    "push": "tsx ingest/push.ts",
+    "push:v2": "tsx ingest/push-enhanced.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.50.0",

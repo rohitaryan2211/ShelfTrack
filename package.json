@@ -13,7 +13,8 @@
     "lint": "pnpm -r lint",
     "typecheck": "pnpm -r typecheck",
     "data:migrate": "pnpm --filter scripts data:migrate",
-    "push": "pnpm --filter scripts push"
+    "push": "pnpm --filter scripts push",
+    "push:v2": "pnpm --filter scripts push:v2"
   },
   "engines": {
     "node": ">=20"

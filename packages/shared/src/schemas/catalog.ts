@@ -39,6 +39,7 @@ export const SeriesCatalogSchema = z.object({
       'slice_of_life', 'action', 'comedy', 'other'
     ]).optional(),
     description: z.string().nullable().optional(),
+    author: z.string().nullable().optional(),
     original_publisher_slug: z.string().min(1),
     status: z.enum(['ongoing', 'completed', 'hiatus']).default('ongoing'),
     cover_url: z.string().nullable().optional(),

@@ -23,6 +23,24 @@ const TRACKER_TABS: { key: ReadStatus; label: string; icon: React.ReactNode }[] 
   { key: 'dropped',      label: 'Dropped',       icon: <XCircle size={15} /> },
 ]
 
+// Series-level entries show the series title; volume-level entries show "<Series> Vol. N"
+function entryTitle(entry: LibraryEntry): string {
+  if (entry.series) return entry.series.title
+  const volLabel = `Vol. ${entry.volume?.volume_number}`
+  const seriesTitle = entry.volume?.series?.title
+  return seriesTitle ? `${seriesTitle} ${volLabel}` : volLabel
+}
+
+function ReadStatusBadge({ status, small }: { status?: ReadStatus | null; small?: boolean }) {
+  if (!status) return null
+  const color = status === 'completed' ? 'badge-ink-green' : status === 'reading' ? 'badge-slate' : 'badge-neutral'
+  return (
+    <span className={`badge ${color}`} style={small ? { fontSize: '0.625rem' } : undefined}>
+      {READ_STATUS_LABELS[status]}
+    </span>
+  )
+}
+
 export default function LibraryPage() {
   const { user } = useAuth()
   const [entries, setEntries] = useState<LibraryEntry[]>([])
@@ -38,13 +56,13 @@ export default function LibraryPage() {
       setLoading(true)
       let query = supabase
         .from('library_entries')
-        .select('*, series:series(id,title,cover_url,status,type), volume:volumes(id,volume_number,cover_url,series_id)')
+        .select('*, series:series(id,title,cover_url,status,type,author), volume:volumes(id,volume_number,cover_url,release_date,series_id,series:series(id,title,author))')
         .eq('user_id', user!.id)
         .order('updated_at', { ascending: false })
 
       if (section === 'shelf') {
         // Shelf only shows volumes, not series
-        query = query.not('volume_id', 'is', null).eq('owned', shelfTab === 'owned')
+        query = query.not('volume_id', 'is', null).eq('collection_status', shelfTab === 'owned' ? 'owned' : 'wishlist')
       } else if (section === 'tracker') {
         // Tracker shows series-level tracking only
         query = query.not('series_id', 'is', null).eq('read_status', trackerTab)
@@ -149,7 +167,7 @@ export default function LibraryPage() {
           <div className="grid-covers-lg" id="library-grid">
             {entries.map((entry, i) => {
               const cover = entry.series?.cover_url ?? entry.volume?.cover_url
-              const title = entry.series?.title ?? `Vol. ${entry.volume?.volume_number}`
+              const title = entryTitle(entry)
               const href = entry.series_id ? `/series/${entry.series_id}` : `/volumes/${entry.volume_id}`
               return (
                 <Link key={entry.id} to={href} className="volume-card animate-fade-up" style={{ textDecoration: 'none', animationDelay: `${i * 30}ms` }} id={`library-entry-${entry.id}`}>
@@ -157,15 +175,14 @@ export default function LibraryPage() {
                     {cover ? <img src={cover} alt={title} loading="lazy" referrerPolicy="no-referrer" /> : <div className="cover-placeholder"><BookMarked size={28} /></div>}
                     <div className="volume-card-cover-overlay" />
                     <div className="volume-card-actions">
-                      {entry.owned && <span className="badge badge-vermillion"><BookMarked size={10} /> Owned</span>}
+                      {entry.collection_status === 'owned' && <span className="badge badge-vermillion"><BookMarked size={10} /> Owned</span>}
+                      {entry.collection_status === 'wishlist' && <span className="badge badge-ochre">★ Wishlisted</span>}
                     </div>
                   </div>
                   <div className="volume-card-body">
                     <div className="volume-card-title" title={title}>{title}</div>
                     <div className="volume-card-meta">
-                      <span className={`badge ${entry.read_status === 'completed' ? 'badge-ink-green' : entry.read_status === 'reading' ? 'badge-slate' : 'badge-neutral'}`} style={{ fontSize: '0.625rem' }}>
-                        {READ_STATUS_LABELS[entry.read_status]}
-                      </span>
+                      <ReadStatusBadge status={entry.read_status} small />
                     </div>
                   </div>
                 </Link>
@@ -178,7 +195,7 @@ export default function LibraryPage() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }} id="library-list">
             {entries.map((entry, i) => {
               const cover = entry.series?.cover_url ?? entry.volume?.cover_url
-              const title = entry.series?.title ?? `Vol. ${entry.volume?.volume_number}`
+              const title = entryTitle(entry)
               const href = entry.series_id ? `/series/${entry.series_id}` : `/volumes/${entry.volume_id}`
               return (
                 <Link key={entry.id} to={href} className="card card-hover animate-fade-up" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)', padding: 'var(--space-3)', textDecoration: 'none', animationDelay: `${i * 30}ms` }} id={`library-list-entry-${entry.id}`}>
@@ -188,10 +205,9 @@ export default function LibraryPage() {
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ fontWeight: 600, color: 'var(--text-primary)', marginBottom: 4 }}>{title}</div>
                     <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                      <span className={`badge ${entry.read_status === 'completed' ? 'badge-ink-green' : entry.read_status === 'reading' ? 'badge-slate' : 'badge-neutral'}`}>
-                        {READ_STATUS_LABELS[entry.read_status]}
-                      </span>
-                      {entry.owned && <span className="badge badge-vermillion"><BookMarked size={10} /> Owned</span>}
+                      <ReadStatusBadge status={entry.read_status} />
+                      {entry.collection_status === 'owned' && <span className="badge badge-vermillion"><BookMarked size={10} /> Owned</span>}
+                      {entry.collection_status === 'wishlist' && <span className="badge badge-ochre">★ Wishlisted</span>}
                     </div>
                   </div>
                   {entry.personal_rating && (

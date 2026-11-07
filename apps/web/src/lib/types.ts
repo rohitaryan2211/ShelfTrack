@@ -37,6 +37,7 @@ export interface Series {
   type: 'manga' | 'novel' | 'light_novel'
   genre?: SeriesGenre
   description?: string
+  author?: string
   original_publisher_id: string
   status: 'ongoing' | 'completed' | 'hiatus'
   cover_url?: string
@@ -112,15 +113,14 @@ export interface Profile {
 }
 
 export type ReadStatus = 'plan_to_read' | 'reading' | 'completed' | 'dropped' | 'on_hold'
+export type CollectionStatus = 'owned' | 'wishlist'
 export type OwnedFormat = 'physical' | 'digital' | 'both'
-export type ReadFormat = 'physical' | 'digital' | 'scanlation'
 export type EditionType = 'single' | 'omnibus' | 'deluxe' | 'digital_only'
 
 export interface UserChapterRead {
   id: string
   user_id: string
   chapter_id: string
-  read_format: ReadFormat
   read_at: string
 }
 
@@ -151,11 +151,12 @@ export interface LibraryEntry {
   user_id: string
   volume_id?: string
   series_id?: string
-  read_status: ReadStatus
+  read_status?: ReadStatus | null
   read_date?: string
   owned: boolean
   owned_date?: string
   owned_format?: OwnedFormat
+  collection_status?: CollectionStatus | null
   personal_rating?: number
   updated_at: string
   // joined
@@ -213,11 +214,5 @@ export const READ_STATUS_COLORS: Record<ReadStatus, string> = {
   completed: 'badge-ink-green',
   dropped: 'badge-neutral',
   on_hold: 'badge-ochre',
-}
-
-export const READ_FORMAT_LABELS: Record<ReadFormat, string> = {
-  physical: 'Physical',
-  digital: 'Digital',
-  scanlation: 'Scanlation',
 }
 

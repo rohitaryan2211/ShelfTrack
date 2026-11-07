@@ -49,6 +49,7 @@ See the full field specification in [docs/data_ingestion_guide.md](../docs/data_
 | `type` | `"manga" \| "novel" \| "light_novel"` | ✅ | |
 | `genre` | `"shonen" \| "shojo" \| "seinen" \| "josei" \| "fantasy" \| "romance" \| "horror" \| "sci_fi" \| "slice_of_life" \| "action" \| "comedy" \| "other"` | — | |
 | `description` | `string \| null` | — | Synopsis |
+| `author` | `string \| null` | — | Author / mangaka name (e.g. `"Gege Akutami"`) |
 | `original_publisher_slug` | `string` | ✅ | Human-readable publisher slug (e.g. `"shueisha"` or `"kodansha"`) |
 | `status` | `"ongoing" \| "completed" \| "hiatus"` | ✅ | |
 | `cover_url` | `string \| null` | — | Fully qualified URL |

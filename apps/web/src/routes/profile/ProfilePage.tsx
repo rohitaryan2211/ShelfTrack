@@ -9,7 +9,7 @@ import type { Profile, LibraryEntry, Review, Volume } from '../../lib/types'
 
 export default function ProfilePage() {
   const { username } = useParams<{ username: string }>()
-  const { user } = useAuth()
+  const { user, profile: authProfile } = useAuth()
   const [profile, setProfile] = useState<Profile | null>(null)
   const [shelfVolumes, setShelfVolumes] = useState<Volume[]>([])
   const [reviews, setReviews] = useState<Review[]>([])
@@ -17,39 +17,27 @@ export default function ProfilePage() {
 
   useEffect(() => {
     async function load() {
-      const target = username ?? (user?.email?.split('@')[0])
-      if (!target) return
-
-      const [profResult] = await Promise.all([
-        supabase.from('profiles').select('*').eq('username', target).maybeSingle(),
-      ])
-      const prof = profResult.data as Profile | null
-      setProfile(prof)
-      
-      // Always refresh profile for logged-in user to get latest data
-      if (!username && user) {
-        const { data: userProf } = await supabase.from('profiles').select('*').eq('id', user.id).maybeSingle()
-        if (userProf) setProfile(userProf as Profile)
+      // Own profile (/profile) is looked up by auth ID; others (/u/:username) by username
+      if (!username && !user) {
+        setLoading(false)
+        return
       }
+      setLoading(true)
+
+      const { data: profData } = username
+        ? await supabase.from('profiles').select('*').eq('username', username).maybeSingle()
+        : await supabase.from('profiles').select('*').eq('id', user!.id).maybeSingle()
+
+      const prof = profData as Profile | null
+      setProfile(prof)
 
       if (prof) {
         const [entriesResult, reviewsResult] = await Promise.all([
           supabase
             .from('library_entries')
-            .select(`
-              *,
-              volume:volumes(
-                id, series_id, volume_number, title, isbn13, publisher_id, region_code,
-                release_date, cover_url, page_count,
-                series:series(id, title, original_title, type, genre, status, cover_url, description,
-                  publisher:publishers!original_publisher_id(id, name, country)
-                ),
-                publisher:publishers(id, name, country)
-              ),
-              series:series(id, title, cover_url)
-            `)
+            .select('*, volume:volumes(id, volume_number, title, cover_url, release_date, series_id, series:series(id, title, original_title, type, genre, status, cover_url, description, author))')
             .eq('user_id', prof.id)
-            .eq('owned', true)
+            .eq('collection_status', 'owned')
             .limit(60),
           supabase
             .from('reviews')
@@ -59,22 +47,33 @@ export default function ProfilePage() {
             .limit(5),
         ])
 
-        const entries = (entriesResult.data ?? []) as LibraryEntry[]
-        const vols: Volume[] = entries
-          .filter(e => e.volume)
-          .map(e => e.volume!)
+        if (entriesResult.error) {
+          console.error('Failed to fetch collection:', entriesResult.error)
+        } else {
+          const entries = (entriesResult.data ?? []) as LibraryEntry[]
+          setShelfVolumes(entries.filter(e => e.volume).map(e => e.volume!))
+        }
 
-        setShelfVolumes(vols)
-        setReviews((reviewsResult.data ?? []) as Review[])
+        if (reviewsResult.error) {
+          console.error('Failed to fetch reviews:', reviewsResult.error)
+        } else {
+          setReviews((reviewsResult.data ?? []) as Review[])
+        }
       }
       setLoading(false)
     }
     load()
   }, [username, user])
 
-  const isOwn = user && (!username || username === user.email?.split('@')[0])
+  // Usernames are editable, so compare IDs rather than deriving from the email
+  const isOwn = !!user && (!username || profile?.id === user.id || username === authProfile?.username)
   const displayName = profile?.username ?? username ?? user?.email?.split('@')[0] ?? 'User'
-  const joinDate = profile?.created_at ? new Date(profile.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long' }) : '—'
+  // Use auth user creation date for own profile, profile creation date for others
+  const joinDate = isOwn && user?.created_at 
+    ? new Date(user.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long' })
+    : profile?.created_at 
+    ? new Date(profile.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long' })
+    : '—'
 
   return (
     <>
@@ -120,9 +119,9 @@ export default function ProfilePage() {
         ) : (
           <div style={{ display: 'flex', gap: 'var(--space-4)', overflowX: 'auto', paddingBottom: 'var(--space-2)' }}>
             {shelfVolumes.map(vol => (
-              <div key={vol.id} style={{ width: 140, flexShrink: 0 }}>
+              <Link key={vol.id} to={`/volumes/${vol.id}`} style={{ width: 140, flexShrink: 0, textDecoration: 'none' }}>
                 <VolumeCard volume={vol} />
-              </div>
+              </Link>
             ))}
           </div>
         )}

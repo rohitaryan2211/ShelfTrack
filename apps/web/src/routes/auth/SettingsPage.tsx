@@ -7,7 +7,7 @@ import { REGION_ENTRIES } from '../../lib/regionLabels'
 const REGIONS = REGION_ENTRIES
 
 export default function SettingsPage() {
-  const { user, signOut } = useAuth()
+  const { user, signOut, refreshProfile } = useAuth()
   const [username, setUsername] = useState('')
   const [bio, setBio] = useState('')
   const [region, setRegion] = useState('US')
@@ -42,6 +42,8 @@ export default function SettingsPage() {
         setUsername(data.username ?? '')
         setBio(data.bio ?? '')
       }
+      // Keep the sidebar/topbar username in sync
+      await refreshProfile()
       showToast('Profile saved!')
     }
     setSaving(false)
