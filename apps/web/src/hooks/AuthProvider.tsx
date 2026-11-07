@@ -1,24 +1,7 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
-import { supabase, type Session, type User } from '../lib/supabaseClient'
+import { useEffect, useState, type ReactNode } from 'react'
+import { supabase, type Session } from '../lib/supabaseClient'
 import type { Profile } from '../lib/types'
-
-interface AuthContextType {
-  session: Session | null
-  user: User | null
-  profile: Profile | null
-  loading: boolean
-  signOut: () => Promise<void>
-  refreshProfile: () => Promise<void>
-}
-
-const AuthContext = createContext<AuthContextType>({
-  session: null,
-  user: null,
-  profile: null,
-  loading: true,
-  signOut: async () => {},
-  refreshProfile: async () => {},
-})
+import { AuthContext } from './useAuth'
 
 const fetchProfile = async (userId: string) => {
   const { data } = await supabase.from('profiles').select('*').eq('id', userId).maybeSingle()
@@ -91,4 +74,3 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   )
 }
 
-export const useAuth = () => useContext(AuthContext)

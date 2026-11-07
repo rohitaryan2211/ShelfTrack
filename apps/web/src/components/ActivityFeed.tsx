@@ -40,7 +40,7 @@ export default function ActivityFeed({ userId, limit = 20 }: ActivityFeedProps) 
         setActivities(data as ActivityFeedItem[])
 
         if (user && data.length > 0) {
-          const activityIds = data.map((a: any) => a.id)
+          const activityIds = (data as ActivityFeedItem[]).map(a => a.id)
           const { data: userLikes } = await supabase
             .from('activity_likes')
             .select('activity_id')
@@ -49,7 +49,7 @@ export default function ActivityFeed({ userId, limit = 20 }: ActivityFeedProps) 
 
           if (userLikes) {
             const likedMap: Record<string, boolean> = {}
-            userLikes.forEach((l: any) => { likedMap[l.activity_id] = true })
+            userLikes.forEach((l: { activity_id: string }) => { likedMap[l.activity_id] = true })
             setLikesMap(likedMap)
           }
         }
