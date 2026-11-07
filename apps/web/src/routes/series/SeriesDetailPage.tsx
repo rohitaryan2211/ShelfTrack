@@ -1,16 +1,13 @@
 import { useEffect, useState, useMemo } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import {
-  ArrowLeft, BookMarked, Eye, Star, ShoppingBag,
-  ChevronDown, ChevronUp, ExternalLink, BookOpen, Globe
+  ArrowLeft, BookMarked, Eye, Star, ChevronDown, ChevronUp, BookOpen, Globe, PenLine, Trash2,
 } from 'lucide-react'
 import { supabase } from '../../lib/supabaseClient'
 import { useAuth } from '../../hooks/useAuth'
-import type { Series, Volume, Review, LibraryEntry, ReadStatus, VolumeAvailability } from '../../lib/types'
-import { READ_STATUS_LABELS } from '../../lib/types'
+import type { Series, SeriesStats, Volume, Review, LibraryEntry, ReadStatus } from '../../lib/types'
+import { READ_STATUS_LABELS, GENRE_LABELS } from '../../lib/types'
 import { getRegionLabel } from '../../lib/regionLabels'
-
-
 
 const STATUS_OPTIONS: ReadStatus[] = ['plan_to_read', 'reading', 'completed', 'dropped', 'on_hold']
 
@@ -22,7 +19,7 @@ interface VolumesSectionProps {
   setRegionFilter: (v: string) => void
 }
 
-function VolumesSection({ series, volumes, regionFilter, setRegionFilter }: VolumesSectionProps) {
+function VolumesSection({ volumes, regionFilter, setRegionFilter }: VolumesSectionProps) {
   // Compute distinct regions from volumes
   const regionGroups = useMemo(() => {
     const map = new Map<string, Volume[]>()
@@ -160,24 +157,14 @@ function VolumesSection({ series, volumes, regionFilter, setRegionFilter }: Volu
                       </div>
                     )}
                     <div className="volume-card-cover-overlay" />
-                    <div className="volume-card-actions">
-                      <span
-                        className="badge badge-neutral"
-                        style={{ fontSize: '0.625rem' }}
-                      >
-                        Vol. {vol.volume_number}
-                      </span>
-                    </div>
                   </div>
                   <div className="volume-card-body">
                     <div className="volume-card-title">
                       Vol. {vol.volume_number}
                     </div>
                     <div className="volume-card-meta">
-                      {series?.author && <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{series.author}</span>}
-                      {vol.release_date
-                        ? <span>{new Date(vol.release_date).getFullYear()}</span>
-                        : '—'}
+                      {vol.publisher?.name && <span className="truncate">{vol.publisher.name}</span>}
+                      {vol.release_date && <span>{new Date(vol.release_date).getFullYear()}</span>}
                     </div>
                   </div>
                 </Link>
@@ -197,51 +184,182 @@ function VolumesSection({ series, volumes, regionFilter, setRegionFilter }: Volu
   )
 }
 
+// ─── 10-point rating as five half-able stars ──────────────
+function StarRating({ value, onChange, disabled }: { value: number | null; onChange: (v: number | null) => void; disabled?: boolean }) {
+  const [hover, setHover] = useState<number | null>(null)
+  const shown = hover ?? value ?? 0
+  return (
+    <div className="star-rating" role="radiogroup" aria-label="Your rating out of 10" onMouseLeave={() => setHover(null)}>
+      {[1, 2, 3, 4, 5].map(star => {
+        const full = shown >= star * 2
+        const half = !full && shown >= star * 2 - 1
+        return (
+          <span key={star} className="star-rating-star">
+            <Star size={20} fill={full ? 'currentColor' : 'none'} className={full || half ? 'is-on' : ''} />
+            {half && <Star size={20} fill="currentColor" className="star-rating-half is-on" />}
+            {[star * 2 - 1, star * 2].map(v => (
+              <button
+                key={v}
+                type="button"
+                className={`star-rating-hit ${v % 2 ? 'left' : 'right'}`}
+                aria-label={`${v} out of 10`}
+                aria-checked={value === v}
+                role="radio"
+                disabled={disabled}
+                onMouseEnter={() => setHover(v)}
+                onFocus={() => setHover(v)}
+                onBlur={() => setHover(null)}
+                onClick={() => onChange(value === v ? null : v)}
+              />
+            ))}
+          </span>
+        )
+      })}
+      <span className="star-rating-value">{value ? `${value}/10` : 'Rate'}</span>
+    </div>
+  )
+}
+
+// ─── Review editor ────────────────────────────────────────
+interface ReviewEditorProps {
+  seriesId: string
+  userId: string
+  existing: Review | null
+  defaultRating: number | null
+  onSaved: (r: Review | null) => void
+  onClose: () => void
+}
+
+function ReviewEditor({ seriesId, userId, existing, defaultRating, onSaved, onClose }: ReviewEditorProps) {
+  const [body, setBody] = useState(existing?.body ?? '')
+  const [rating, setRating] = useState<number | null>(existing?.rating ?? defaultRating)
+  const [spoilers, setSpoilers] = useState(existing?.contains_spoilers ?? false)
+  const [saving, setSaving] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  const save = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (body.trim().length < 10) { setError('Write at least a sentence (10+ characters).'); return }
+    setSaving(true)
+    setError(null)
+    const payload = { body: body.trim(), rating, contains_spoilers: spoilers }
+    const res = existing
+      ? await supabase.from('reviews').update(payload).eq('id', existing.id).select('*, profile:profiles(id,username,avatar_url,created_at)').single()
+      : await supabase.from('reviews').insert({ ...payload, user_id: userId, series_id: seriesId }).select('*, profile:profiles(id,username,avatar_url,created_at)').single()
+    setSaving(false)
+    if (res.error) { setError(res.error.message); return }
+    onSaved(res.data as Review)
+  }
+
+  const remove = async () => {
+    if (!existing || !confirm('Delete your review?')) return
+    setSaving(true)
+    const { error } = await supabase.from('reviews').delete().eq('id', existing.id)
+    setSaving(false)
+    if (error) { setError(error.message); return }
+    onSaved(null)
+  }
+
+  return (
+    <form className="card animate-fade-up" style={{ padding: 'var(--space-5)', marginBottom: 'var(--space-4)' }} onSubmit={save} id="review-editor">
+      {error && <div className="alert alert-error" role="alert">{error}</div>}
+      <label className="label" htmlFor="review-body">{existing ? 'Edit your review' : 'Your review'}</label>
+      <textarea
+        id="review-body"
+        className="input"
+        style={{ minHeight: 130, resize: 'vertical', marginBottom: 'var(--space-4)' }}
+        placeholder="What did you think?"
+        value={body}
+        onChange={e => setBody(e.target.value)}
+        maxLength={5000}
+        autoFocus
+      />
+      <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 'var(--space-4)', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 'var(--space-4)' }}>
+          <StarRating value={rating} onChange={setRating} disabled={saving} />
+          <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '0.875rem', cursor: 'pointer' }}>
+            <input type="checkbox" checked={spoilers} onChange={e => setSpoilers(e.target.checked)} style={{ accentColor: 'var(--ochre)' }} />
+            Contains spoilers
+          </label>
+        </div>
+        <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
+          {existing && <button type="button" className="btn btn-ghost btn-sm text-danger" onClick={remove} disabled={saving}><Trash2 size={14} /> Delete</button>}
+          <button type="button" className="btn btn-secondary btn-sm" onClick={onClose} disabled={saving}>Cancel</button>
+          <button type="submit" className="btn btn-primary btn-sm" disabled={saving}>{saving ? 'Saving…' : existing ? 'Update' : 'Publish'}</button>
+        </div>
+      </div>
+    </form>
+  )
+}
+
+function ReviewCard({ review }: { review: Review }) {
+  const [revealed, setRevealed] = useState(!review.contains_spoilers)
+  return (
+    <div className="card animate-fade-up" style={{ padding: 'var(--space-5)' }} id={`review-${review.id}`}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', marginBottom: 'var(--space-3)', flexWrap: 'wrap' }}>
+        <Link to={`/profile/${review.profile?.username ?? ''}`} className="avatar avatar-sm" style={{ textDecoration: 'none' }}>
+          {review.profile?.username?.[0]?.toUpperCase() ?? '?'}
+        </Link>
+        <div>
+          <Link to={`/profile/${review.profile?.username ?? ''}`} style={{ fontWeight: 600, fontSize: '0.9375rem', color: 'var(--text-primary)', textDecoration: 'none' }}>
+            @{review.profile?.username ?? 'reader'}
+          </Link>
+          <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{new Date(review.created_at).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</div>
+        </div>
+        {review.contains_spoilers && <span className="badge badge-ochre">Spoilers</span>}
+        {review.rating != null && (
+          <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 4, color: 'var(--ochre)', fontWeight: 700 }}>
+            <Star size={14} fill="currentColor" /> {review.rating}/10
+          </div>
+        )}
+      </div>
+      {revealed
+        ? <p style={{ lineHeight: 1.75, whiteSpace: 'pre-line' }}>{review.body}</p>
+        : <button className="btn btn-secondary btn-sm" onClick={() => setRevealed(true)}>Show review with spoilers</button>}
+    </div>
+  )
+}
+
+// ─── Page ─────────────────────────────────────────────────
 export default function SeriesDetailPage() {
   const { id } = useParams<{ id: string }>()
   const { user } = useAuth()
 
   const [series, setSeries] = useState<Series | null>(null)
+  const [stats, setStats] = useState<SeriesStats | null>(null)
   const [volumes, setVolumes] = useState<Volume[]>([])
   const [reviews, setReviews] = useState<Review[]>([])
-  const [availability, setAvailability] = useState<VolumeAvailability[]>([])
-  const [libraryEntry, setLibraryEntry] = useState<Partial<LibraryEntry> | null>(null)
+  const [libraryEntry, setLibraryEntry] = useState<LibraryEntry | null>(null)
   const [loading, setLoading] = useState(true)
-  const [whereToByOpen, setWhereToBuyOpen] = useState(false)
   const [savingStatus, setSavingStatus] = useState(false)
   const [toast, setToast] = useState<string | null>(null)
   const [regionFilter, setRegionFilter] = useState<string>('all')
+  const [editingReview, setEditingReview] = useState(false)
+  const [descExpanded, setDescExpanded] = useState(false)
 
   useEffect(() => {
+    if (!id) return
+    let cancelled = false
     async function load() {
-      const [seriesResult, volumesResult, reviewsResult] = await Promise.all([
-        supabase.from('series').select('*, publisher:publishers!original_publisher_id(*)').eq('id', id!).single(),
-        supabase.from('volumes').select('*, publisher:publishers(*)').eq('series_id', id!).eq('ingest_status', 'published').order('volume_number'),
-        supabase.from('reviews').select('*, profile:profiles(id,username,avatar_url,created_at)').eq('series_id', id!).limit(10),
+      const [seriesResult, volumesResult, reviewsResult, statsResult] = await Promise.all([
+        supabase.from('series').select('*, publisher:publishers!original_publisher_id(*)').eq('id', id!).maybeSingle(),
+        supabase.from('volumes').select('*, publisher:publishers(*)').eq('series_id', id!).eq('ingest_status', 'published').order('volume_number').limit(1000),
+        supabase.from('reviews').select('*, profile:profiles(id,username,avatar_url,created_at)').eq('series_id', id!).order('created_at', { ascending: false }).limit(20),
+        supabase.from('series_stats').select('*').eq('series_id', id!).maybeSingle(),
       ])
+      const entry = user
+        ? (await supabase.from('library_entries').select('*').eq('user_id', user.id).eq('series_id', id!).maybeSingle()).data
+        : null
+      if (cancelled) return
       setSeries(seriesResult.data as Series | null)
       setVolumes((volumesResult.data as Volume[]) ?? [])
       setReviews((reviewsResult.data as Review[]) ?? [])
-
-      if (volumesResult.data && volumesResult.data.length > 0) {
-        const volumeIds = volumesResult.data.map(v => v.id)
-        const { data: availData } = await supabase
-          .from('volume_availability')
-          .select('*, retailer:retailers(*)')
-          .in('volume_id', volumeIds)
-        if (availData) {
-          setAvailability(availData as VolumeAvailability[])
-        }
-      }
-
+      setStats(statsResult.data as SeriesStats | null)
+      setLibraryEntry(entry as LibraryEntry | null)
       setLoading(false)
-
-      if (user) {
-        const { data: entry } = await supabase.from('library_entries').select('*').eq('user_id', user.id).eq('series_id', id!).maybeSingle()
-        setLibraryEntry(entry)
-      }
     }
-    if (id) load()
+    load()
+    return () => { cancelled = true }
   }, [id, user])
 
   const showToast = (msg: string) => {
@@ -249,38 +367,34 @@ export default function SeriesDetailPage() {
     setTimeout(() => setToast(null), 2500)
   }
 
-  const upsertLibraryEntry = async (updates: Partial<LibraryEntry>) => {
-    if (!user) return
+  const saveEntry = async (updates: Partial<LibraryEntry>) => {
+    if (!user || !id) return
     setSavingStatus(true)
-    let error = null
-    let updatedEntry = null
-
-    const existingId = libraryEntry?.id
-    if (existingId) {
-      const res = await supabase.from('library_entries').update({ ...updates, updated_at: new Date().toISOString() }).eq('id', existingId).select().maybeSingle()
-      error = res.error
-      updatedEntry = res.data
-    } else {
-      const check = await supabase.from('library_entries').select('id').eq('user_id', user.id).eq('series_id', id!).maybeSingle()
-      if (check.data?.id) {
-        const res = await supabase.from('library_entries').update({ ...updates, updated_at: new Date().toISOString() }).eq('id', check.data.id).select().maybeSingle()
-        error = res.error
-        updatedEntry = res.data
-      } else {
-        const res = await supabase.from('library_entries').insert({ ...updates, user_id: user.id, series_id: id }).select().maybeSingle()
-        error = res.error
-        updatedEntry = res.data
-      }
-    }
-
-    if (!error && updatedEntry) {
-      setLibraryEntry(updatedEntry as LibraryEntry)
-      showToast('Saved!')
-    } else if (error) {
-      showToast(`Error: ${error.message}`)
-    }
+    const { data, error } = await supabase
+      .from('library_entries')
+      .upsert(
+        { user_id: user.id, series_id: id, read_status: libraryEntry?.read_status ?? 'plan_to_read', ...updates, updated_at: new Date().toISOString() },
+        { onConflict: 'user_id,series_id' },
+      )
+      .select()
+      .single()
     setSavingStatus(false)
+    if (error) { showToast(`Error: ${error.message}`); return }
+    setLibraryEntry(data as LibraryEntry)
+    showToast('Saved')
   }
+
+  const removeEntry = async () => {
+    if (!user || !libraryEntry) return
+    setSavingStatus(true)
+    const { error } = await supabase.from('library_entries').delete().eq('id', libraryEntry.id)
+    setSavingStatus(false)
+    if (error) { showToast(`Error: ${error.message}`); return }
+    setLibraryEntry(null)
+    showToast('Removed from your list')
+  }
+
+  const myReview = user ? reviews.find(r => r.user_id === user.id) ?? null : null
 
   if (loading) {
     return (
@@ -307,109 +421,101 @@ export default function SeriesDetailPage() {
   }
 
   const s = series
+  const volumeCount = s.volume_count ?? new Set(volumes.map(v => Number(v.volume_number))).size
+  const description = s.description ?? ''
+  const longDescription = description.length > 420
 
   return (
     <>
-      {/* Back */}
       <Link to="/discover" className="btn btn-ghost btn-sm" style={{ marginBottom: 'var(--space-6)', display: 'inline-flex' }} id="back-to-discover-btn">
-        <ArrowLeft size={16} /> Back
+        <ArrowLeft size={16} /> Discover
       </Link>
 
-      {/* ── Hero banner ──────────────────────────────── */}
-      <section id="series-hero" className="animate-fade-in" style={{ position: 'relative', borderRadius: 'var(--radius-xl)', overflow: 'hidden', marginBottom: 'var(--space-8)', minHeight: 300 }}>
-        {/* Blurred bg cover */}
-        {s.cover_url && (
-          <div style={{ position: 'absolute', inset: 0, backgroundImage: `url(${s.cover_url})`, backgroundSize: 'cover', backgroundPosition: 'center', filter: 'blur(32px) saturate(0.4)', transform: 'scale(1.1)', opacity: 0.4 }} aria-hidden="true" />
-        )}
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, rgba(13,15,20,0.95) 0%, rgba(13,15,20,0.7) 60%, transparent 100%)' }} />
+      {/* ── Hero ─────────────────────────────────────── */}
+      <section id="series-hero" className="series-hero animate-fade-in">
+        {s.cover_url && <div className="series-hero-bg" style={{ backgroundImage: `url(${s.cover_url})` }} aria-hidden="true" />}
+        <div className="series-hero-shade" />
 
-        <div style={{ position: 'relative', display: 'flex', gap: 'var(--space-8)', padding: 'var(--space-8)', alignItems: 'flex-start' }}>
-          {/* Cover */}
-          <div style={{ width: 160, flexShrink: 0, borderRadius: 'var(--radius-lg)', overflow: 'hidden', boxShadow: 'var(--shadow-xl)' }}>
+        <div className="series-hero-inner">
+          <div className="series-hero-cover">
             {s.cover_url
-              ? <img src={s.cover_url} alt={s.title} style={{ width: '100%', aspectRatio: '2/3', objectFit: 'cover' }} referrerPolicy="no-referrer" />
-              : <div className="cover-placeholder" style={{ height: 240 }}><BookMarked size={40} /></div>
-            }
+              ? <img src={s.cover_url} alt={s.title} referrerPolicy="no-referrer" />
+              : <div className="cover-placeholder" style={{ height: 240 }}><BookMarked size={40} /></div>}
           </div>
 
-          {/* Info */}
           <div style={{ flex: 1, minWidth: 0 }}>
             {s.publisher && (
-              <Link to={`/publishers/${s.publisher.id}`} className="badge badge-ink-green animate-fade-up" style={{ marginBottom: 'var(--space-3)', display: 'inline-flex', textDecoration: 'none' }}>
+              <Link to={`/publishers/${s.publisher.id}`} className="badge badge-ink-green" style={{ marginBottom: 'var(--space-3)', display: 'inline-flex', textDecoration: 'none' }}>
                 {s.publisher.name}
               </Link>
             )}
-            <h1 className="animate-fade-up delay-100" style={{ marginBottom: 8, fontSize: 'clamp(1.5rem, 4vw, 2.5rem)' }}>{s.title}</h1>
-            {s.original_title && <p className="animate-fade-up delay-100" style={{ fontSize: '1rem', color: 'var(--text-muted)', marginBottom: 'var(--space-3)' }}>{s.original_title}</p>}
+            <h1 style={{ marginBottom: 6, fontSize: 'clamp(1.5rem, 4vw, 2.5rem)' }}>{s.title}</h1>
+            {s.original_title && s.original_title !== s.title && (
+              <p style={{ fontSize: '1rem', color: 'var(--text-muted)', marginBottom: 'var(--space-2)' }}>{s.original_title}</p>
+            )}
+            {s.author && (
+              <p style={{ fontSize: '0.9375rem', color: 'var(--text-secondary)', marginBottom: 'var(--space-3)', display: 'flex', alignItems: 'center', gap: 6 }}>
+                <PenLine size={14} /> {s.author}
+              </p>
+            )}
 
-            {/* Chips */}
-            <div className="animate-fade-up delay-200" style={{ display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap', marginBottom: 'var(--space-5)' }}>
-              <span className={`badge ${s.status === 'ongoing' ? 'badge-slate' : s.status === 'completed' ? 'badge-ink-green' : 'badge-ochre'}`}>
-                {s.status}
-              </span>
-              <span className="badge badge-neutral">{s.type}</span>
-              {s._count?.volumes && <span className="badge badge-neutral">{s._count.volumes} volumes</span>}
+            <div style={{ display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap', marginBottom: 'var(--space-5)' }}>
+              <span className={`badge ${s.status === 'ongoing' ? 'badge-slate' : s.status === 'completed' ? 'badge-ink-green' : 'badge-ochre'}`}>{s.status}</span>
+              {s.genre && s.genre !== 'other' && <span className="badge badge-vermillion">{GENRE_LABELS[s.genre]}</span>}
+              {volumeCount > 0 && <span className="badge badge-neutral">{volumeCount} volumes</span>}
+              {s.chapter_count ? <span className="badge badge-neutral">{s.chapter_count} chapters</span> : null}
+              {s.start_year && <span className="badge badge-neutral">{s.start_year}</span>}
             </div>
 
-            {/* Stats row */}
-            <div className="animate-fade-up delay-200" style={{ display: 'flex', gap: 'var(--space-6)', marginBottom: 'var(--space-6)', flexWrap: 'wrap' }}>
-              {s.avg_rating && (
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '1.25rem', color: 'var(--ochre)' }}>
-                    <Star size={18} fill="currentColor" />{s.avg_rating.toFixed(1)}
-                  </div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Rating</div>
+            <div className="series-stats">
+              {s.average_score != null && (
+                <div title="Average score on AniList">
+                  <div className="series-stat-value" style={{ color: 'var(--ochre)' }}><Star size={18} fill="currentColor" />{(s.average_score / 10).toFixed(1)}</div>
+                  <div className="series-stat-label">Score</div>
                 </div>
               )}
-              {s._count?.readers && (
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '1.25rem', color: 'var(--ink-green)' }}>{(s._count.readers / 1000).toFixed(1)}k</div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}><Eye size={11} style={{ display: 'inline' }} /> Readers</div>
+              {stats?.avg_rating != null && (
+                <div title="Average ShelfTrack rating">
+                  <div className="series-stat-value" style={{ color: 'var(--ochre)' }}>{Number(stats.avg_rating).toFixed(1)}</div>
+                  <div className="series-stat-label">Our readers</div>
                 </div>
               )}
-              {s._count?.owned && (
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '1.25rem', color: 'var(--vermillion)' }}>{(s._count.owned / 1000).toFixed(1)}k</div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}><BookMarked size={11} style={{ display: 'inline' }} /> Owned</div>
-                </div>
-              )}
+              <div>
+                <div className="series-stat-value" style={{ color: 'var(--text-primary)' }}>{stats?.readers ?? 0}</div>
+                <div className="series-stat-label"><Eye size={11} style={{ display: 'inline' }} /> Tracking</div>
+              </div>
+              <div>
+                <div className="series-stat-value" style={{ color: 'var(--vermillion)' }}>{stats?.owners ?? 0}</div>
+                <div className="series-stat-label"><BookMarked size={11} style={{ display: 'inline' }} /> Collectors</div>
+              </div>
             </div>
 
-            {/* ── Action bar ──────────────────────────── */}
             {user ? (
-              <div className="animate-fade-up delay-300" style={{ display: 'flex', gap: 'var(--space-3)', flexWrap: 'wrap', alignItems: 'center' }}>
-                {/* Read status */}
+              <div style={{ display: 'flex', gap: 'var(--space-3)', flexWrap: 'wrap', alignItems: 'center' }}>
                 <select
                   id="read-status-select"
-                  className="input select"
-                  style={{ width: 'auto', padding: '8px 36px 8px 12px', background: libraryEntry?.read_status ? 'var(--ink-green-dim)' : undefined, borderColor: libraryEntry?.read_status ? 'var(--ink-green-border)' : undefined, color: libraryEntry?.read_status ? '#a78bfa' : undefined }}
+                  className={`input select read-status-select ${libraryEntry?.read_status ? 'is-set' : ''}`}
                   value={libraryEntry?.read_status ?? ''}
                   disabled={savingStatus}
-                  onChange={e => upsertLibraryEntry({ read_status: e.target.value as ReadStatus })}
+                  onChange={e => {
+                    const v = e.target.value
+                    if (v === '__remove') removeEntry()
+                    else if (v) saveEntry({ read_status: v as ReadStatus })
+                  }}
                   aria-label="Reading status"
                 >
-                  <option value="">📖 Add to list…</option>
-                  {STATUS_OPTIONS.map(s => <option key={s} value={s}>{READ_STATUS_LABELS[s]}</option>)}
+                  <option value="" disabled>Add to list…</option>
+                  {STATUS_OPTIONS.map(opt => <option key={opt} value={opt}>{READ_STATUS_LABELS[opt]}</option>)}
+                  {libraryEntry && <option value="__remove">Remove from list</option>}
                 </select>
-
-                {/* Rating */}
-                <div style={{ display: 'flex', gap: 2 }} aria-label="Your rating" role="group">
-                  {[1,2,3,4,5,6,7,8,9,10].filter(n => n % 2 === 0 || n === 1).map(n => (
-                    <button
-                      key={n}
-                      className="btn btn-ghost"
-                      style={{ padding: '0 2px', color: (libraryEntry?.personal_rating ?? 0) >= n ? 'var(--ochre)' : 'var(--text-muted)' }}
-                      onClick={() => upsertLibraryEntry({ personal_rating: n, read_status: libraryEntry?.read_status ?? 'plan_to_read' })}
-                      aria-label={`Rate ${n}`}
-                      id={`rating-star-${n}`}
-                    >
-                      <Star size={18} fill={(libraryEntry?.personal_rating ?? 0) >= n ? 'currentColor' : 'none'} />
-                    </button>
-                  ))}
-                </div>
+                <StarRating
+                  value={libraryEntry?.personal_rating ?? null}
+                  disabled={savingStatus}
+                  onChange={v => saveEntry({ personal_rating: v })}
+                />
               </div>
             ) : (
-              <Link to="/login" className="btn btn-primary animate-fade-up delay-300" id="series-login-cta-btn">
+              <Link to="/login" state={{ from: `/series/${s.id}` }} className="btn btn-primary" id="series-login-cta-btn">
                 Sign in to track this series →
               </Link>
             )}
@@ -418,93 +524,68 @@ export default function SeriesDetailPage() {
       </section>
 
       {/* ── Description ─────────────────────────────── */}
-      {s.description && (
+      {description && (
         <section id="series-description" className="card animate-fade-up" style={{ padding: 'var(--space-6)', marginBottom: 'var(--space-8)' }}>
           <h2 style={{ fontSize: '1.125rem', marginBottom: 'var(--space-3)' }}>About</h2>
-          <p style={{ lineHeight: 1.8 }}>{s.description}</p>
+          <p style={{ lineHeight: 1.8, whiteSpace: 'pre-line' }}>
+            {longDescription && !descExpanded ? `${description.slice(0, 420).trimEnd()}…` : description}
+          </p>
+          {longDescription && (
+            <button className="btn btn-ghost btn-sm" style={{ marginTop: 'var(--space-2)' }} onClick={() => setDescExpanded(x => !x)}>
+              {descExpanded ? <>Show less <ChevronUp size={14} /></> : <>Read more <ChevronDown size={14} /></>}
+            </button>
+          )}
+          {s.genres && s.genres.length > 0 && (
+            <div style={{ display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap', marginTop: 'var(--space-4)' }}>
+              {s.genres.map(g => <span key={g} className="badge badge-neutral">{g}</span>)}
+            </div>
+          )}
         </section>
       )}
 
-      {/* ── Volume grid — grouped by region ─────────── */}
       <VolumesSection series={series} volumes={volumes} regionFilter={regionFilter} setRegionFilter={setRegionFilter} />
-
-      {/* ── Where to buy ─────────────────────────────── */}
-      <section id="where-to-buy-section" className="card animate-fade-up" style={{ marginBottom: 'var(--space-8)', overflow: 'hidden' }}>
-        <button
-          id="where-to-buy-toggle"
-          style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--space-5) var(--space-6)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-primary)' }}
-          onClick={() => setWhereToBuyOpen(o => !o)}
-          aria-expanded={whereToByOpen}
-        >
-          <span style={{ display: 'flex', alignItems: 'center', gap: 10, fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '1.125rem' }}>
-            <ShoppingBag size={20} style={{ color: 'var(--vermillion)' }} /> Where to Buy
-          </span>
-          {whereToByOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
-        </button>
-        {whereToByOpen && (
-          <div style={{ padding: '0 var(--space-6) var(--space-6)' }}>
-            {availability.length > 0 ? (
-              <table className="table">
-                <thead><tr><th>Region</th><th>Retailer</th><th>Status</th><th>Link</th></tr></thead>
-                <tbody>
-                  {availability.map(a => (
-                    <tr key={a.id}>
-                      <td>{a.region_code}</td>
-                      <td>{a.retailer?.name}</td>
-                      <td><span className={`badge ${a.in_print ? 'badge-slate' : 'badge-neutral'}`}>{a.in_print ? 'In Print' : 'Unknown'}</span></td>
-                      <td>{a.product_url && <a href={a.product_url} target="_blank" rel="noopener noreferrer" className="btn btn-ghost btn-sm" id={`buy-link-${a.id}`}><ExternalLink size={12} /> View</a>}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            ) : (
-              <div className="empty-state" style={{ padding: 'var(--space-8)' }}>
-                <div className="empty-state-icon"><ShoppingBag size={28} /></div>
-                <p>Availability data not yet curated for this series.</p>
-                <p style={{ fontSize: '0.8125rem', color: 'var(--text-muted)' }}>Check individual volume pages for specific retailer links.</p>
-              </div>
-            )}
-          </div>
-        )}
-      </section>
 
       {/* ── Reviews ──────────────────────────────────── */}
       <section id="reviews-section" style={{ marginBottom: 'var(--space-8)' }}>
         <div className="section-header">
           <h2>Reviews</h2>
-          {user && <button className="btn btn-primary btn-sm" id="write-review-btn" onClick={() => alert('Review editor coming soon!')}>Write a review</button>}
+          {user && !editingReview && (
+            <button className="btn btn-primary btn-sm" id="write-review-btn" onClick={() => setEditingReview(true)}>
+              {myReview ? 'Edit your review' : 'Write a review'}
+            </button>
+          )}
         </div>
 
-        {reviews.length === 0 ? (
+        {user && editingReview && (
+          <ReviewEditor
+            seriesId={s.id}
+            userId={user.id}
+            existing={myReview}
+            defaultRating={libraryEntry?.personal_rating ?? null}
+            onClose={() => setEditingReview(false)}
+            onSaved={saved => {
+              setReviews(prev => {
+                const others = prev.filter(r => r.user_id !== user.id)
+                return saved ? [saved, ...others] : others
+              })
+              setEditingReview(false)
+              showToast(saved ? 'Review saved' : 'Review deleted')
+            }}
+          />
+        )}
+
+        {reviews.length === 0 && !editingReview ? (
           <div className="empty-state">
             <div className="empty-state-icon"><Star size={28} /></div>
-            <p>No reviews yet. Be the first!</p>
+            <p>No reviews yet. {user ? 'Be the first!' : <Link to="/login" state={{ from: `/series/${s.id}` }}>Sign in</Link>}</p>
           </div>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
-            {reviews.map(review => (
-              <div key={review.id} className="card animate-fade-up" style={{ padding: 'var(--space-5)' }} id={`review-${review.id}`}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', marginBottom: 'var(--space-3)' }}>
-                  <div className="avatar avatar-sm">{review.profile?.username[0].toUpperCase()}</div>
-                  <div>
-                    <div style={{ fontWeight: 600, fontSize: '0.9375rem', color: 'var(--text-primary)' }}>{review.profile?.username}</div>
-                    <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{new Date(review.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</div>
-                  </div>
-                  {review.rating && (
-                    <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 4, color: 'var(--ochre)', fontWeight: 700 }}>
-                      <Star size={14} fill="currentColor" /> {review.rating}/10
-                    </div>
-                  )}
-                  {review.contains_spoilers && <span className="badge badge-ochre">Spoilers</span>}
-                </div>
-                <p style={{ lineHeight: 1.75 }}>{review.body}</p>
-              </div>
-            ))}
+            {reviews.map(review => <ReviewCard key={review.id} review={review} />)}
           </div>
         )}
       </section>
 
-      {/* Toast */}
       {toast && (
         <div className="toast" role="status" aria-live="polite">
           <span style={{ color: 'var(--slate)', fontSize: '1.25rem' }}>✓</span>

@@ -33,14 +33,17 @@ export function SeriesCard({ series, size = 'md' }: SeriesCardProps) {
       <div className="volume-card-body">
         <div className="volume-card-title" title={series.title}>{series.title}</div>
         <div className="volume-card-meta">
-          {series.avg_rating && (
+          {series.average_score != null && (
             <>
               <Star size={11} fill="currentColor" style={{ color: 'var(--ochre)' }} />
-              <span style={{ color: 'var(--ochre)' }}>{series.avg_rating.toFixed(1)}</span>
-              <span>·</span>
+              <span style={{ color: 'var(--ochre)' }}>{(series.average_score / 10).toFixed(1)}</span>
             </>
           )}
-          {series._count?.volumes != null && <span>{series._count.volumes} vols</span>}
+          {series.average_score != null && series.volume_count != null && <span>·</span>}
+          {series.volume_count != null && <span>{series.volume_count} vols</span>}
+          {series.average_score == null && series.volume_count == null && series.author && (
+            <span className="truncate">{series.author}</span>
+          )}
         </div>
       </div>
     </Link>

@@ -43,11 +43,43 @@ export interface Series {
   cover_url?: string
   created_at: string
   ingest_status?: 'draft' | 'published' | 'rejected'
+  // populated by the catalog sync
+  anilist_id?: number | null
+  popularity?: number | null
+  average_score?: number | null
+  volume_count?: number | null
+  chapter_count?: number | null
+  start_year?: number | null
+  genres?: string[]
+  source?: 'manual' | 'sync'
+  last_synced_at?: string | null
   // joined
   publisher?: Publisher
   volumes?: Volume[]
-  _count?: { volumes: number; readers: number; owned: number }
-  avg_rating?: number
+  stats?: SeriesStats | null
+}
+
+/** Row of the series_stats view — live community counts. */
+export interface SeriesStats {
+  series_id: string
+  readers: number
+  completed: number
+  avg_rating: number | null
+  owners: number
+}
+
+export interface SyncRun {
+  id: string
+  started_at: string
+  finished_at: string | null
+  mode: string
+  status: 'running' | 'success' | 'partial' | 'failed'
+  series_checked: number
+  series_added: number
+  series_updated: number
+  volumes_added: number
+  chapters_added: number
+  errors: { series: string; error: string }[]
 }
 
 export interface Volume {
@@ -157,7 +189,7 @@ export interface LibraryEntry {
   owned_date?: string
   owned_format?: OwnedFormat
   collection_status?: CollectionStatus | null
-  personal_rating?: number
+  personal_rating?: number | null
   updated_at: string
   // joined
   volume?: Volume
@@ -187,7 +219,7 @@ export interface Review {
   series_id?: string
   volume_id?: string
   body: string
-  rating?: number
+  rating?: number | null
   contains_spoilers: boolean
   created_at: string
   // joined
