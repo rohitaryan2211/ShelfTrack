@@ -16,7 +16,8 @@ interface SearchResult {
 }
 
 function mapSeries(s: Series): SearchResult {
-  return { type: 'series', id: s.id, title: s.title, subtitle: s.original_title, cover_url: s.cover_url, badge: s.status }
+  const subtitle = [s.author, s.original_title !== s.title ? s.original_title : null].filter(Boolean).join(' · ')
+  return { type: 'series', id: s.id, title: s.title, subtitle: subtitle || undefined, cover_url: s.cover_url, badge: s.status }
 }
 
 function mapPublisher(p: Publisher): SearchResult {
@@ -33,39 +34,59 @@ const RESULT_LINK: Record<ResultType, (id: string) => string> = {
   publishers: id => `/publishers/${id}`,
 }
 
+const sanitize = (q: string) => q.replace(/[,()*%\\]/g, ' ').trim()
+
+async function runSearch(raw: string): Promise<SearchResult[]> {
+  const q = sanitize(raw)
+  if (!q) return []
+  const like = `%${q}%`
+  const [seriesResult, pubResult] = await Promise.all([
+    supabase
+      .from('series')
+      .select('id,title,original_title,author,status,cover_url')
+      .or(`title.ilike.${like},original_title.ilike.${like},author.ilike.${like}`)
+      .eq('ingest_status', 'published')
+      .order('popularity', { ascending: false, nullsFirst: false })
+      .limit(20),
+    supabase.from('publishers').select('*').ilike('name', like).limit(5),
+  ])
+  return [
+    ...((seriesResult.data ?? []) as Series[]).map(mapSeries),
+    ...((pubResult.data ?? []) as Publisher[]).map(mapPublisher),
+  ]
+}
+
 export default function SearchPage() {
   const [searchParams, setSearchParams] = useSearchParams()
-  const [query, setQuery] = useState(searchParams.get('q') ?? '')
-  const [results, setResults] = useState<SearchResult[]>([])
-  const [loading, setLoading] = useState(false)
-  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const urlQuery = searchParams.get('q') ?? ''
 
-  const doSearch = async (q: string) => {
-    if (!q.trim()) { setResults([]); return }
-    setLoading(true)
-    const [seriesResult, pubResult] = await Promise.all([
-      supabase.from('series').select('id,title,original_title,status,cover_url').ilike('title', `%${q}%`).eq('ingest_status', 'published').limit(10),
-      supabase.from('publishers').select('*').ilike('name', `%${q}%`).limit(5),
-    ])
-    const mapped: SearchResult[] = [
-      ...(seriesResult.data ?? []).map(mapSeries as (s: unknown) => SearchResult),
-      ...(pubResult.data ?? []).map(mapPublisher as (p: unknown) => SearchResult),
-    ]
-    setResults(mapped)
-    setLoading(false)
+  // Keep the input in sync when the URL changes from elsewhere (e.g. the topbar search)
+  const [query, setQuery] = useState(urlQuery)
+  const [lastUrlQuery, setLastUrlQuery] = useState(urlQuery)
+  if (urlQuery !== lastUrlQuery) {
+    setLastUrlQuery(urlQuery)
+    setQuery(urlQuery)
   }
 
+  const [fetched, setFetched] = useState<{ q: string; results: SearchResult[] }>({ q: '', results: [] })
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
   useEffect(() => {
-    const q = searchParams.get('q') ?? ''
-    setQuery(q)
-    doSearch(q)
-  }, [searchParams])
+    if (!urlQuery.trim()) return
+    let cancelled = false
+    runSearch(urlQuery).then(results => { if (!cancelled) setFetched({ q: urlQuery, results }) })
+    return () => { cancelled = true }
+  }, [urlQuery])
+
+  const hasQuery = urlQuery.trim() !== ''
+  const loading = hasQuery && fetched.q !== urlQuery
+  const results = hasQuery ? fetched.results : []
 
   const handleInput = (q: string) => {
     setQuery(q)
     if (debounceRef.current) clearTimeout(debounceRef.current)
     debounceRef.current = setTimeout(() => {
-      setSearchParams(q ? { q } : {})
+      setSearchParams(q ? { q } : {}, { replace: true })
     }, 350)
   }
 
@@ -89,7 +110,7 @@ export default function SearchPage() {
             id="search-input"
             type="search"
             className="input"
-            placeholder="Search series, volumes, publishers, authors…"
+            placeholder="Search series, authors, publishers…"
             value={query}
             onChange={e => handleInput(e.target.value)}
             autoFocus
@@ -107,19 +128,19 @@ export default function SearchPage() {
         </div>
       )}
 
-      {!loading && query && results.length === 0 && (
+      {!loading && hasQuery && results.length === 0 && (
         <div className="empty-state animate-fade-up">
           <div className="empty-state-icon"><Search size={28} /></div>
-          <h3>No results for "{query}"</h3>
+          <h3>No results for "{urlQuery}"</h3>
           <p>Try a different spelling or browse the <Link to="/discover" style={{ color: 'var(--vermillion)' }}>full catalog</Link>.</p>
         </div>
       )}
 
-      {!loading && !query && (
+      {!hasQuery && (
         <div className="empty-state animate-fade-up" style={{ paddingTop: 'var(--space-10)' }}>
           <div className="empty-state-icon"><Search size={32} /></div>
           <h3>Start typing to search</h3>
-          <p>Search across all series, publishers, and more.</p>
+          <p>Search across series titles (English and Japanese), authors and publishers.</p>
         </div>
       )}
 

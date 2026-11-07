@@ -4,7 +4,7 @@ import { Globe, BookOpen, ExternalLink } from 'lucide-react'
 import { supabase } from '../../lib/supabaseClient'
 import type { Publisher } from '../../lib/types'
 
-const FLAG: Record<string, string> = { JP: '🇯🇵', US: '🇺🇸', GB: '🇬🇧', IN: '🇮🇳', DE: '🇩🇪', FR: '🇫🇷', AU: '🇦🇺' }
+const FLAG: Record<string, string> = { JP: '🇯🇵', US: '🇺🇸', GB: '🇬🇧', IN: '🇮🇳', DE: '🇩🇪', FR: '🇫🇷', AU: '🇦🇺', KR: '🇰🇷', CN: '🇨🇳', TW: '🇹🇼' }
 
 type Filter = 'all' | 'original' | 'licensor'
 
@@ -15,8 +15,16 @@ export default function PublishersPage() {
 
   useEffect(() => {
     async function load() {
-      const { data } = await supabase.from('publishers').select('*').order('name')
-      setPublishers((data as (Publisher & { series_count: number })[]) ?? [])
+      // Originals are counted by series.original_publisher_id, licensors by series_licensors
+      const { data } = await supabase
+        .from('publishers')
+        .select('*, originals:series!original_publisher_id(count), licensed:series_licensors(count)')
+        .order('name')
+      type Row = Publisher & { originals: { count: number }[]; licensed: { count: number }[] }
+      setPublishers(((data as Row[] | null) ?? []).map(({ originals, licensed, ...p }) => ({
+        ...p,
+        series_count: (originals?.[0]?.count ?? 0) + (licensed?.[0]?.count ?? 0),
+      })))
       setLoading(false)
     }
     load()
