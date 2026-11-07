@@ -2,7 +2,7 @@ import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import {
   mapStatus, mapGenre, cleanDescription, pickAuthor, resolveChapterVolumes,
-  chapterNumbers, pickEnglishLicensor, pickOriginalPublisher, slugify, canonicalPublisherName,
+  chapterNumbers, fillBoundedGaps, pickEnglishLicensor, pickOriginalPublisher, slugify, canonicalPublisherName,
 } from './map.ts'
 
 test('mapStatus', () => {
@@ -105,4 +105,15 @@ test('canonicalPublisherName folds imprints and short forms', () => {
   assert.equal(canonicalPublisherName('Shonen Sunday'), 'Viz Media')
   assert.equal(canonicalPublisherName('Kodansha Comics'), 'Kodansha USA')
   assert.equal(canonicalPublisherName('Daum'), 'Daum')
+})
+
+test('fillBoundedGaps fills only between same-volume anchors', () => {
+  const known = new Map([[1, 1], [7, 1], [63, 8], [181, 21], [190, 21], [191, 22]])
+  const all = Array.from({ length: 200 }, (_, i) => i + 1)
+  const out = fillBoundedGaps(known, all)
+  assert.equal(out.get(4), 1)
+  assert.equal(out.get(185), 21)
+  assert.equal(out.has(8), false)    // between vol 1 and vol 8: unknown
+  assert.equal(out.has(100), false)
+  assert.equal(out.has(195), false)  // after the last anchor
 })

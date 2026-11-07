@@ -190,6 +190,25 @@ export function resolveChapterVolumes(votes: { chapter: number; volume: number |
   return result
 }
 
+/**
+ * Fill chapters that sit between two known chapters of the *same* volume
+ * (e.g. 1→v1 and 7→v1 means 2–6 are v1 too). Boundaries between different
+ * volumes are never guessed.
+ */
+export function fillBoundedGaps(known: Map<number, number>, allChapters: number[]): Map<number, number> {
+  const anchors = [...known.entries()].sort((a, b) => a[0] - b[0])
+  const out = new Map(known)
+  let k = 0
+  for (const ch of [...allChapters].sort((a, b) => a - b)) {
+    if (out.has(ch)) continue
+    while (k + 1 < anchors.length && anchors[k + 1][0] < ch) k++
+    const before = anchors[k]
+    const after = anchors[k + 1]
+    if (before && after && before[0] < ch && ch < after[0] && before[1] === after[1]) out.set(ch, before[1])
+  }
+  return out
+}
+
 /** Every chapter number we should store: 1..max, plus any decimal chapters MangaDex knows. */
 export function chapterNumbers(maxChapter: number | null, known: Iterable<number>, cap = 3000): number[] {
   const set = new Set<number>()

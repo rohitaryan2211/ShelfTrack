@@ -8,7 +8,7 @@ import * as mangaupdates from './sources/mangaupdates.ts'
 import {
   mapStatus, mapGenre, cleanDescription, pickAuthor, pickTitle, searchTitles,
   countryToRegion, regionLanguage, resolveChapterVolumes, chapterNumbers,
-  pickEnglishLicensor, pickOriginalPublisher, type Licensor, type SeriesGenre, type SeriesStatus,
+  pickEnglishLicensor, pickOriginalPublisher, fillBoundedGaps, type Licensor, type SeriesGenre, type SeriesStatus,
 } from './map.ts'
 
 export interface SeriesFields {
@@ -130,6 +130,7 @@ export async function buildBundle(media: AniListMedia): Promise<SeriesBundle> {
   // 4. Chapters
   const maxChapter = media.chapters ?? muLatestChapter ?? (knownChapters.length ? Math.max(...knownChapters) : null)
   const chapters = chapterNumbers(maxChapter ? Math.floor(maxChapter) : null, knownChapters)
+  chapterVolume = fillBoundedGaps(chapterVolume, chapters)
   series.chapter_count = media.chapters ?? (chapters.length ? Math.floor(Math.max(...chapters)) : null)
 
   // 5. Volume rows: original-language edition, plus the English edition when licensed
