@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { NavLink, Link, useNavigate } from 'react-router-dom'
 import {
   Home, Compass, BookOpen, Library, User, Settings,
-  Search, Menu, X, BookMarked, LogIn, LogOut, ShieldCheck,
+  Search, Menu, X, BookMarked, LogIn, LogOut, Database,
 } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
 
@@ -12,7 +12,6 @@ interface NavItem {
   icon: React.ReactNode
   label: string
   authRequired?: boolean
-  curatorOnly?: boolean
 }
 
 const PUBLIC_NAV: NavItem[] = [
@@ -20,16 +19,13 @@ const PUBLIC_NAV: NavItem[] = [
   { to: '/discover',  icon: <Compass size={18} />, label: 'Discover' },
   { to: '/publishers',icon: <BookOpen size={18} />,label: 'Publishers' },
   { to: '/search',    icon: <Search size={18} />,  label: 'Search' },
+  { to: '/catalog-status', icon: <Database size={18} />, label: 'Catalog Status' },
 ]
 
 const AUTH_NAV: NavItem[] = [
   { to: '/library',   icon: <Library size={18} />,    label: 'My Library',  authRequired: true },
   { to: '/profile',   icon: <User size={18} />,        label: 'Profile',     authRequired: true },
   { to: '/settings',  icon: <Settings size={18} />,    label: 'Settings',    authRequired: true },
-]
-
-const CURATOR_NAV: NavItem[] = [
-  { to: '/admin/ingest', icon: <ShieldCheck size={18} />, label: 'Ingest Data', curatorOnly: true },
 ]
 
 // ─── Sidebar ──────────────────────────────────────────────
@@ -63,7 +59,7 @@ function Sidebar({ open, onClose }: { open: boolean; onClose: () => void }) {
             ST
           </Link>
           <span className="sidebar-logo-text">ShelfTrack</span>
-          <button className="btn btn-ghost btn-icon" style={{ marginLeft: 'auto', display: 'none' }} onClick={onClose} id="close-sidebar-btn" aria-label="Close menu">
+          <button className="btn btn-ghost btn-icon mobile-only-flex" style={{ marginLeft: 'auto' }} onClick={onClose} id="close-sidebar-btn" aria-label="Close menu">
             <X size={18} />
           </button>
         </div>
@@ -103,23 +99,6 @@ function Sidebar({ open, onClose }: { open: boolean; onClose: () => void }) {
             </>
           )}
 
-          {user && (
-            <>
-              <span className="sidebar-section-label" style={{ marginTop: 8 }}>Curator</span>
-              {CURATOR_NAV.map(item => (
-                <NavLink
-                  key={item.to}
-                  to={item.to}
-                  className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
-                  onClick={onClose}
-                  id={`nav-ingest-data`}
-                >
-                  {item.icon}
-                  {item.label}
-                </NavLink>
-              ))}
-            </>
-          )}
         </nav>
 
         {/* Bottom user area */}
@@ -206,8 +185,7 @@ function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
   return (
     <header className="topbar">
       <button
-        className="btn btn-ghost btn-icon"
-        style={{ display: 'none' }}
+        className="btn btn-ghost btn-icon mobile-only-flex"
         onClick={onMenuClick}
         id="open-sidebar-btn"
         aria-label="Open menu"
@@ -223,7 +201,7 @@ function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
             id="topbar-search"
             type="search"
             className="input"
-            placeholder="Search series, volumes, authors… (Press '/' to focus)"
+            placeholder="Search series or authors…"
             value={query}
             onChange={e => setQuery(e.target.value)}
             aria-label="Search"
@@ -264,8 +242,8 @@ function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
                 <Link to="/settings" className="dropdown-item" onClick={() => setDropdownOpen(false)}>
                   <Settings size={14} /> Settings
                 </Link>
-                <Link to="/admin/ingest" className="dropdown-item" onClick={() => setDropdownOpen(false)}>
-                  <ShieldCheck size={14} /> Curator Ingest
+                <Link to="/profile" className="dropdown-item" onClick={() => setDropdownOpen(false)}>
+                  <BookMarked size={14} /> Profile
                 </Link>
                 <hr className="dropdown-divider" />
                 <button className="dropdown-item text-danger" onClick={handleSignOut} style={{ width: '100%', border: 'none', background: 'none', textAlign: 'left', cursor: 'pointer' }}>
@@ -325,19 +303,6 @@ function BottomTabBar() {
 // ─── App Layout ───────────────────────────────────────────
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-
-  // inject mobile toggle visibility via media query
-  useEffect(() => {
-    const style = document.createElement('style')
-    style.textContent = `
-      @media (max-width: 1024px) {
-        #open-sidebar-btn { display: flex !important; }
-        #close-sidebar-btn { display: flex !important; }
-      }
-    `
-    document.head.appendChild(style)
-    return () => { document.head.removeChild(style) }
-  }, [])
 
   return (
     <div className="app-shell">
