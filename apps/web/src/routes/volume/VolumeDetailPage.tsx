@@ -1,9 +1,31 @@
 import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { ArrowLeft, BookMarked, ShoppingBag, ExternalLink, List } from 'lucide-react'
+import { ArrowLeft, ArrowRight, BookMarked, ShoppingBag, ExternalLink, List, CheckCheck } from 'lucide-react'
 import { supabase } from '../../lib/supabaseClient'
 import { useAuth } from '../../hooks/useAuth'
 import type { Volume, Chapter, VolumeAvailability, LibraryEntry, CollectionStatus } from '../../lib/types'
+
+const LANGUAGE_NAMES: Record<string, string> = { ja: 'Japanese', en: 'English', ko: 'Korean', zh: 'Chinese', fr: 'French', de: 'German' }
+
+/** Store search links: no affiliate tags, no scraped prices, just a fast way to find the book. */
+function storeLinks(seriesTitle: string, volumeNumber: number, region: string, isbn?: string | null) {
+  const q = encodeURIComponent(isbn ?? `${seriesTitle} vol ${volumeNumber}`)
+  const qManga = encodeURIComponent(isbn ?? `${seriesTitle} volume ${volumeNumber} manga`)
+  if (region === 'JP') {
+    const jp = encodeURIComponent(isbn ?? `${seriesTitle} ${volumeNumber}`)
+    return [
+      { name: 'Amazon Japan', url: `https://www.amazon.co.jp/s?k=${jp}&i=stripbooks` },
+      { name: 'CDJapan', url: `https://www.cdjapan.co.jp/searches?q=${jp}` },
+      { name: 'BookWalker', url: `https://bookwalker.jp/search/?word=${jp}` },
+    ]
+  }
+  return [
+    { name: 'Amazon', url: `https://www.amazon.com/s?k=${qManga}&i=stripbooks` },
+    { name: 'Barnes & Noble', url: `https://www.barnesandnoble.com/s/${q}` },
+    { name: 'Bookshop.org', url: `https://bookshop.org/search?keywords=${q}` },
+    { name: 'BookWalker', url: `https://global.bookwalker.jp/search/?word=${q}` },
+  ]
+}
 
 export default function VolumeDetailPage() {
   const { id } = useParams<{ id: string }>()
@@ -18,15 +40,24 @@ export default function VolumeDetailPage() {
   const [toast, setToast] = useState<string | null>(null)
 
   const [userChapterReads, setUserChapterReads] = useState<Set<string>>(new Set())
+  const [siblings, setSiblings] = useState<{ prev: string | null; next: string | null }>({ prev: null, next: null })
 
   useEffect(() => {
     async function load() {
       const [volResult, chapResult, availResult] = await Promise.all([
-        supabase.from('volumes').select('*, publisher:publishers(*), series:series(id,title,type,status,original_publisher_id,created_at)').eq('id', id!).single(),
+        supabase.from('volumes').select('*, publisher:publishers(*), series:series(id,title,author,type,status,original_publisher_id,created_at)').eq('id', id!).single(),
         supabase.from('volume_chapters').select('chapter:chapters(*)').eq('volume_id', id!),
         supabase.from('volume_availability').select('*, retailer:retailers(*)').eq('volume_id', id!),
       ])
-      setVolume(volResult.data as Volume | null)
+      const vol = volResult.data as Volume | null
+      setVolume(vol)
+      if (vol) {
+        const [prevRes, nextRes] = await Promise.all([
+          supabase.from('volumes').select('id').eq('series_id', vol.series_id).eq('region_code', vol.region_code).lt('volume_number', vol.volume_number).order('volume_number', { ascending: false }).limit(1).maybeSingle(),
+          supabase.from('volumes').select('id').eq('series_id', vol.series_id).eq('region_code', vol.region_code).gt('volume_number', vol.volume_number).order('volume_number', { ascending: true }).limit(1).maybeSingle(),
+        ])
+        setSiblings({ prev: prevRes.data?.id ?? null, next: nextRes.data?.id ?? null })
+      }
       const rawChapters = (chapResult.data ?? []) as unknown as { chapter: Chapter | null }[]
       const mappedChapters = rawChapters
         .map(r => r.chapter)
@@ -91,6 +122,18 @@ export default function VolumeDetailPage() {
         showToast(`Error: ${error.message}`)
       }
     }
+  }
+
+  const markAllRead = async () => {
+    if (!user) return
+    const unread = chapters.filter(c => !userChapterReads.has(c.id))
+    if (unread.length === 0) return
+    const { error } = await supabase
+      .from('user_chapter_reads')
+      .upsert(unread.map(c => ({ user_id: user.id, chapter_id: c.id })), { onConflict: 'user_id,chapter_id', ignoreDuplicates: true })
+    if (error) { showToast(`Error: ${error.message}`); return }
+    setUserChapterReads(new Set(chapters.map(c => c.id)))
+    showToast(`Marked ${unread.length} chapter${unread.length === 1 ? '' : 's'} read`)
   }
 
   // Volume entries only track collection (owned / wishlist); reading status lives on the series.
@@ -210,8 +253,8 @@ export default function VolumeDetailPage() {
             {[
               { label: 'Publisher', value: vol.publisher?.name ?? '—' },
               { label: 'Release Date', value: vol.release_date ? new Date(vol.release_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long' }) : '—' },
-              { label: 'Edition', value: vol.edition_type ? vol.edition_type.toUpperCase() : 'SINGLE' },
-              { label: 'Language', value: vol.language_code ? vol.language_code.toUpperCase() : vol.region_code },
+              { label: 'Edition', value: vol.edition_type ? vol.edition_type.replace('_', ' ').replace(/^\w/, c => c.toUpperCase()) : 'Single' },
+              { label: 'Language', value: vol.language_code ? (LANGUAGE_NAMES[vol.language_code] ?? vol.language_code.toUpperCase()) : vol.region_code },
               { label: 'ISBN', value: vol.isbn ?? vol.isbn13 ?? '—' },
               { label: 'Pages', value: vol.page_count ? `${vol.page_count} pages` : '—' },
             ].map(item => (
@@ -247,7 +290,7 @@ export default function VolumeDetailPage() {
               </button>
             </div>
           ) : (
-            <Link to="/login" className="btn btn-primary animate-fade-up delay-300" id="volume-login-cta-btn">
+            <Link to="/login" state={{ from: `/volumes/${vol.id}` }} className="btn btn-primary animate-fade-up delay-300" id="volume-login-cta-btn">
               Sign in to track this volume →
             </Link>
           )}
@@ -261,7 +304,15 @@ export default function VolumeDetailPage() {
             <h2 style={{ fontSize: '1.125rem', display: 'flex', alignItems: 'center', gap: 8, margin: 0 }}>
               <List size={18} style={{ color: 'var(--ink-green)' }} />
               Chapters in this volume
+              <span style={{ fontSize: '0.8125rem', fontWeight: 500, color: 'var(--text-muted)' }}>
+                {user ? `${chapters.filter(c => userChapterReads.has(c.id)).length}/${chapters.length} read` : `${chapters.length}`}
+              </span>
             </h2>
+            {user && chapters.some(c => !userChapterReads.has(c.id)) && (
+              <button className="btn btn-secondary btn-sm" onClick={markAllRead} id="mark-all-read-btn">
+                <CheckCheck size={14} /> Mark all read
+              </button>
+            )}
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-1)' }}>
             {chapters.map(ch => {
@@ -321,12 +372,30 @@ export default function VolumeDetailPage() {
             </table>
           </div>
         ) : (
-          <div className="card empty-state" style={{ padding: 'var(--space-8)' }}>
-            <div className="empty-state-icon"><ShoppingBag size={28} /></div>
-            <p>No retailer data yet for this volume.</p>
+          <div className="card" style={{ padding: 'var(--space-5)' }}>
+            <p style={{ fontSize: '0.875rem', marginBottom: 'var(--space-3)' }}>
+              Search for this {LANGUAGE_NAMES[vol.language_code ?? ''] ?? ''} edition at:
+            </p>
+            <div style={{ display: 'flex', gap: 'var(--space-2)', flexWrap: 'wrap' }}>
+              {storeLinks(vol.series?.title ?? '', vol.volume_number, vol.region_code, vol.isbn13 ?? vol.isbn).map(link => (
+                <a key={link.name} href={link.url} target="_blank" rel="noopener noreferrer" className="btn btn-secondary btn-sm">
+                  <ExternalLink size={12} /> {link.name}
+                </a>
+              ))}
+            </div>
           </div>
         )}
       </section>
+
+      {/* Previous / next volume */}
+      {(siblings.prev || siblings.next) && (
+        <nav style={{ display: 'flex', justifyContent: 'space-between', gap: 'var(--space-3)', marginBottom: 'var(--space-8)' }} aria-label="Volume navigation">
+          {siblings.prev
+            ? <Link to={`/volumes/${siblings.prev}`} className="btn btn-secondary btn-sm"><ArrowLeft size={14} /> Previous volume</Link>
+            : <span />}
+          {siblings.next && <Link to={`/volumes/${siblings.next}`} className="btn btn-secondary btn-sm">Next volume <ArrowRight size={14} /></Link>}
+        </nav>
+      )}
 
       {/* Toast */}
       {toast && (

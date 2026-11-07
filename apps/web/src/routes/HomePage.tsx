@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight, BookMarked, ShoppingBag, Eye, TrendingUp, Star, Users } from 'lucide-react'
+import { ArrowRight, BookMarked, Eye, TrendingUp, Users, Globe, Building2, Library } from 'lucide-react'
 import { SeriesCard, SkeletonCard } from '../components/Cards'
 import { useAuth } from '../hooks/useAuth'
 import { supabase } from '../lib/supabaseClient'
@@ -7,43 +7,50 @@ import { useEffect, useState } from 'react'
 import type { Series } from '../lib/types'
 import ActivityFeed from '../components/ActivityFeed'
 
-// ── Feature highlight data (static UI copy, not mock DB data) ────
+// ── Feature highlight data (static UI copy) ────
 const FEATURES = [
   {
     icon: <Eye size={28} style={{ color: 'var(--ink-green)' }} />,
     title: 'Track what you read',
-    desc: 'Log every volume — scanlation or official, borrowed or bought. Status per volume, not just the series.',
+    desc: 'Reading, completed, on hold, dropped — plus chapter-by-chapter checkmarks and your own 10-point rating.',
     bg: 'var(--ink-green-dim)',
     border: 'var(--ink-green-border)',
   },
   {
     icon: <BookMarked size={28} style={{ color: 'var(--vermillion)' }} />,
     title: 'Own what you love',
-    desc: 'Separate owned shelf from your reading log. Collect physical volumes and digital editions independently.',
+    desc: 'Your shelf is separate from your reading log. Mark the exact volumes you own, and wishlist the ones you want.',
     bg: 'var(--vermillion-dim)',
     border: 'var(--vermillion-border)',
   },
   {
-    icon: <ShoppingBag size={28} style={{ color: 'var(--slate)' }} />,
-    title: 'Know where to buy',
-    desc: 'Region-aware retailer links for every volume. Find where to buy vol. 106 in your country right now.',
-    bg: 'var(--slate-dim)',
-    border: 'rgba(20,184,166,0.35)',
+    icon: <Globe size={28} style={{ color: 'var(--ochre)' }} />,
+    title: 'Every edition, every volume',
+    desc: 'Japanese originals and English editions, volume by volume, with covers — kept up to date automatically every week.',
+    bg: 'var(--ochre-dim)',
+    border: 'rgba(201,154,60,0.35)',
   },
 ]
 
-const STATS = [
-  { icon: <BookMarked size={20} />, value: '10,000+', label: 'Volumes cataloged' },
-  { icon: <Users size={20} />,      value: '500+',    label: 'Series tracked' },
-  { icon: <Star size={20} />,       value: '4.8★',    label: 'Avg user rating' },
-  { icon: <TrendingUp size={20} />, value: '12 pubs', label: 'Publishers supported' },
-]
+interface CatalogCounts { series: number; volumes: number; publishers: number; readers: number }
+
+async function countRows(table: string): Promise<number> {
+  const { count } = await supabase.from(table).select('*', { count: 'exact', head: true })
+  return count ?? 0
+}
+
+function formatCount(n: number): string {
+  if (n >= 10_000) return `${Math.floor(n / 1000)}k`
+  if (n >= 1000) return `${(n / 1000).toFixed(1)}k`
+  return String(n)
+}
 
 // ── Page ─────────────────────────────────────────────────
 export default function HomePage() {
   const { user } = useAuth()
   const [trending, setTrending] = useState<Series[]>([])
   const [loadingTrending, setLoadingTrending] = useState(true)
+  const [counts, setCounts] = useState<CatalogCounts | null>(null)
 
   useEffect(() => {
     async function load() {
@@ -51,13 +58,27 @@ export default function HomePage() {
         .from('series')
         .select('*, publisher:publishers!original_publisher_id(id,name,country)')
         .eq('ingest_status', 'published')
-        .order('created_at', { ascending: false })
-        .limit(12)
+        .order('popularity', { ascending: false, nullsFirst: false })
+        .limit(16)
       setTrending((data as Series[]) ?? [])
       setLoadingTrending(false)
     }
+    async function loadCounts() {
+      const [series, volumes, publishers, readers] = await Promise.all(
+        ['series', 'volumes', 'publishers', 'profiles'].map(countRows),
+      )
+      setCounts({ series, volumes, publishers, readers })
+    }
     load()
+    loadCounts()
   }, [])
+
+  const stats = [
+    { icon: <Library size={20} />,   value: counts?.series,     label: 'Series' },
+    { icon: <BookMarked size={20} />, value: counts?.volumes,    label: 'Volumes cataloged' },
+    { icon: <Building2 size={20} />, value: counts?.publishers, label: 'Publishers' },
+    { icon: <Users size={20} />,     value: counts?.readers,    label: 'Readers' },
+  ]
 
   return (
     <>
@@ -76,7 +97,7 @@ export default function HomePage() {
             <span className="text-gradient">love</span>.
           </h1>
           <p className="animate-fade-up delay-200" style={{ fontSize: '1.125rem', marginBottom: 'var(--space-8)', color: 'var(--text-secondary)', maxWidth: 480 }}>
-            ShelfTrack is the manga cataloging platform that finally separates <strong>reading</strong> from <strong>owning</strong> — and tells you exactly where to buy every volume in your region.
+            ShelfTrack is the manga tracker that finally separates <strong>reading</strong> from <strong>owning</strong> — every series, every volume, every edition.
           </p>
           <div className="animate-fade-up delay-300" style={{ display: 'flex', gap: 'var(--space-3)', flexWrap: 'wrap' }}>
             {user ? (
@@ -140,10 +161,12 @@ export default function HomePage() {
 
       {/* ── Stats banner ─────────────────────────────────── */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 'var(--space-4)', marginBottom: 'var(--space-12)' }}>
-        {STATS.map((s, i) => (
+        {stats.map((s, i) => (
           <div key={i} className="card animate-fade-up" style={{ padding: 'var(--space-5)', textAlign: 'center', animationDelay: `${i * 80}ms` }}>
             <div style={{ color: 'var(--vermillion)', marginBottom: 8 }}>{s.icon}</div>
-            <div style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)' }}>{s.value}</div>
+            <div style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+              {s.value == null ? <span className="skeleton" style={{ display: 'inline-block', width: 48, height: 24 }} /> : formatCount(s.value)}
+            </div>
             <div style={{ fontSize: '0.8125rem', color: 'var(--text-muted)' }}>{s.label}</div>
           </div>
         ))}
@@ -174,7 +197,7 @@ export default function HomePage() {
       {/* ── Trending now ─────────────────────────────────── */}
       <section id="trending-section" style={{ marginBottom: 'var(--space-12)' }}>
         <div className="section-header">
-          <h2><TrendingUp size={22} style={{ display: 'inline', marginRight: 8, color: 'var(--vermillion)' }} />Trending Now</h2>
+          <h2><TrendingUp size={22} style={{ display: 'inline', marginRight: 8, color: 'var(--vermillion)' }} />Popular Now</h2>
           <Link to="/discover" className="btn btn-ghost btn-sm" id="view-all-trending-btn">
             View all <ArrowRight size={14} />
           </Link>
@@ -187,7 +210,7 @@ export default function HomePage() {
               : (
                 <div className="empty-state" style={{ width: '100%', padding: 'var(--space-8)' }}>
                   <div className="empty-state-icon"><TrendingUp size={28} /></div>
-                  <p>No series in the catalog yet. Use the ingest scripts to add data.</p>
+                  <p>The catalog is filling up — check back after the next sync.</p>
                 </div>
               )
           }
@@ -214,7 +237,7 @@ export default function HomePage() {
           }}>
             <h2 style={{ marginBottom: 'var(--space-3)' }}>Ready to build your shelf?</h2>
             <p style={{ marginBottom: 'var(--space-8)', fontSize: '1.0625rem' }}>
-              Free forever. No credit card. Start tracking in 30 seconds.
+              Free. No password, no card — just your email.
             </p>
             <Link to="/login" className="btn btn-primary btn-lg" id="cta-signup-btn">
               Create free account <ArrowRight size={18} />

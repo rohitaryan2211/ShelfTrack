@@ -158,7 +158,7 @@ export default function LibraryPage() {
           <div className="empty-state animate-fade-up" style={{ paddingTop: 'var(--space-12)' }}>
             <div className="empty-state-icon" style={{ width: 80, height: 80 }}><Library size={36} /></div>
             <h3>Your shelf is empty</h3>
-            <p>Start by discovering series and marking volumes as read or owned.</p>
+            <p>Find a series, then track your reading and mark the volumes you own.</p>
             <Link to="/discover" className="btn btn-primary" id="library-empty-discover-btn">Browse catalog</Link>
           </div>
         )}
